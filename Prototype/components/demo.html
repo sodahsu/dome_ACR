@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日期區間選擇器元件使用範例</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .demo-title {
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result-display {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <h1>日期區間選擇器元件使用範例</h1>
+
+        <div id="app">
+            <!-- 基本使用 -->
+            <div class="demo-section">
+                <div class="demo-title">基本使用（僅日期）</div>
+                <date-range-picker label="通報案件完成日期 (起/迄)" v-model="basicDateRange" @change="onBasicDateChange">
+                </date-range-picker>
+                <div class="result-display">
+                    選擇結果: {{ basicResult }}
+                </div>
+            </div>
+
+            <!-- 包含時間 -->
+            <div class="demo-section">
+                <div class="demo-title">包含時間選擇</div>
+                <date-range-picker label="處理時間範圍" placeholder="選擇處理時間區間" :enable-time="true" date-format="Y-m-d"
+                    v-model="timeIncludedRange" @change="onTimeIncludedChange">
+                </date-range-picker>
+                <div class="result-display">
+                    選擇結果: {{ timeIncludedResult }}
+                </div>
+            </div>
+
+            <!-- 自訂標籤 -->
+            <div class="demo-section">
+                <div class="demo-title">自訂標籤與提示文字</div>
+                <date-range-picker label="案件建立日期範圍" placeholder="請選擇案件建立的日期範圍" v-model="customRange"
+                    @change="onCustomChange">
+                </date-range-picker>
+                <div class="result-display">
+                    選擇結果: {{ customResult }}
+                </div>
+            </div>
+
+            <!-- 程式控制 -->
+            <div class="demo-section">
+                <div class="demo-title">程式控制</div>
+                <date-range-picker ref="programmaticPicker" label="程式控制的日期選擇器" v-model="programmaticRange"
+                    @change="onProgrammaticChange">
+                </date-range-picker>
+                <div style="margin-top: 10px;">
+                    <button @click="setThisMonth" class="btn btn-primary">設定本月</button>
+                    <button @click="setLastMonth" class="btn btn-secondary">設定上月</button>
+                    <button @click="clearDates" class="btn btn-outline">清空</button>
+                </div>
+                <div class="result-display">
+                    選擇結果: {{ programmaticResult }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh-tw.js"></script>
+    <script src="date-range-picker.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                basicDateRange: [],
+                timeIncludedRange: [],
+                customRange: [],
+                programmaticRange: [],
+
+                basicResult: '',
+                timeIncludedResult: '',
+                customResult: '',
+                programmaticResult: ''
+            },
+            methods: {
+                onBasicDateChange(dates) {
+                    this.basicResult = dates.length === 2
+                        ? `${this.formatDate(dates[0])} ~ ${this.formatDate(dates[1])}`
+                        : '未選擇';
+                },
+
+                onTimeIncludedChange(dates) {
+                    this.timeIncludedResult = dates.length === 2
+                        ? `${this.formatDateTime(dates[0])} ~ ${this.formatDateTime(dates[1])}`
+                        : '未選擇';
+                },
+
+                onCustomChange(dates) {
+                    this.customResult = dates.length === 2
+                        ? `${this.formatDate(dates[0])} ~ ${this.formatDate(dates[1])}`
+                        : '未選擇';
+                },
+
+                onProgrammaticChange(dates) {
+                    this.programmaticResult = dates.length === 2
+                        ? `${this.formatDate(dates[0])} ~ ${this.formatDate(dates[1])}`
+                        : '未選擇';
+                },
+
+                setThisMonth() {
+                    const now = new Date();
+                    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+                    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+                    this.$refs.programmaticPicker.setDates([firstDay, lastDay]);
+                },
+
+                setLastMonth() {
+                    const now = new Date();
+                    const firstDay = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+                    const lastDay = new Date(now.getFullYear(), now.getMonth(), 0);
+                    this.$refs.programmaticPicker.setDates([firstDay, lastDay]);
+                },
+
+                clearDates() {
+                    this.$refs.programmaticPicker.clear();
+                },
+
+                formatDate(date) {
+                    return flatpickr.formatDate(date, 'Y-m-d');
+                },
+
+                formatDateTime(date) {
+                    return flatpickr.formatDate(date, 'Y-m-d H:i');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

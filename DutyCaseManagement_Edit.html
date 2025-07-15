@@ -193,80 +193,19 @@
 
 <body class="bg-bg-light font-noto">
     <!-- 引入 header.html -->
-    <!-- 共用導覽列元件 header.html -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="bg-secondary shadow-md">
-            <div class="px-4 py-1 flex justify-end items-center gap-2">
-                <div class="flex items-center gap-1 text-white text-sm">
-                    <span class="hidden sm:inline">您好，</span>
-                    <i class="fas fa-user w-4 h-4"></i>
-                    <span class="hidden sm:inline">王小明(linkchain0000)</span>
-                    <span class="mx-1 hidden sm:inline">｜</span>
-                    <i class="fas fa-home w-4 h-4"></i>
-                    <span class="hidden sm:inline">前台</span>
-                    <span class="mx-1 hidden sm:inline">｜</span>
-                    <i class="fas fa-sign-out-alt w-4 h-4"></i>
-                    <span class="hidden sm:inline">登出</span>
-                </div>
-            </div>
-        </div>
-        <div class="px-4 py-2">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <img src="img/logo.png" alt="logo" class="w-8 h-8 md:w-10 md:h-10 rounded-full">
-                    <a href="HomeDashboard.html" class="flex flex-col">
-                        <p class="text-xs md:text-sm font-medium text-gray-dark">屏東縣政府</p>
-                        <h1 class="text-sm md:text-xl font-bold text-secondary">捕蜂捉蛇及動物救援業務管理系統</h1>
-                    </a>
-                </div>
-                <!-- 漢堡選單按鈕（僅手機顯示） -->
-                <button id="mobile-menu-btn"
-                    class="lg:hidden flex items-center px-2 py-1 border rounded text-secondary focus:outline-none">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-                <!-- 桌面選單 -->
-                <div class="hidden lg:flex items-center gap-8">
-                    <div class="relative group">
-                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
-                            <a href="DutyCaseManagement_List.html" id="menu-duty" class="hover:underline">
-                                <span>勤務案件管理</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="relative group">
-                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
-                            <a href="ReviewCaseManagement_List.html" id="menu-review" class="hover:underline">
-                                <span>審核案件管理</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="relative group">
-                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
-                            <a href="DataStatistics.html" id="menu-stat" class="hover:underline">
-                                <span>數據統計</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="relative group">
-                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
-                            <a href="#" id="menu-setting" class="hover:underline">
-                                <span>系統設定管理(X)</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 手機版選單 -->
-            <div id="mobile-menu"
-                class="lg:hidden mt-2 flex flex-col gap-2 bg-white shadow rounded px-4 py-2 absolute w-full left-0 top-full z-50 hidden">
-                <a href="DutyCaseManagement_List.html" class="py-2 border-b hover:text-primary">勤務案件管理</a>
-                <a href="ReviewCaseManagement_List.html" class="py-2 border-b hover:text-primary">審核案件管理</a>
-                <a href="DataStatistics.html" class="py-2 border-b hover:text-primary">數據統計</a>
-                <a href="#" class="py-2 hover:text-primary">系統設定管理(X)</a>
-            </div>
-        </div>
-    </nav>
-    <!-- 結束導覽元件 -->
+    <div id="header"></div>
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header').innerHTML = html;
+                // 手動初始化 header 功能
+                if (window.initializeHeader) {
+                    window.initializeHeader();
+                }
+            });
+    </script>
+    <script src="header-utils.js"></script>
 
     <main class="p-2 md:p-4 max-w-[1440px] mx-auto">
         <!-- 頁面標題 -->

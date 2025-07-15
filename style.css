@@ -1,0 +1,180 @@
+/* 新增 Figma 設計稿專用樣式 */
+/* 小按鈕樣式 */
+.btn-small {
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: 400;
+    gap: 4px;
+}
+
+.btn-small .btn-icon {
+    width: 14px;
+    height: 14px;
+}
+
+/* 狀態指示器 */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+}
+
+.status-badge.status-completed {
+    color: #6C936D;
+}
+
+.status-badge.status-processing {
+    color: #417991;
+}
+
+.status-badge.status-rejected {
+    color: #417991;
+}
+
+/* 狀態點樣式 */
+.status-dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    font-size: 8px;
+}
+
+.status-dot.green {
+    background-color: #6C936D;
+    color: #FFFFFF;
+}
+
+.status-dot.yellow {
+    background-color: #EAD065;
+    color: #3F5146;
+}
+
+.status-dot.red {
+    background-color: #DC3545;
+    color: #FFFFFF;
+}
+
+/* 表格樣式調整 */
+.data-table table {
+    width: 1376px;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 16px;
+}
+
+.data-table th {
+    background: #C5E0C7;
+    font-weight: 700;
+    font-size: 16px;
+    color: #000000;
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #E9ECEF;
+}
+
+.data-table td {
+    padding: 6px 8px;
+    font-size: 16px;
+    color: #000000;
+    border-bottom: 1px solid #E9ECEF;
+    line-height: 1.5;
+}
+
+.data-table .checkbox-cell {
+    width: 50px;
+    text-align: center;
+}
+
+.data-table .action-cell {
+    width: auto;
+    text-align: center;
+}
+
+.data-table tr.row-even {
+    background-color: #F8F9FA;
+}
+
+.data-table tr:hover {
+    background-color: #E8F5E8;
+}
+
+/* 系統名稱區塊調整 */
+.system-text .system-subtitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #495057;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.system-text h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #3F5146;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* 導覽列選單項目 */
+.nav-menu .menu-item.active {
+    background-color: transparent;
+    color: #000000;
+}
+
+.nav-menu .menu-item {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+/* 日期輸入樣式 */
+.form-input.date-range {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.form-input.date-range input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ADB5BD;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #6C757D;
+}
+
+.form-input.date-range span {
+    color: #000000;
+    font-size: 16px;
+    padding: 0 4px;
+}
+
+/* 按鈕顏色調整 */
+.btn-info {
+    background: #417991;
+    color: #FFFFFF;
+}
+
+.btn-info:hover {
+    background: #336b84;
+}
+
+/* 表格固定寬度 */
+.data-section {
+    overflow-x: auto;
+}
+
+.data-table {
+    min-width: 1376px;
+}
+
+/* 工具類別 */
+.hidden {
+    display: none !important;
+}
