@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>數據統計</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6C936D',
+                        'secondary': '#3F5146',
+                        'accent': '#417991',
+                        'danger': '#DC3545',
+                        'warning': '#EAD065',
+                        'gray-light': '#F8F9FA',
+                        'gray-medium': '#6C757D',
+                        'gray-dark': '#495057',
+                        'border': '#ADB5BD',
+                        'green-light': '#C5E0C7',
+                        'bg-light': '#F3F3F3'
+                    },
+                    fontFamily: {
+                        'noto': ['Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-light font-noto">
+<!-- 共用導覽列元件 header.html -->
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="bg-secondary shadow-md">
+        <div class="px-4 py-1 flex justify-end items-center gap-2">
+            <div class="flex items-center gap-1 text-white text-sm">
+                <span class="hidden sm:inline">您好，</span>
+                <i class="fas fa-user w-4 h-4"></i>
+                <span class="hidden sm:inline">王小明(linkchain0000)</span>
+                <span class="mx-1 hidden sm:inline">｜</span>
+                <i class="fas fa-home w-4 h-4"></i>
+                <span class="hidden sm:inline">前台</span>
+                <span class="mx-1 hidden sm:inline">｜</span>
+                <i class="fas fa-sign-out-alt w-4 h-4"></i>
+                <span class="hidden sm:inline">登出</span>
+            </div>
+        </div>
+    </div>
+    <div class="px-4 py-2">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <img src="img/logo.png" alt="logo" class="w-8 h-8 md:w-10 md:h-10 rounded-full">
+                <a href="HomeDashboard.html" class="flex flex-col">
+                    <p class="text-xs md:text-sm font-medium text-gray-dark">屏東縣政府</p>
+                    <h1 class="text-sm md:text-xl font-bold text-secondary">捕蜂捉蛇及動物救援業務管理系統</h1>
+                </a>
+            </div>
+            <!-- 漢堡選單按鈕（僅手機顯示） -->
+            <button id="mobile-menu-btn"
+                class="lg:hidden flex items-center px-2 py-1 border rounded text-secondary focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <!-- 桌面選單 -->
+            <div class="hidden lg:flex items-center gap-8">
+                <div class="relative group">
+                    <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                        <a href="DutyCaseManagement_List.html" id="menu-duty" class="hover:underline">
+                            <span>勤務案件管理</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                        <a href="ReviewCaseManagement_List.html" id="menu-review" class="hover:underline">
+                            <span>審核案件管理</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                        <a href="DataStatistics.html" id="menu-stat" class="hover:underline">
+                            <span>數據統計</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                        <a href="#" id="menu-setting" class="hover:underline">
+                            <span>系統設定管理(X)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 手機版選單 -->
+        <div id="mobile-menu"
+            class="lg:hidden mt-2 flex flex-col gap-2 bg-white shadow rounded px-4 py-2 absolute w-full left-0 top-full z-50 hidden">
+            <a href="DutyCaseManagement_List.html" class="py-2 border-b hover:text-primary">勤務案件管理</a>
+            <a href="ReviewCaseManagement_List.html" class="py-2 border-b hover:text-primary">審核案件管理</a>
+            <a href="DataStatistics.html" class="py-2 border-b hover:text-primary">數據統計</a>
+            <a href="#" class="py-2 hover:text-primary">系統設定管理(X)</a>
+        </div>
+    </div>
+</nav>
+<!-- 結束導覽元件 -->
+    <main class="p-2 md:p-4 max-w-[1440px] mx-auto">
+        <!-- 頁面標題 -->
+        <div class="bg-white shadow-lg rounded-lg border-l-4 border-primary p-2 mb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center px-2 md:px-4 py-2 gap-2">
+                <h2 class="text-xl md:text-2xl font-bold text-secondary">數據統計</h2>
+                <div class="flex items-center gap-1 text-gray-medium text-sm">
+                    <span>首頁</span>
+                    <span>/</span>
+                    <span>數據統計</span>
+                    <span>/</span>
+                    <span class="text-primary font-bold">數據統計</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 查詢表單區塊 -->
+        <div class="bg-white shadow-lg rounded-lg p-4 mb-4">
+            <form class="flex flex-wrap gap-4 items-end">
+                <div class="min-w-[200px] flex-shrink-0">
+                    <label class="block text-gray-dark font-medium mb-2">年度 (區間)</label>
+                    <div class="flex gap-2 items-center">
+                        <div class="relative">
+                            <input type="date" class="date-input w-full border border-border rounded px-3 py-2">
+                        </div>
+                        <span class="text-black">～</span>
+                        <div class="relative">
+                            <input type="date" class="date-input w-full border border-border rounded px-3 py-2">
+                        </div>
+                    </div>
+                </div>
+                <div class="min-w-[160px] flex-shrink-0">
+                    <label class="block text-gray-dark font-medium mb-2">鄉鎮</label>
+                    <div class="relative">
+                        <select class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
+                            <option>不拘</option>
+                            <option>屏東市</option>
+                            <option>潮州鎮</option>
+                            <option>東港鎮</option>
+                            <option>恆春鎮</option>
+                            <option>萬丹鄉</option>
+                            <option>內埔鄉</option>
+                            <option>長治鄉</option>
+                            <option>麟洛鄉</option>
+                            <option>九如鄉</option>
+                            <option>里港鄉</option>
+                            <option>鹽埔鄉</option>
+                            <option>高樹鄉</option>
+                            <option>萬巒鄉</option>
+                            <option>崁頂鄉</option>
+                            <option>新埤鄉</option>
+                            <option>佳冬鄉</option>
+                            <option>新園鄉</option>
+                            <option>林邊鄉</option>
+                            <option>南州鄉</option>
+                            <option>琉球鄉</option>
+                            <option>枋寮鄉</option>
+                            <option>枋山鄉</option>
+                            <option>春日鄉</option>
+                            <option>獅子鄉</option>
+                            <option>車城鄉</option>
+                            <option>滿州鄉</option>
+                            <option>三地門鄉</option>
+                            <option>霧台鄉</option>
+                            <option>瑪家鄉</option>
+                            <option>泰武鄉</option>
+                            <option>來義鄉</option>
+                            <option>竹田鄉</option>
+                            <option>東源鄉</option>
+                        </select>
+                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                            <i class="fa-solid fa-chevron-down w-4 h-4"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="min-w-[160px] flex-shrink-0">
+                    <label class="block text-gray-dark font-medium mb-2">物種</label>
+                    <div class="relative">
+                        <select class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
+                            <option>請選擇</option>
+                            <option>補蜂</option>
+                            <option>捉蛇</option>
+                            <option>動物救援</option>
+                            <option>綠鬣蜥</option>
+                        </select>
+                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                            <i class="fa-solid fa-chevron-down w-4 h-4"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="min-w-[160px] flex-shrink-0">
+                    <label class="block text-gray-dark font-medium mb-2">圖表類型</label>
+                    <div class="relative">
+                        <select class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
+                            <option>折線圖</option>
+                            <option>長條圖</option>
+                        </select>
+                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                            <i class="fa-solid fa-chevron-down w-4 h-4"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit"
+                        class="bg-primary text-white px-6 py-2 rounded hover:bg-green-700 transition flex items-center gap-2">
+                        <!-- 搜尋 icon -->
+                        <i class="fa-solid fa-magnifying-glass w-4 h-4"></i>
+                        搜尋
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-4">
+            <!-- 左側統計卡片 -->
+            <div class="w-full md:w-80 flex-shrink-0">
+                <!-- 年度統計區塊 -->
+                <div class="bg-white shadow-lg rounded-lg mb-4">
+                    <div class="bg-primary text-white p-3 flex items-center gap-2">
+                        <i class="fa-regular fa-calendar-days w-4 h-4"></i>
+                        <span class="font-bold">年度</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="border-b border-gray-200 pb-2 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-regular fa-calendar-days w-5 h-5 text-primary"></i>
+                                <span class="font-bold text-lg">110 ~ 113年度</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="border border-primary rounded-lg p-2">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-1">
+                                        <i class="fa-regular fa-comment-dots w-4 h-4"></i>
+                                        <span class="text-sm font-bold">通報數</span>
+                                    </div>
+                                </div>
+                                <div class="text-right text-primary text-xl font-bold">17,930</div>
+                            </div>
+                            <div class="border border-primary rounded-lg p-2">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-1">
+                                        <i class="fa-regular fa-circle-check w-4 h-4"></i>
+                                        <span class="text-sm font-bold">結案數</span>
+                                    </div>
+                                </div>
+                                <div class="text-right text-primary text-xl font-bold">12,930</div>
+                            </div>
+                        </div>
+
+                        <div class="border border-primary rounded-lg p-2">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check w-4 h-4"></i>
+                                    <span class="text-sm font-bold">完成率為</span>
+                                </div>
+                                <div class="text-primary text-xl font-bold">92.7 %</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側圖表和表格區塊 -->
+            <div class="flex-1 min-w-0 flex flex-col h-full">
+                <!-- Tab 選項 -->
+                <div class="bg-white shadow-lg rounded-lg">
+                    <div class="flex border-b" id="tabBar">
+                        <button type="button" data-tab="source"
+                            class="tab-btn px-4 py-2 bg-secondary border-b-[3px] border-secondary text-white font-bold">通報來源</button>
+                        <button type="button" data-tab="species"
+                            class="tab-btn px-4 py-2 bg-gray-light border-b-[3px] border-transparent text-gray-dark">物種分析</button>
+                        <button type="button" data-tab="area"
+                            class="tab-btn px-4 py-2 bg-gray-light border-b-[3px] border-transparent text-gray-dark">地區比較</button>
+                    </div>
+
+                    <!-- 趨勢分析標題和功能按鈕 -->
+                    <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line w-4 h-4"></i>
+                            <span class="font-bold text-lg text-primary">趨勢分析</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-accent text-white px-3 py-1 rounded text-sm flex items-center gap-1">
+                                <i class="fa-solid fa-file-export w-3 h-3"></i>
+                                匯出圖表
+                            </button>
+                            <button class="bg-accent text-white px-3 py-1 rounded text-sm flex items-center gap-1">
+                                <i class="fa-solid fa-file-export w-3 h-3"></i>
+                                匯出明細表
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 圖表區域 -->
+                    <div class="p-4">
+                        <canvas id="lineChart" class="w-full h-64"></canvas>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div><!-- 數據表格 -->
+            <div class="bg-white shadow-lg rounded-lg mt-4 flex-1 flex flex-col overflow-auto">
+                <div class="overflow-auto flex-1">
+                    <table class="w-full min-w-[1200px]">
+                        <thead>
+                            <tr class="bg-green-light">
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">序號</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">鄉鎮</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">年度</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">年度</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">年度</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="border-b border-gray-200">
+                                <td class="px-2 py-3">1</td>
+                                <td class="px-2 py-3">屏東市</td>
+                                <td class="px-2 py-3">110</td>
+                                <td class="px-2 py-3">420</td>
+                                <td class="px-2 py-3">420</td>
+                                <td class="px-2 py-3">100%</td>
+                                <td class="px-2 py-3">111</td>
+                                <td class="px-2 py-3">380</td>
+                                <td class="px-2 py-3">378</td>
+                                <td class="px-2 py-3">99.47%</td>
+                                <td class="px-2 py-3">112</td>
+                                <td class="px-2 py-3">580</td>
+                                <td class="px-2 py-3">557</td>
+                                <td class="px-2 py-3">96.03%</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 bg-gray-50">
+                                <td class="px-2 py-3">2</td>
+                                <td class="px-2 py-3">潮州鎮</td>
+                                <td class="px-2 py-3">110</td>
+                                <td class="px-2 py-3">310</td>
+                                <td class="px-2 py-3">310</td>
+                                <td class="px-2 py-3">100%</td>
+                                <td class="px-2 py-3">111</td>
+                                <td class="px-2 py-3">280</td>
+                                <td class="px-2 py-3">280</td>
+                                <td class="px-2 py-3">100%</td>
+                                <td class="px-2 py-3">112</td>
+                                <td class="px-2 py-3">430</td>
+                                <td class="px-2 py-3">416</td>
+                                <td class="px-2 py-3">96.74%</td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-2 py-3">3</td>
+                                <td class="px-2 py-3">東港鎮</td>
+                                <td class="px-2 py-3">110</td>
+                                <td class="px-2 py-3">290</td>
+                                <td class="px-2 py-3">270</td>
+                                <td class="px-2 py-3">93.1%</td>
+                                <td class="px-2 py-3">111</td>
+                                <td class="px-2 py-3">260</td>
+                                <td class="px-2 py-3">260</td>
+                                <td class="px-2 py-3">100%</td>
+                                <td class="px-2 py-3">112</td>
+                                <td class="px-2 py-3">400</td>
+                                <td class="px-2 py-3">396</td>
+                                <td class="px-2 py-3">99%</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 bg-gray-50">
+                                <td class="px-2 py-3">4</td>
+                                <td class="px-2 py-3">恆春鎮</td>
+                                <td class="px-2 py-3">110</td>
+                                <td class="px-2 py-3">150</td>
+                                <td class="px-2 py-3">150</td>
+                                <td class="px-2 py-3">100%</td>
+                                <td class="px-2 py-3">111</td>
+                                <td class="px-2 py-3">220</td>
+                                <td class="px-2 py-3">210</td>
+                                <td class="px-2 py-3">95.45%</td>
+                                <td class="px-2 py-3">112</td>
+                                <td class="px-2 py-3">200</td>
+                                <td class="px-2 py-3">200</td>
+                                <td class="px-2 py-3">100%</td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-2 py-3">5</td>
+                                <td class="px-2 py-3">萬丹鄉</td>
+                                <td class="px-2 py-3">110</td>
+                                <td class="px-2 py-3">270</td>
+                                <td class="px-2 py-3">265</td>
+                                <td class="px-2 py-3">98.15%</td>
+                                <td class="px-2 py-3">111</td>
+                                <td class="px-2 py-3">250</td>
+                                <td class="px-2 py-3">250</td>
+                                <td class="px-2 py-3">100%</td>
+                                <td class="px-2 py-3">112</td>
+                                <td class="px-2 py-3">380</td>
+                                <td class="px-2 py-3">380</td>
+                                <td class="px-2 py-3">100%</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 bg-gray-50">
+                                <td class="px-2 py-3">6</td>
+                                <td class="px-2 py-3">內埔鄉</td>
+                                <td class="px-2 py-3">110</td>
+                                <td class="px-2 py-3">180</td>
+                                <td class="px-2 py-3">180</td>
+                                <td class="px-2 py-3">100%</td>
+                                <td class="px-2 py-3">111</td>
+                                <td class="px-2 py-3">170</td>
+                                <td class="px-2 py-3">170</td>
+                                <td class="px-2 py-3">100%</td>
+                                <td class="px-2 py-3">112</td>
+                                <td class="px-2 py-3">250</td>
+                                <td class="px-2 py-3">250</td>
+                                <td class="px-2 py-3">100%</td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-2 py-3">7</td>
+                                <td class="px-2 py-3">長治鄉</td>
+                                <td class="px-2 py-3">110</td>
+                                <td class="px-2 py-3">160</td>
+                                <td class="px-2 py-3">160</td>
+                                <td class="px-2 py-3">100%</td>
+                                <td class="px-2 py-3">111</td>
+                                <td class="px-2 py-3">140</td>
+                                <td class="px-2 py-3">140</td>
+                                <td class="px-2 py-3">100%</td>
+                                <td class="px-2 py-3">112</td>
+                                <td class="px-2 py-3">220</td>
+                                <td class="px-2 py-3">220</td>
+                                <td class="px-2 py-3">100%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 分頁 -->
+            <div class="bg-white shadow-lg rounded-lg p-4 mt-4 flex flex-wrap justify-center items-center gap-4">
+                <span class="text-sm">每頁</span>
+                <div class="relative">
+                    <select class="border border-border rounded px-3 py-1 text-sm bg-white appearance-none pr-8">
+                        <option>10</option>
+                    </select>
+                    <span class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                        <i class="fa-solid fa-chevron-down w-3 h-3"></i>
+                    </span>
+                </div>
+                <span class="text-sm">筆，第 1/4 頁，共 33 筆，</span>
+                <span class="text-primary text-sm cursor-pointer">上一頁</span>
+                <span class="text-sm">｜跳至第</span>
+                <div class="relative">
+                    <select class="border border-border rounded px-3 py-1 text-sm bg-white appearance-none pr-8">
+                        <option>1</option>
+                    </select>
+                    <span class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                        <i class="fa-solid fa-chevron-down w-3 h-3"></i>
+                    </span>
+                </div>
+                <span class="text-sm">頁｜</span>
+                <span class="text-primary text-sm cursor-pointer">下一頁</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 產生亂數陣列（平均落在10000~13000）
+        function randomData(len, min, max) {
+            return Array.from({ length: len }, () => Math.floor(Math.random() * (max - min + 1)) + min);
+        }
+        const labels = ['屏東市', '潮州鎮', '東港鎮', '恆春鎮', '萬丹鄉', '內埔鄉', '長治鄉', '麟洛鄉', '九如鄉', '里港鄉', '鹽埔鄉', '高樹鄉', '萬巒鄉', '崁頂鄉', '新埤鄉', '佳冬鄉', '新園鄉', '林邊鄉', '南州鄉', '琉球鄉', '港口鄉', '土城鄉', '三地門鄉', '霧台鄉', '車城鄉', '滿州鄉'];
+        // 各Tab的亂數範圍
+        const tabConfig = {
+            source: { min: 10000, max: 13000 },
+            species: { min: 5000, max: 9000 },
+            area: { min: 10000, max: 13000 }
+        };
+        function getDatasets(tab) {
+            const { min, max } = tabConfig[tab];
+            return [
+                { label: '110 年', data: randomData(labels.length, min, max), borderColor: '#8979FF', backgroundColor: 'rgba(137, 121, 255, 0.1)', tension: 0.4 },
+                { label: '111 年', data: randomData(labels.length, min, max), borderColor: '#FF928A', backgroundColor: 'rgba(255, 146, 138, 0.1)', tension: 0.4 },
+                { label: '112 年', data: randomData(labels.length, min, max), borderColor: '#3CC3DF', backgroundColor: 'rgba(60, 195, 223, 0.1)', tension: 0.4 },
+                { label: '113 年', data: randomData(labels.length, min, max), borderColor: '#FFAE4C', backgroundColor: 'rgba(255, 174, 76, 0.1)', tension: 0.4 }
+            ];
+        }
+        // 初始化圖表
+        let currentTab = 'source';
+        const ctx = document.getElementById('lineChart').getContext('2d');
+        let chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: getDatasets(currentTab)
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 15000,
+                        ticks: {
+                            stepSize: 1000,
+                            callback: function (value) {
+                                return value.toLocaleString();
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    }
+                },
+                elements: {
+                    point: {
+                        radius: 3,
+                        hoverRadius: 5
+                    }
+                }
+            }
+        });
+        // Tab 切換
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const tab = this.getAttribute('data-tab');
+                if (tab === currentTab) return;
+                currentTab = tab;
+                // 切換樣式
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('bg-secondary', 'text-white', 'font-bold', 'border-secondary');
+                    b.classList.add('bg-gray-light', 'text-gray-dark', 'border-transparent');
+                });
+                this.classList.remove('bg-gray-light', 'text-gray-dark', 'border-transparent');
+                this.classList.add('bg-secondary', 'text-white', 'font-bold', 'border-secondary');
+                // 更新圖表
+                chart.data.datasets = getDatasets(tab);
+                chart.update();
+            });
+        });
+    </script>
+</body>
+
+</html>

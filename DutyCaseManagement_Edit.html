@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勤務案件管理-編輯(廠商)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fixed-bottom-bar {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100vw;
+            z-index: 50;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+            background: #fff;
+        }
+
+        .work-photo-preview {
+            min-height: 200px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .work-photo-preview img,
+        .work-photo-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 640px) {
+            .form-section-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .bottom-btns {
+                flex-direction: row !important;
+                gap: 0.75rem !important;
+                align-items: center !important;
+            }
+
+            .upload-section {
+                flex-direction: column !important;
+                gap: 1rem !important;
+            }
+
+            .upload-section>div {
+                margin-bottom: 0.5rem;
+            }
+
+            .main-padding {
+                padding: 1rem !important;
+            }
+
+            .page-title {
+                font-size: 1.25rem !important;
+            }
+
+            /* 電子簽章區塊手機版維持並列 */
+            .signature-row {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 1rem !important;
+            }
+
+            .address-row {
+                flex-direction: row !important;
+                gap: 1rem !important;
+            }
+
+            .address-input-row {
+                margin-top: 0.5rem !important;
+            }
+        }
+
+        .work-photo-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: #f3f3f3;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 物種狀況橫向排列 */
+        @media (min-width: 768px) {
+            .species-status-row {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .species-status-row>* {
+                min-width: 180px;
+                flex: 1 1 0;
+            }
+        }
+
+        /* 新增預覽區塊固定尺寸CSS */
+        .work-photo-preview.relative {
+            width: 200px;
+            height: 200px;
+            min-width: 200px;
+            min-height: 200px;
+            max-width: 200px;
+            max-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .work-photo-preview.relative img,
+        .work-photo-preview.relative video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* 通報地址響應式樣式 */
+        @media (max-width: 640px) {
+            .address-row {
+                flex-wrap: wrap !important;
+            }
+
+            .address-row>select {
+                flex-basis: calc(50% - 0.375rem) !important;
+            }
+
+            .address-input {
+                flex-basis: 100% !important;
+                margin-top: 0.5rem !important;
+            }
+        }
+
+        @media (min-width: 641px) {
+            .address-row {
+                flex-wrap: nowrap !important;
+            }
+
+            .address-input {
+                flex-basis: auto !important;
+                margin-top: 0 !important;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6C936D',
+                        'secondary': '#3F5146',
+                        'accent': '#417991',
+                        'danger': '#DC3545',
+                        'warning': '#EAD065',
+                        'gray-light': '#F8F9FA',
+                        'gray-medium': '#6C757D',
+                        'gray-dark': '#495057',
+                        'border': '#ADB5BD',
+                        'green-light': '#C5E0C7',
+                        'bg-light': '#F3F3F3'
+                    },
+                    fontFamily: {
+                        'noto': ['Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-light font-noto">
+    <!-- 引入 header.html -->
+    <!-- 共用導覽列元件 header.html -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="bg-secondary shadow-md">
+            <div class="px-4 py-1 flex justify-end items-center gap-2">
+                <div class="flex items-center gap-1 text-white text-sm">
+                    <span class="hidden sm:inline">您好，</span>
+                    <i class="fas fa-user w-4 h-4"></i>
+                    <span class="hidden sm:inline">王小明(linkchain0000)</span>
+                    <span class="mx-1 hidden sm:inline">｜</span>
+                    <i class="fas fa-home w-4 h-4"></i>
+                    <span class="hidden sm:inline">前台</span>
+                    <span class="mx-1 hidden sm:inline">｜</span>
+                    <i class="fas fa-sign-out-alt w-4 h-4"></i>
+                    <span class="hidden sm:inline">登出</span>
+                </div>
+            </div>
+        </div>
+        <div class="px-4 py-2">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo.png" alt="logo" class="w-8 h-8 md:w-10 md:h-10 rounded-full">
+                    <a href="HomeDashboard.html" class="flex flex-col">
+                        <p class="text-xs md:text-sm font-medium text-gray-dark">屏東縣政府</p>
+                        <h1 class="text-sm md:text-xl font-bold text-secondary">捕蜂捉蛇及動物救援業務管理系統</h1>
+                    </a>
+                </div>
+                <!-- 漢堡選單按鈕（僅手機顯示） -->
+                <button id="mobile-menu-btn"
+                    class="lg:hidden flex items-center px-2 py-1 border rounded text-secondary focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <!-- 桌面選單 -->
+                <div class="hidden lg:flex items-center gap-8">
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="DutyCaseManagement_List.html" id="menu-duty" class="hover:underline">
+                                <span>勤務案件管理</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="ReviewCaseManagement_List.html" id="menu-review" class="hover:underline">
+                                <span>審核案件管理</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="DataStatistics.html" id="menu-stat" class="hover:underline">
+                                <span>數據統計</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="#" id="menu-setting" class="hover:underline">
+                                <span>系統設定管理(X)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 手機版選單 -->
+            <div id="mobile-menu"
+                class="lg:hidden mt-2 flex flex-col gap-2 bg-white shadow rounded px-4 py-2 absolute w-full left-0 top-full z-50 hidden">
+                <a href="DutyCaseManagement_List.html" class="py-2 border-b hover:text-primary">勤務案件管理</a>
+                <a href="ReviewCaseManagement_List.html" class="py-2 border-b hover:text-primary">審核案件管理</a>
+                <a href="DataStatistics.html" class="py-2 border-b hover:text-primary">數據統計</a>
+                <a href="#" class="py-2 hover:text-primary">系統設定管理(X)</a>
+            </div>
+        </div>
+    </nav>
+    <!-- 結束導覽元件 -->
+
+    <main class="p-2 md:p-4 max-w-[1440px] mx-auto">
+        <!-- 頁面標題 -->
+        <div class="bg-white shadow-lg rounded-lg border-l-4 border-primary p-2 mb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center px-2 md:px-4 py-2 gap-2">
+                <h2 class="text-xl md:text-2xl font-bold text-secondary">勤務案件管理-編輯(廠商)</h2>
+                <div class="flex items-center gap-1 text-gray-medium text-sm">
+                    <span>首頁</span>
+                    <span>/</span>
+                    <span>勤務案件管理</span>
+                    <span>/</span>
+                    <span>勤務案件管理</span>
+                    <span>/</span>
+                    <span class="text-primary font-bold">編輯(廠商)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 表單區塊 -->
+        <form class="bg-white rounded-lg shadow-lg border border-gray-200 p-4 md:p-6 lg:p-8 space-y-8">
+            <!-- 通報基本資料 -->
+            <section>
+                <div
+                    class="flex items-center gap-2 mb-4 bg-gray-light border-l-2 border-primary px-4 py-2 justify-between">
+                    <div class="flex items-center gap-2">
+                        <!-- 通報基本資料 icon -->
+                        <i class="fas fa-clipboard text-primary w-4 h-4 mr-1"></i>
+                        <h3 class="text-lg md:text-xl font-bold text-primary">通報資料</h3>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" id="toggleBasicInfoBtn"
+                            class="bg-primary text-white px-3 py-1 rounded text-sm font-medium hover:bg-green-700 transition">
+                            <span id="toggleBasicInfoText">收合</span>
+                            <i id="toggleBasicInfoIcon" class="fas fa-chevron-up ml-1"></i>
+                        </button>
+                        <button type="button" id="editBasicBtn"
+                            class="bg-primary text-white px-3 py-1 rounded text-sm font-medium hover:bg-green-700 transition">資料修正</button>
+                    </div>
+                </div>
+                <div class="border border-border rounded p-4" id="basicInfoBlock">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">立案編號</label>
+                            <input type="text"
+                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white text-gray-dark focus:outline-primary "
+                                value="T1130428001">
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>通報來源
+                            </label>
+                            <select
+                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary ">
+                                <option selected>119</option>
+                                <option>19999</option>
+                                <option>1959</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">通報時間</label>
+                            <input type="text"
+                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary "
+                                value="2024/04/28 20:20:21">
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>通報人
+                            </label>
+                            <input type="text"
+                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary "
+                                placeholder="請輸入" value="王小明">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>性別
+                            </label>
+                            <div class="flex flex-wrap items-center gap-4 mt-1 min-w-0">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="gender" class="text-primary mr-2" checked>
+                                    <span>先生</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="gender" class="text-primary mr-2">
+                                    <span>小姐</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="gender" class="text-primary mr-2">
+                                    <span>其他</span>
+                                </label>
+                                <!-- <input type="text" class="border border-border rounded px-2 py-1 text-sm flex-1 min-w-0 ml-2"
+                                    placeholder="請輸入" readonly> -->
+                            </div>
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>通報人電話
+                            </label>
+                            <input type="text"
+                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary "
+                                placeholder="請輸入" value="0912345678">
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>電話值班人員
+                            </label>
+                            <input type="text"
+                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary "
+                                placeholder="請輸入" value="林值班">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="flex items-center text-gray-dark font-medium mb-1">
+                            <span class="text-danger mr-1">*</span>通報地址
+                        </label>
+                        <div class="address-row flex flex-row gap-2 min-w-0 w-full"
+                            style="background:none;padding:0;margin:0;">
+                            <select
+                                class="border border-r border-border px-3 py-2 bg-white focus:outline-primary min-w-0"
+                                style="min-width:90px;max-width:120px;">
+                                <option>屏東市</option>
+                                <option selected>屏東縣</option>
+                            </select>
+                            <select
+                                class="border border-border rounded-r px-3 py-2 bg-white focus:outline-primary min-w-0"
+                                style="min-width:90px;max-width:120px;">
+                                <option selected>不拘</option>
+                                <option>潮州鎮</option>
+                                <option>東港鎮</option>
+                                <option>恆春鎮</option>
+                                <option>萬丹鄉</option>
+                                <option>長治鄉</option>
+                                <option>麟洛鄉</option>
+                                <option>九如鄉</option>
+                                <option>里港鄉</option>
+                                <option>鹽埔鄉</option>
+                                <option>高樹鄉</option>
+                                <option>萬巒鄉</option>
+                                <option>內埔鄉</option>
+                                <option>竹田鄉</option>
+                                <option>新埤鄉</option>
+                                <option>枋寮鄉</option>
+                                <option>新園鄉</option>
+                                <option>崁頂鄉</option>
+                                <option>林邊鄉</option>
+                                <option>南州鄉</option>
+                                <option>佳冬鄉</option>
+                                <option>琉球鄉</option>
+                                <option>車城鄉</option>
+                                <option>滿州鄉</option>
+                                <option>枋山鄉</option>
+                                <option>三地門鄉</option>
+                                <option>霧台鄉</option>
+                                <option>瑪家鄉</option>
+                                <option>泰武鄉</option>
+                                <option>來義鄉</option>
+                                <option>春日鄉</option>
+                                <option>獅子鄉</option>
+                                <option>牡丹鄉</option>
+                            </select>
+                            <input type="text"
+                                class="address-input border border-border rounded px-3 py-2 bg-gray-light min-w-0 flex-1"
+                                value="自由路527號">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 內勤作業紀錄 -->
+            <section>
+                <div
+                    class="flex items-center gap-2 mb-4 bg-gray-light border-l-2 border-primary px-4 py-2 justify-between">
+                    <div class="flex items-center gap-2">
+                        <!-- 內勤作業紀錄 icon -->
+                        <i class="fas fa-clipboard text-primary w-4 h-4 mr-1"></i>
+                        <h3 class="text-lg md:text-xl font-bold text-primary">內勤作業紀錄</h3>
+                    </div>
+                    <button type="button" id="toggleDutyRecordBtn"
+                        class="bg-primary text-white px-3 py-1 rounded text-sm font-medium hover:bg-green-700 transition">
+                        <span id="toggleDutyRecordText">收合</span>
+                        <i id="toggleDutyRecordIcon" class="fas fa-chevron-up ml-1"></i>
+                    </button>
+                </div>
+                <div class="border border-border rounded p-4" id="dutyRecordBlock">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>案件類型
+                            </label>
+                            <select id="caseTypeSelect"
+                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                <option selected>補蜂</option>
+                                <option>捉蛇</option>
+                                <option>動物救援</option>
+                                <option>綠鬣蜥</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>作業廠商
+                            </label>
+                            <select
+                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                <option selected>請選擇</option>
+                                <option>廠商A</option>
+                                <option>廠商B</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>作業人員
+                            </label>
+                            <select
+                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                <!-- 作業人員選項將由 JS 動態產生，初始留空 -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">廠商聯繫通報人時間</label>
+                            <input type="text"
+                                class="w-full border border-border rounded px-3 py-2 bg-gray-light focus:outline-primary"
+                                value="2024/04/28 22:20:21" readonly>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 外勤作業紀錄 -->
+            <section>
+                <div class="flex items-center justify-between mb-4 bg-gray-light border-l-2 border-primary px-4 py-2">
+                    <div class="flex items-center gap-2">
+                        <!-- 外勤作業紀錄 icon -->
+                        <i class="fas fa-image text-primary w-4 h-4 mr-1"></i>
+                        <h3 class="text-lg md:text-xl font-bold text-primary">外勤作業紀錄</h3>
+                    </div>
+                    <span class="text-sm text-gray-dark">回報日期： yyy/mm/dd</span>
+                </div>
+                <div class="border border-border rounded p-4" id="fieldWorkBlock" style="display:none;">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div class="min-w-0 md:col-span-2 flex flex-col">
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>值勤人員抵達時間
+                            </label>
+                            <div class="flex flex-col md:flex-row gap-2 min-w-0 w-full">
+                                <input type="text" id="arriveTimeField"
+                                    class="flex-1 min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary md:w-40"
+                                    placeholder="-">
+                                <button type="button" id="getLocationBtn"
+                                    class="bg-accent text-white px-3 py-2 rounded text-sm flex items-center gap-1 md:w-28">
+                                    <img src="img/location-arrow.png" alt="location"
+                                        class="w-3 h-3 filter brightness-0 invert">
+                                    定位
+                                </button>
+                                <input type="text" id="locationField"
+                                    class="border border-border rounded px-3 py-2 bg-gray-light text-sm flex-1 min-w-0 md:w-48"
+                                    placeholder="座標" readonly>
+                            </div>
+                        </div>
+                        <div class="min-w-0">
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>物種
+                            </label>
+                            <select id="speciesSelect"
+                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                <!-- 物種選項由 JS 動態產生 -->
+                            </select>
+                        </div>
+                        <div class="min-w-0">
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>數量
+                            </label>
+                            <input type="text"
+                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary"
+                                placeholder="請輸入" value="1">
+                        </div>
+                        <div class="min-w-0">
+                            <label id="speciesStatusLabel" class="flex items-center text-gray-dark font-medium mb-1">
+                                <span id="speciesStatusStar" class="text-danger mr-1">*</span>物種狀況
+                            </label>
+                            <div class="species-status-row flex flex-col gap-2 min-w-0">
+                                <select id="speciesStatusSelect"
+                                    class="border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                    <option value="">請選擇</option>
+                                    <option value="健康">健康</option>
+                                    <option value="受困">受困</option>
+                                    <option value="受傷">受傷</option>
+                                    <option value="到場前已自行逃脫">到場前已自行逃脫</option>
+                                    <option value="已死亡">已死亡</option>
+                                </select>
+                                <div id="speciesStatusSubBlock" style="display:none;">
+                                    <select id="speciesStatusSubSelect"
+                                        class="border border-border rounded px-3 py-2 bg-white focus:outline-primary mt-0">
+                                        <option value="">請選擇受困類型</option>
+                                        <option value="獸鋏">獸鋏</option>
+                                        <option value="網拒">網拒</option>
+                                        <option value="其他">其他</option>
+                                    </select>
+                                    <input id="speciesStatusOtherInput" type="text"
+                                        class="border border-border rounded px-3 py-2 bg-white focus:outline-primary mt-0"
+                                        placeholder="請輸入其他受困類型" style="display:none;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label id="ownerLabel" class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>是否有飼主
+                            </label>
+                            <div class="flex items-center gap-4 mt-1">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="hasOwner" class="text-primary mr-2">
+                                    <span>是</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="hasOwner" class="text-primary mr-2" checked>
+                                    <span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label id="processLabel" class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>處理情形
+                            </label>
+                            <select id="processSelect"
+                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                <option selected>已逃跑</option>
+                                <option>現場放走</option>
+                                <option>野放</option>
+                                <option>後送</option>
+                            </select>
+                            <input id="transferHospitalInput" type="text"
+                                class="mt-2 w-full border border-border rounded px-3 py-2 bg-gray-light"
+                                style="display:none;" value="移送指定動物醫院/單位">
+                        </div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+                    <!-- 圖片上傳區塊 -->
+                    <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+                        <!-- 處理前紀錄 -->
+                        <div id="workPhotoBlock1" class="work-photo-block flex flex-col h-full flex-1 min-w-0">
+                            <div class="work-photo-title">
+                                <span class="text-danger mr-1">*</span><span>處理前紀錄</span>
+                            </div>
+                            <label
+                                class="work-photo-upload bg-primary text-white px-3 py-2 rounded text-base flex items-center gap-2 font-bold cursor-pointer">
+                                <i class="fas fa-upload w-4 h-4"></i>
+                                上傳檔案
+                                <input type="file" id="workPhotoInput1" accept="image/*" style="display:none;">
+                            </label>
+                            <p class="text-xs text-gray-medium mb-2" id="workPhotoTip1">可上傳的檔案格式：jpg、jpeg、png，一張照片最大
+                                2MB。</p>
+                            <div id="workPhotoPreview1" class="work-photo-preview relative">
+                                <span style="color: #6c757d;">點擊上方按鈕選擇檔案</span>
+                            </div>
+                        </div>
+                        <!-- 處理中紀錄 -->
+                        <div id="workPhotoBlock2" class="work-photo-block flex flex-col h-full flex-1 min-w-0">
+                            <div class="work-photo-title">
+                                <span class="text-danger mr-1" style="display:none;"></span><span>處理中紀錄（非必填）</span>
+                            </div>
+                            <label
+                                class="work-photo-upload bg-primary text-white px-3 py-2 rounded text-base flex items-center gap-2 font-bold cursor-pointer">
+                                <i class="fas fa-upload w-4 h-4"></i>
+                                上傳檔案
+                                <input type="file" id="workPhotoInput2" accept="image/*" style="display:none;">
+                            </label>
+                            <p class="text-xs text-gray-medium mb-2" id="workPhotoTip2">可上傳的檔案格式：jpg、jpeg、png，一張照片最大
+                                2MB。</p>
+                            <div id="workPhotoPreview2" class="work-photo-preview relative">
+                                <span style="color: #6c757d;">點擊上方按鈕選擇檔案</span>
+                            </div>
+                        </div>
+                        <!-- 處理完成紀錄 -->
+                        <div id="workPhotoBlock3" class="work-photo-block flex flex-col h-full flex-1 min-w-0"
+                            style="display: none;">
+                            <div class="work-photo-title">
+                                <span class="text-danger mr-1">*</span><span>處理完成紀錄</span>
+                            </div>
+                            <label
+                                class="work-photo-upload bg-primary text-white px-3 py-2 rounded text-base flex items-center gap-2 font-bold cursor-pointer">
+                                <i class="fas fa-upload w-4 h-4"></i>
+                                上傳檔案
+                                <input type="file" id="workPhotoInput3" accept="image/*" style="display:none;">
+                            </label>
+                            <p class="text-xs text-gray-medium mb-2" id="workPhotoTip3">可上傳的檔案格式：jpg、jpeg、png，一張照片最大
+                                2MB。</p>
+                            <div id="workPhotoPreview3" class="work-photo-preview relative">
+                                <span style="color: #6c757d;">點擊上方按鈕選擇檔案</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 電子簽章 -->
+            <section>
+                <div class="flex items-center gap-2 mb-4 bg-gray-light border-l-2 border-primary px-4 py-2">
+                    <!-- 電子簽章 icon -->
+                    <i class="fas fa-clipboard text-primary w-4 h-4 mr-1"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-primary">電子簽章</h3>
+                </div>
+                <div class="border border-border rounded p-4" id="signatureBlock" style="display:none;">
+                    <div class="signature-row grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">通報人</label>
+                            <div class="w-full border border-border rounded bg-gray-light flex flex-col items-center justify-center"
+                                style="height: 120px;">
+                                <button type="button" id="openSignatureModalBtn"
+                                    class="px-3 py-2 bg-primary text-white rounded text-base font-bold mt-4">簽名</button>
+                                <div id="signaturePreview" class="mt-2 w-full flex justify-center"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">業務人員</label>
+                            <div class="w-full border border-border rounded bg-gray-light flex items-center justify-center"
+                                style="height: 120px;">
+                                <span class="ml-4 text-gray-dark font-bold text-base">王大明 值班人</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div id="signatureModal"
+                        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+                        <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center min-w-[340px]">
+                            <h3 class="text-lg font-bold mb-2">通報人簽名</h3>
+                            <canvas id="signatureCanvas" width="320" height="80"
+                                style="background:#fff;border-radius:8px;border:1px solid #ADB5BD;max-width:100%;display:block;"></canvas>
+                            <div class="flex gap-2 mt-2">
+                                <button type="button" id="clearSignatureBtn"
+                                    class="px-2 py-1 bg-gray-medium text-white rounded text-sm">清除</button>
+                                <button type="button" id="saveSignatureBtn"
+                                    class="px-2 py-1 bg-primary text-white rounded text-sm">儲存</button>
+                                <button type="button" id="closeSignatureModalBtn"
+                                    class="px-2 py-1 bg-gray-light text-gray-dark rounded text-sm">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </main>
+
+    <!-- 底部按鈕 -->
+    <div class="fixed-bottom-bar bg-white shadow-lg border-t border-gray-200 py-2">
+        <div class="bottom-btns flex flex-wrap justify-center items-center gap-2 max-w-[1440px] mx-auto px-4">
+            <button type="button"
+                class="min-w-[96px] bg-white text-gray-medium border border-gray-medium px-4 py-2 rounded hover:bg-gray-100 transition">取消</button>
+            <button type="button"
+                class="min-w-[96px] bg-gray-medium text-white px-4 py-2 rounded hover:bg-gray-dark transition flex items-center gap-1">
+                <!-- 底部按鈕 icon -->
+                <i class="fas fa-save w-3.5 h-3.5 mr-1"></i>
+                暫存
+            </button>
+            <button type="button" id="assignCaseBtn"
+                class="min-w-[96px] bg-primary text-white px-4 py-2 rounded hover:bg-green-700 transition flex items-center gap-1">
+                <!-- 底部按鈕 icon -->
+                <i class="fas fa-paper-plane w-3.5 h-3.5 mr-1"></i>
+                指派案件
+            </button>
+            <button type="submit"
+                class="min-w-[96px] bg-primary text-white px-4 py-2 rounded hover:bg-green-700 transition flex items-center gap-1"
+                style="display:none;">
+                <!-- 底部按鈕 icon -->
+                <i class="fas fa-check-circle w-3.5 h-3.5 mr-1"></i>
+                提交縣府
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 全部互動功能
+        document.addEventListener('DOMContentLoaded', function () {
+            // 作業廠商與作業人員連動
+            // 取得正確的作業廠商與作業人員 select
+            const selects = document.querySelectorAll('#dutyRecordBlock select');
+            // 0: 案件類型, 1: 作業廠商, 2: 作業人員
+            const vendorSelect2 = selects[1];
+            const staffSelect2 = selects[2];
+            // 假設廠商A、B各自有不同人員
+            const vendorStaffMap = {
+                '廠商A': ['許ＯＯ', '陳ＯＯ'],
+                '廠商B': ['李ＯＯ', '陳ＯＯ', '周ＯＯ'],
+                '請選擇': []
+            };
+            function updateStaffOptions() {
+                if (!vendorSelect2 || !staffSelect2) return;
+                const vendor = vendorSelect2.value;
+                let staffList = vendorStaffMap[vendor] || [];
+                // 第一個選項永遠是「請選擇」
+                let options = [`<option selected>請選擇</option>`];
+                staffList.forEach(s => {
+                    options.push(`<option>${s}</option>`);
+                });
+                staffSelect2.innerHTML = options.join('');
+            }
+            if (vendorSelect2) {
+                vendorSelect2.addEventListener('change', function () {
+                    updateStaffOptions();
+                });
+                // 頁面載入時也執行一次
+                updateStaffOptions();
+            }
+            // 指派案件驗證作業廠商與作業人員
+            const assignCaseBtn = document.getElementById('assignCaseBtn');
+            if (assignCaseBtn) {
+                assignCaseBtn.addEventListener('click', function (e) {
+                    let vendorValue = '';
+                    let staffValue = '';
+                    if (vendorSelect2) vendorValue = vendorSelect2.value;
+                    if (staffSelect2) staffValue = staffSelect2.value;
+                    if (!vendorValue || vendorValue === '請選擇') {
+                        alert('請選擇作業廠商');
+                        return;
+                    }
+                    if (!staffValue || staffValue === '請選擇') {
+                        alert('請選擇作業人員');
+                        return;
+                    }
+                    // 自動填入現在時間到廠商聯繫通報人時間欄位
+                    const vendorContactTimeInput = document.querySelector('#dutyRecordBlock input[type="text"]');
+                    if (vendorContactTimeInput) {
+                        const now = new Date();
+                        const yyyy = now.getFullYear();
+                        const mm = String(now.getMonth() + 1).padStart(2, '0');
+                        const dd = String(now.getDate()).padStart(2, '0');
+                        const hh = String(now.getHours()).padStart(2, '0');
+                        const min = String(now.getMinutes()).padStart(2, '0');
+                        const ss = String(now.getSeconds()).padStart(2, '0');
+                        vendorContactTimeInput.value = `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}`;
+                    }
+                    // 通過驗證才可執行後續動作
+                    // 顯示外勤作業紀錄區塊
+                    const fieldWorkBlock = document.getElementById('fieldWorkBlock');
+                    if (fieldWorkBlock) fieldWorkBlock.style.display = '';
+                    // 顯示電子簽章區塊
+                    const signatureBlock = document.getElementById('signatureBlock');
+                    if (signatureBlock) signatureBlock.style.display = '';
+                    // 將指派案件按鈕變成回報完成
+                    const assignBtn = document.getElementById('assignCaseBtn');
+                    if (assignBtn) {
+                        assignBtn.innerHTML = '<i class="fas fa-check-circle w-3.5 h-3.5 mr-1"></i>回報完成';
+                        assignBtn.type = 'submit';
+                    }
+                });
+            }
+            // 回報完成驗證外勤作業紀錄
+            const assignBtn = document.getElementById('assignCaseBtn');
+            if (assignBtn) {
+                assignBtn.addEventListener('click', function (e) {
+                    if (assignBtn.type === 'submit' && assignBtn.innerText.includes('回報完成')) {
+                        // 驗證外勤作業紀錄必填欄位
+                        const arriveTime = document.getElementById('arriveTimeField')?.value.trim();
+                        const species = document.getElementById('speciesSelect')?.value;
+                        const quantity = document.querySelector('#fieldWorkBlock input[type="text"]')?.value.trim();
+                        const speciesStatus = document.getElementById('speciesStatusSelect')?.value;
+                        const owner = Array.from(document.getElementsByName('hasOwner')).find(r => r.checked)?.nextElementSibling?.textContent;
+                        const process = document.getElementById('processSelect')?.value;
+                        // 三張照片
+                        const photo1 = document.getElementById('workPhotoInput1')?.files.length;
+                        const photo2 = document.getElementById('workPhotoInput2')?.files.length;
+                        const photo3 = document.getElementById('workPhotoInput3')?.files.length;
+                        let msg = '';
+                        if (!arriveTime) msg += '請填寫值勤人員抵達時間\n';
+                        if (!species || species === '不拘') msg += '請選擇物種\n';
+                        if (!quantity) msg += '請填寫數量\n';
+                        if (!speciesStatus) msg += '請選擇物種狀況\n';
+                        if (!owner) msg += '請選擇是否有飼主\n';
+                        if (!process) msg += '請選擇處理情形\n';
+                        if (!photo1) msg += '請上傳處理前紀錄照片\n';
+                        // 處理中紀錄非必填
+                        if (!photo3) msg += '請上傳處理完成紀錄照片\n';
+                        if (msg) {
+                            alert(msg);
+                            e.preventDefault();
+                            return;
+                        }
+                        // 驗證通過，跳出完成案件視窗
+                        e.preventDefault();
+                        showCompleteCaseModal();
+                    }
+                }, true);
+            }
+            // 完成案件視窗
+            function showCompleteCaseModal() {
+                let modal = document.getElementById('completeCaseModal');
+                if (!modal) {
+                    modal = document.createElement('div');
+                    modal.id = 'completeCaseModal';
+                    modal.style.position = 'fixed';
+                    modal.style.top = '0';
+                    modal.style.left = '0';
+                    modal.style.width = '100vw';
+                    modal.style.height = '100vh';
+                    modal.style.background = 'rgba(0,0,0,0.5)';
+                    modal.style.display = 'flex';
+                    modal.style.justifyContent = 'center';
+                    modal.style.alignItems = 'center';
+                    modal.style.zIndex = '9999';
+                    modal.innerHTML = `
+                        <div style='background:#fff;padding:32px 40px;border-radius:12px;box-shadow:0 2px 16px #0008;text-align:center;min-width:320px;'>
+                            <h2 style='font-size:1.5rem;font-weight:bold;margin-bottom:16px;'>案件已完成</h2>
+                            <p style='margin-bottom:24px;'>所有外勤作業紀錄已填寫，案件完成！</p>
+                            <button id='closeCompleteCaseModalBtn' style='background:#198754;color:#fff;padding:8px 24px;border:none;border-radius:6px;font-size:1rem;font-weight:bold;cursor:pointer;'>確定</button>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    document.getElementById('closeCompleteCaseModalBtn').onclick = function () {
+                        window.location.href = 'DutyCaseManagement_List.html';
+                    };
+                } else {
+                    modal.style.display = 'flex';
+                }
+            }
+            // 屏東市/鄉鎮下拉選單控制
+            const citySelect = document.querySelector('select.border-r');
+            const townSelect = document.querySelector('select.rounded-r');
+            if (citySelect && townSelect) {
+                function updateTownVisibility() {
+                    if (citySelect.value === '屏東市') {
+                        townSelect.style.display = 'none';
+                    } else {
+                        townSelect.style.display = '';
+                    }
+                }
+                citySelect.addEventListener('change', updateTownVisibility);
+                updateTownVisibility();
+            }
+
+            // 案件類型與物種聯動
+            const caseTypeSelect = document.getElementById('caseTypeSelect');
+            const speciesSelect = document.getElementById('speciesSelect');
+            // 關聯設定
+            const speciesOptionsMap = {
+                '補蜂': ['蜜蜂', '虎頭蜂', '游離蜂', '泥壺蜂'],
+                '捉蛇': ['蛇類'],
+                '動物救援': ['犬', '貓', '經濟動物', '野生動物'],
+                '綠鬣蜥': ['綠鬣蜥']
+            };
+            function updateSpeciesOptionsByCaseType() {
+                if (!caseTypeSelect || !speciesSelect) return;
+                const type = caseTypeSelect.value;
+                const options = speciesOptionsMap[type] || [];
+                speciesSelect.innerHTML = options.map(o => `<option>${o}</option>`).join('');
+                speciesSelect.value = options[0] || '';
+                updateProcessOptions && updateProcessOptions();
+                updateWorkPhotoTips && updateWorkPhotoTips();
+            }
+            if (caseTypeSelect) {
+                caseTypeSelect.addEventListener('change', updateSpeciesOptionsByCaseType);
+                updateSpeciesOptionsByCaseType();
+            }
+            if (speciesSelect) {
+                speciesSelect.addEventListener('change', function () {
+                    updateProcessOptions && updateProcessOptions();
+                    updateWorkPhotoTips && updateWorkPhotoTips();
+                });
+            }
+
+            // 處理情形動態調整
+            function updateProcessOptions() {
+                const speciesSelect = document.getElementById('speciesSelect');
+                const statusSelect_main = document.getElementById('speciesStatusSelect');
+                const ownerRadios = document.getElementsByName('hasOwner');
+                const processSelect = document.getElementById('processSelect');
+                const processLabel_main = document.getElementById('processLabel');
+                const processStar_main = processLabel_main ? processLabel_main.querySelector('.text-danger') : null;
+                const workPhotoBlock3 = document.getElementById('workPhotoBlock3');
+                const workPhotoBlock2Star = document.querySelector('#workPhotoBlock2 .work-photo-title .text-danger');
+                if (workPhotoBlock2Star) workPhotoBlock2Star.style.display = 'none';
+                if (!speciesSelect || !statusSelect_main || !processSelect) return;
+                const species = speciesSelect.value;
+                const status = statusSelect_main.value;
+                let owner = '否';
+                if (ownerRadios && ownerRadios.length) {
+                    owner = Array.from(ownerRadios).find(r => r.checked)?.nextElementSibling?.textContent || '否';
+                }
+                let options = [];
+                let required = true;
+                if (species === '野生動物' && status === '受傷') {
+                    options = ['已逃跑', '後送'];
+                } else if ((species === '犬' || species === '貓' || species === '經濟動物') && status === '受傷' && owner === '否') {
+                    options = ['後送'];
+                } else if ((species === '犬' || species === '貓' || species === '經濟動物') && status === '受傷' && owner === '是') {
+                    options = ['後送'];
+                    required = false;
+                } else {
+                    options = ['已逃跑', '現場放走', '野放', '後送'];
+                }
+                processSelect.innerHTML = options.map((o, i) => `<option${i === 0 ? ' selected' : ''}>${o}</option>`).join('');
+                if (processStar_main) processStar_main.style.display = required ? '' : 'none';
+                // 三個區塊都要顯示
+                if (workPhotoBlock3) workPhotoBlock3.style.display = '';
+
+                // 顯示/隱藏後送文字欄位
+                const transferInput = document.getElementById('transferHospitalInput');
+                if (transferInput && processSelect.value === '後送') {
+                    transferInput.style.display = '';
+                } else if (transferInput) {
+                    transferInput.style.display = 'none';
+                }
+            }
+            // 綁定事件時直接取得元素，避免重複宣告
+            if (document.getElementById('speciesSelect')) document.getElementById('speciesSelect').addEventListener('change', updateProcessOptions);
+            if (document.getElementById('speciesStatusSelect')) document.getElementById('speciesStatusSelect').addEventListener('change', updateProcessOptions);
+            const ownerRadiosInit = document.getElementsByName('hasOwner');
+            if (ownerRadiosInit && ownerRadiosInit.length) {
+                Array.from(ownerRadiosInit).forEach(r => r.addEventListener('change', updateProcessOptions));
+            }
+            if (document.getElementById('processSelect')) document.getElementById('processSelect').addEventListener('change', function () {
+                const workPhotoBlock3 = document.getElementById('workPhotoBlock3');
+                if (workPhotoBlock3) workPhotoBlock3.style.display = '';
+                // 顯示/隱藏後送文字欄位
+                const transferInput = document.getElementById('transferHospitalInput');
+                if (transferInput && this.value === '後送') {
+                    transferInput.style.display = '';
+                } else if (transferInput) {
+                    transferInput.style.display = 'none';
+                }
+            });
+            updateProcessOptions();
+
+            // 物種狀況管理
+            const statusSelect_cascade = document.getElementById('speciesStatusSelect');
+            const subBlock = document.getElementById('speciesStatusSubBlock');
+            const subSelect = document.getElementById('speciesStatusSubSelect');
+            const otherInput = document.getElementById('speciesStatusOtherInput');
+            const star = document.getElementById('speciesStatusStar');
+            const ownerLabel = document.getElementById('ownerLabel');
+            const ownerStar = ownerLabel ? ownerLabel.querySelector('.text-danger') : null;
+            const processLabel_cascade = document.getElementById('processLabel');
+            const processStar_cascade = processLabel_cascade ? processLabel_cascade.querySelector('.text-danger') : null;
+            const photoStars = document.querySelectorAll('.work-photo-title .text-danger');
+            function updateRequiredFields(status) {
+                if (status === '到場前已自行逃脫') {
+                    if (ownerStar) ownerStar.style.display = 'none';
+                    if (processStar_cascade) processStar_cascade.style.display = 'none';
+                    if (star) star.style.display = 'none';
+                    photoStars.forEach(function (s) { s.style.display = 'none'; });
+                } else {
+                    if (ownerStar) ownerStar.style.display = '';
+                    if (processStar_cascade) processStar_cascade.style.display = '';
+                    if (star) star.style.display = '';
+                    photoStars.forEach(function (s) { s.style.display = ''; });
+                }
+            }
+            if (statusSelect_cascade) {
+                statusSelect_cascade.addEventListener('change', function () {
+                    if (this.value === '受困') {
+                        subBlock.style.display = '';
+                    } else {
+                        subBlock.style.display = 'none';
+                        otherInput.style.display = 'none';
+                        if (subSelect) subSelect.value = '';
+                    }
+                    updateRequiredFields(this.value);
+                    updateProcessOptions();
+                });
+            }
+            if (subSelect) {
+                subSelect.addEventListener('change', function () {
+                    if (this.value === '其他') {
+                        otherInput.style.display = '';
+                    } else {
+                        otherInput.style.display = 'none';
+                    }
+                });
+            }
+
+            // 照片上傳和預覽功能
+            function setupPhotoUpload(blockId, inputId, previewId) {
+                let modal = document.getElementById('photoModal');
+                if (!modal) {
+                    modal = document.createElement('div');
+                    modal.id = 'photoModal';
+                    modal.style.position = 'fixed';
+                    modal.style.top = '0';
+                    modal.style.left = '0';
+                    modal.style.width = '100vw';
+                    modal.style.height = '100vh';
+                    modal.style.background = 'rgba(0,0,0,0.7)';
+                    modal.style.display = 'none';
+                    modal.style.justifyContent = 'center';
+                    modal.style.alignItems = 'center';
+                    modal.style.zIndex = '9999';
+                    modal.innerHTML = `
+                        <div id='photoModalTitle' style='position:absolute;top:32px;left:32px;color:#fff;font-size:1.25rem;font-weight:bold;text-shadow:0 2px 8px #000a;'></div>
+                        <button id='photoModalCloseBtn' style='position:absolute;top:32px;right:32px;background:#fff;border:none;border-radius:50%;width:40px;height:40px;box-shadow:0 2px 8px #0004;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.5rem;'>×</button>
+                        <button id='photoModalPrevBtn' style='position:absolute;left:16px;top:50%;transform:translateY(-50%);background:#fff;border:none;border-radius:50%;width:40px;height:40px;box-shadow:0 2px 8px #0004;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:2rem;'>&lt;</button>
+                        <button id='photoModalNextBtn' style='position:absolute;right:16px;top:50%;transform:translateY(-50%);background:#fff;border:none;border-radius:50%;width:40px;height:40px;box-shadow:0 2px 8px #0004;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:2rem;'>&gt;</button>
+                        <img id="photoModalImg" style="max-width:90vw;max-height:90vh;border-radius:12px;box-shadow:0 2px 16px #0008;" />
+                    `;
+                    document.body.appendChild(modal);
+                    modal.addEventListener('click', function (e) {
+                        if (e.target === modal) {
+                            modal.style.display = 'none';
+                        }
+                    });
+                    document.getElementById('photoModalCloseBtn').onclick = function (e) {
+                        modal.style.display = 'none';
+                        e.stopPropagation();
+                    };
+                }
+                const uploadBtn = document.getElementById(inputId);
+                const previewBox = document.getElementById(previewId);
+                if (!uploadBtn || !previewBox) return;
+                if (!window.workPhotoData) {
+                    window.workPhotoData = [null, null, null];
+                    window.workPhotoTitles = ["處理前紀錄", "處理中紀錄", "處理完成紀錄"];
+                }
+                const blockIdx = blockId === 'workPhotoBlock1' ? 0 : blockId === 'workPhotoBlock2' ? 1 : 2;
+                uploadBtn.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const isImage = file.type.startsWith('image/');
+                        const isVideo = file.type.startsWith('video/');
+                        if (!isImage && !isVideo) {
+                            previewBox.innerHTML = `<div style='color:#DC3545;font-weight:bold;text-align:center;'>無法上傳</div>`;
+                            window.workPhotoData[blockIdx] = null;
+                            return;
+                        }
+                        const reader = new FileReader();
+                        reader.onload = function (evt) {
+                            let title = '';
+                            const block = document.getElementById(blockId);
+                            if (block) {
+                                const titleEl = block.querySelector('.work-photo-title span');
+                                if (titleEl) title = titleEl.textContent.trim();
+                            }
+                            window.workPhotoData[blockIdx] = evt.target.result;
+                            window.workPhotoTitles[blockIdx] = title;
+                            if (isImage) {
+                                previewBox.innerHTML = `<img src='${evt.target.result}' alt='preview' style='width:100%;height:100%;object-fit:cover;border-radius:8px;cursor:pointer;' />`;
+                                const img = previewBox.querySelector('img');
+                                if (img) {
+                                    img.onclick = function () {
+                                        showPhotoModal(blockIdx);
+                                    };
+                                }
+                            } else if (isVideo) {
+                                previewBox.innerHTML = `<video src='${evt.target.result}' controls style='width:100%;height:100%;border-radius:8px;object-fit:cover;'></video>`;
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        previewBox.innerHTML = '';
+                        window.workPhotoData[blockIdx] = null;
+                    }
+                });
+                previewBox.onclick = function () {
+                    if (window.workPhotoData[blockIdx]) {
+                        showPhotoModal(blockIdx);
+                    }
+                };
+                if (!window.photoModalSliderInit) {
+                    window.photoModalSliderInit = true;
+                    window.currentPhotoIdx = 0;
+                    window.showPhotoModal = function (idx) {
+                        window.currentPhotoIdx = idx;
+                        updatePhotoModal();
+                        document.getElementById("photoModal").style.display = "flex";
+                    };
+                    function updatePhotoModal() {
+                        const img = document.getElementById("photoModalImg");
+                        const title = document.getElementById("photoModalTitle");
+                        if (!img || !title) return;
+                        const dataArr = window.workPhotoData;
+                        const titlesArr = window.workPhotoTitles;
+                        let idx = window.currentPhotoIdx;
+                        if (!dataArr[idx]) {
+                            idx = dataArr.findIndex(d => d);
+                            if (idx === -1) {
+                                img.src = '';
+                                title.textContent = '';
+                                return;
+                            }
+                            window.currentPhotoIdx = idx;
+                        }
+                        img.src = dataArr[idx];
+                        title.textContent = titlesArr[idx];
+                    }
+                    document.getElementById('photoModalPrevBtn').onclick = function (e) {
+                        e.stopPropagation();
+                        let idx = window.currentPhotoIdx;
+                        for (let i = 1; i <= 3; i++) {
+                            let nextIdx = (idx - i + 3) % 3;
+                            if (window.workPhotoData[nextIdx]) {
+                                window.currentPhotoIdx = nextIdx;
+                                updatePhotoModal();
+                                break;
+                            }
+                        }
+                    };
+                    document.getElementById('photoModalNextBtn').onclick = function (e) {
+                        e.stopPropagation();
+                        let idx = window.currentPhotoIdx;
+                        for (let i = 1; i <= 3; i++) {
+                            let nextIdx = (idx + i) % 3;
+                            if (window.workPhotoData[nextIdx]) {
+                                window.currentPhotoIdx = nextIdx;
+                                updatePhotoModal();
+                                break;
+                            }
+                        }
+                    };
+                }
+            }
+            setupPhotoUpload('workPhotoBlock1', 'workPhotoInput1', 'workPhotoPreview1');
+            setupPhotoUpload('workPhotoBlock2', 'workPhotoInput2', 'workPhotoPreview2');
+            setupPhotoUpload('workPhotoBlock3', 'workPhotoInput3', 'workPhotoPreview3');
+
+            // 動態檔案上傳限制
+            function updateWorkPhotoTips() {
+                const tip1 = document.getElementById('workPhotoTip1');
+                const tip2 = document.getElementById('workPhotoTip2');
+                const tip3 = document.getElementById('workPhotoTip3');
+                const input1 = document.getElementById('workPhotoInput1');
+                const input2 = document.getElementById('workPhotoInput2');
+                const input3 = document.getElementById('workPhotoInput3');
+                // 判斷案件類型與物種
+                const type = caseTypeSelect?.value;
+                const species = speciesSelect?.value;
+                if (type === '補蜂' && (species === '游離蜂' || species === '泥壺蜂')) {
+                    if (tip1) tip1.textContent = '只能上傳影片';
+                    if (tip2) tip2.textContent = '只能上傳影片';
+                    if (tip3) tip3.textContent = '只能上傳影片';
+                    if (input1) input1.setAttribute('accept', 'video/*');
+                    if (input2) input2.setAttribute('accept', 'video/*');
+                    if (input3) input3.setAttribute('accept', 'video/*');
+                } else {
+                    if (tip1) tip1.textContent = '可上傳的檔案格式：jpg、jpeg、png，一張照片最大 2MB。';
+                    if (tip2) tip2.textContent = '可上傳的檔案格式：jpg、jpeg、png，一張照片最大 2MB。';
+                    if (tip3) tip3.textContent = '可上傳的檔案格式：jpg、jpeg、png，一張照片最大 2MB。';
+                    if (input1) input1.setAttribute('accept', 'image/*');
+                    if (input2) input2.setAttribute('accept', 'image/*');
+                    if (input3) input3.setAttribute('accept', 'image/*');
+                }
+            }
+            if (caseTypeSelect) caseTypeSelect.addEventListener('change', updateWorkPhotoTips);
+            if (speciesSelect) speciesSelect.addEventListener('change', updateWorkPhotoTips);
+            updateWorkPhotoTips();
+
+            // 定位功能
+            const locationBtn = document.getElementById('getLocationBtn');
+            const locationField = document.getElementById('locationField');
+            if (locationBtn && locationField) {
+                locationBtn.addEventListener('click', function () {
+                    console.log('定位按鈕已點擊');
+                    const arriveTimeField = document.getElementById('arriveTimeField');
+                    const now = new Date();
+                    const yyyy = now.getFullYear();
+                    const mm = String(now.getMonth() + 1).padStart(2, '0');
+                    const dd = String(now.getDate()).padStart(2, '0');
+                    const hh = String(now.getHours()).padStart(2, '0');
+                    const min = String(now.getMinutes()).padStart(2, '0');
+                    const ss = String(now.getSeconds()).padStart(2, '0');
+                    const dateTimeStr = `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}`;
+                    if (arriveTimeField) arriveTimeField.value = dateTimeStr;
+                    locationField.focus();
+                    if (!navigator.geolocation) {
+                        locationField.value = '瀏覽器不支援定位';
+                        return;
+                    }
+                    locationField.value = '定位中...';
+                    navigator.geolocation.getCurrentPosition(
+                        function (pos) {
+                            locationField.value = pos.coords.latitude + ',' + pos.coords.longitude;
+                            console.log('定位成功', pos.coords);
+                        },
+                        function (err) {
+                            let msg = '無法取得定位';
+                            if (err && err.message) msg += `: ${err.message}`;
+                            locationField.value = msg;
+                            console.log('定位失敗', err);
+                        },
+                        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                    );
+                });
+            }
+
+            // 收合/展開功能
+            const toggleBtn = document.getElementById('toggleBasicInfoBtn');
+            const basicBlock = document.getElementById('basicInfoBlock');
+            const toggleText = document.getElementById('toggleBasicInfoText');
+            const toggleIcon = document.getElementById('toggleBasicInfoIcon');
+            let isBasicInfoOpen = true;
+            if (toggleBtn && basicBlock) {
+                toggleBtn.addEventListener('click', function () {
+                    isBasicInfoOpen = !isBasicInfoOpen;
+                    if (isBasicInfoOpen) {
+                        basicBlock.style.display = '';
+                        toggleText.textContent = '收合';
+                        toggleIcon.classList.remove('fa-chevron-down');
+                        toggleIcon.classList.add('fa-chevron-up');
+                    } else {
+                        basicBlock.style.display = 'none';
+                        toggleText.textContent = '展開';
+                        toggleIcon.classList.remove('fa-chevron-up');
+                        toggleIcon.classList.add('fa-chevron-down');
+                    }
+                });
+            }
+            const toggleDutyBtn = document.getElementById('toggleDutyRecordBtn');
+            const dutyBlock = document.getElementById('dutyRecordBlock');
+            const toggleDutyText = document.getElementById('toggleDutyRecordText');
+            const toggleDutyIcon = document.getElementById('toggleDutyRecordIcon');
+            let isDutyRecordOpen = true;
+            if (toggleDutyBtn && dutyBlock) {
+                toggleDutyBtn.addEventListener('click', function () {
+                    isDutyRecordOpen = !isDutyRecordOpen;
+                    if (isDutyRecordOpen) {
+                        dutyBlock.style.display = '';
+                        toggleDutyText.textContent = '收合';
+                        toggleDutyIcon.classList.remove('fa-chevron-down');
+                        toggleDutyIcon.classList.add('fa-chevron-up');
+                    } else {
+                        dutyBlock.style.display = 'none';
+                        toggleDutyText.textContent = '展開';
+                        toggleDutyIcon.classList.remove('fa-chevron-up');
+                        toggleDutyIcon.classList.add('fa-chevron-down');
+                    }
+                });
+            }
+
+            // 手機選單收合
+            const btn = document.getElementById('mobileMenuBtn');
+            const menu = document.getElementById('mobileMenu');
+            if (btn && menu) {
+                btn.addEventListener('click', () => {
+                    menu.classList.toggle('hidden');
+                });
+            }
+
+            // 電子簽章功能
+            const openBtn = document.getElementById('openSignatureModalBtn');
+            const signatureModal = document.getElementById('signatureModal');
+            const closeBtn = document.getElementById('closeSignatureModalBtn');
+            const previewDiv = document.getElementById('signaturePreview');
+            let signatureDataURL = '';
+            if (openBtn && signatureModal) {
+                openBtn.onclick = function () {
+                    signatureModal.classList.remove('hidden');
+                };
+            }
+            if (closeBtn && signatureModal) {
+                closeBtn.onclick = function () {
+                    signatureModal.classList.add('hidden');
+                };
+            }
+            const canvas = document.getElementById('signatureCanvas');
+            const ctx = canvas ? canvas.getContext('2d') : null;
+            let drawing = false;
+            let lastX = 0, lastY = 0;
+            if (canvas && ctx) {
+                canvas.addEventListener('mousedown', function (e) {
+                    drawing = true;
+                    const rect = canvas.getBoundingClientRect();
+                    lastX = e.clientX - rect.left;
+                    lastY = e.clientY - rect.top;
+                });
+                canvas.addEventListener('mousemove', function (e) {
+                    if (!drawing) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    ctx.beginPath();
+                    ctx.moveTo(lastX, lastY);
+                    ctx.lineTo(x, y);
+                    ctx.strokeStyle = '#222';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    lastX = x;
+                    lastY = y;
+                });
+                canvas.addEventListener('mouseup', function () { drawing = false; });
+                canvas.addEventListener('mouseleave', function () { drawing = false; });
+                canvas.addEventListener('touchstart', function (e) {
+                    drawing = true;
+                    const rect = canvas.getBoundingClientRect();
+                    const touch = e.touches[0];
+                    lastX = touch.clientX - rect.left;
+                    lastY = touch.clientY - rect.top;
+                });
+                canvas.addEventListener('touchmove', function (e) {
+                    if (!drawing) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const touch = e.touches[0];
+                    const x = touch.clientX - rect.left;
+                    const y = touch.clientY - rect.top;
+                    ctx.beginPath();
+                    ctx.moveTo(lastX, lastY);
+                    ctx.lineTo(x, y);
+                    ctx.strokeStyle = '#222';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    lastX = x;
+                    lastY = y;
+                    e.preventDefault();
+                }, { passive: false });
+                canvas.addEventListener('touchend', function () { drawing = false; });
+                canvas.addEventListener('touchcancel', function () { drawing = false; });
+                document.getElementById('clearSignatureBtn').onclick = function () {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                };
+                document.getElementById('saveSignatureBtn').onclick = function () {
+                    signatureDataURL = canvas.toDataURL('image/png');
+                    previewDiv.innerHTML = `<img src='${signatureDataURL}' alt='簽名預覽' style='max-width:160px;max-height:60px;border:1px solid #ADB5BD;border-radius:8px;background:#fff;' />`;
+                    signatureModal.classList.add('hidden');
+                };
+            }
+        });
+    </script>
+</body>
+
+</html>

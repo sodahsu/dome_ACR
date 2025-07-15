@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勤務案件管理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 5 Free 官方 CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6C936D',
+                        'secondary': '#3F5146',
+                        'accent': '#417991',
+                        'danger': '#DC3545',
+                        'warning': '#EAD065',
+                        'gray-light': '#F8F9FA',
+                        'gray-medium': '#6C757D',
+                        'gray-dark': '#495057',
+                        'border': '#ADB5BD',
+                        'green-light': '#C5E0C7',
+                        'bg-light': '#F3F3F3'
+                    },
+                    fontFamily: {
+                        'noto': ['Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-light font-noto">
+    <!-- 引入 header.html -->
+    <!-- 共用導覽列元件 header.html -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="bg-secondary shadow-md">
+            <div class="px-4 py-1 flex justify-end items-center gap-2">
+                <div class="flex items-center gap-1 text-white text-sm">
+                    <span class="hidden sm:inline">您好，</span>
+                    <i class="fas fa-user w-4 h-4"></i>
+                    <span class="hidden sm:inline">王小明(linkchain0000)</span>
+                    <span class="mx-1 hidden sm:inline">｜</span>
+                    <i class="fas fa-home w-4 h-4"></i>
+                    <span class="hidden sm:inline">前台</span>
+                    <span class="mx-1 hidden sm:inline">｜</span>
+                    <i class="fas fa-sign-out-alt w-4 h-4"></i>
+                    <span class="hidden sm:inline">登出</span>
+                </div>
+            </div>
+        </div>
+        <div class="px-4 py-2">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo.png" alt="logo" class="w-8 h-8 md:w-10 md:h-10 rounded-full">
+                    <a href="HomeDashboard.html" class="flex flex-col">
+                        <p class="text-xs md:text-sm font-medium text-gray-dark">屏東縣政府</p>
+                        <h1 class="text-sm md:text-xl font-bold text-secondary">捕蜂捉蛇及動物救援業務管理系統</h1>
+                    </a>
+                </div>
+                <!-- 漢堡選單按鈕（僅手機顯示） -->
+                <button id="mobile-menu-btn"
+                    class="lg:hidden flex items-center px-2 py-1 border rounded text-secondary focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <!-- 桌面選單 -->
+                <div class="hidden lg:flex items-center gap-8">
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="DutyCaseManagement_List.html" id="menu-duty" class="hover:underline">
+                                <span>勤務案件管理</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="ReviewCaseManagement_List.html" id="menu-review" class="hover:underline">
+                                <span>審核案件管理</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="DataStatistics.html" id="menu-stat" class="hover:underline">
+                                <span>數據統計</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="#" id="menu-setting" class="hover:underline">
+                                <span>系統設定管理(X)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 手機版選單 -->
+            <div id="mobile-menu"
+                class="lg:hidden mt-2 flex flex-col gap-2 bg-white shadow rounded px-4 py-2 absolute w-full left-0 top-full z-50 hidden">
+                <a href="DutyCaseManagement_List.html" class="py-2 border-b hover:text-primary">勤務案件管理</a>
+                <a href="ReviewCaseManagement_List.html" class="py-2 border-b hover:text-primary">審核案件管理</a>
+                <a href="DataStatistics.html" class="py-2 border-b hover:text-primary">數據統計</a>
+                <a href="#" class="py-2 hover:text-primary">系統設定管理(X)</a>
+            </div>
+        </div>
+    </nav>
+    <!-- 結束導覽元件 -->
+
+    <nav class="p-2 md:p-4 max-w-[1440px] mx-auto">
+        <!-- 頁面標題 -->
+        <div class="bg-white shadow-lg rounded-lg border-l-4 border-primary p-2 mb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center px-2 md:px-4 py-2 gap-2">
+                <h2 class="text-xl md:text-2xl font-bold text-secondary">勤務案件管理</h2>
+                <div class="flex items-center gap-1 text-gray-medium text-sm">
+                    <span>首頁</span>
+                    <span>/</span>
+                    <span>案件管理</span>
+                    <span>/</span>
+                    <span class="text-primary font-bold">勤務案件管理</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 搜尋表單 -->
+        <div class="bg-white shadow-lg rounded-lg p-2 md:p-4 mb-4">
+            <form>
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-4">
+                    <!-- 依欄位查詢 -->
+                    <div class="flex flex-col gap-2 col-span-2 lg:col-span-1">
+                        <label class="text-secondary font-medium text-sm">依欄位查詢</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>不拘</option>
+                            <option>立案編號</option>
+                            <option>通報人</option>
+                            <option>作業人員</option>
+                            <option>作業廠商</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2 col-span-2 lg:col-span-1">
+                        <label class="text-secondary font-medium text-sm">關鍵字</label>
+                        <input type="text" placeholder="請輸入查詢關鍵字"
+                            class="border border-border rounded px-3 py-2 text-gray-medium text-sm">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">通報來源</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>不拘</option>
+                            <option>119</option>
+                            <option>1999</option>
+                            <option>1959</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">鄉鎮</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>不拘</option>
+                            <!-- 屏東縣鄉鎮市選項 -->
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">案件類型</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>不拘</option>
+                            <option>補蜂</option>
+                            <option>捉蛇</option>
+                            <option>動物救援</option>
+                            <option>捉綠鬣蜥</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">進度</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>不拘</option>
+                            <option>審核中</option>
+                            <option>審核完成</option>
+                            <option>審核退回</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">是否已點交</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>不拘</option>
+                            <option>是</option>
+                            <option>否</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2 col-span-2 lg:col-span-1">
+                        <label class="text-secondary font-medium text-sm">案件完成日期</label>
+                        <div class="flex items-center gap-2">
+                            <input type="date"
+                                class="border border-border rounded px-3 py-2 text-gray-medium flex-1 text-sm">
+                            <span class="text-black">～</span>
+                            <input type="date"
+                                class="border border-border rounded px-3 py-2 text-gray-medium flex-1 text-sm">
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2 col-span-2 lg:col-span-1">
+                        <label class="text-secondary font-medium text-sm">物種</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>不拘</option>
+                            <!-- 兩層關聯式選單，預設皆為不拘 -->
+                        </select>
+                    </div>
+                </div>
+                <div class="border-t border-gray-300 pt-4">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button type="submit"
+                            class="bg-[#6C8C6B] text-white px-3 py-2 rounded flex items-center gap-1 justify-center text-sm hover:bg-[#5a7359] transition">
+                            <i class="fas fa-search fa-fw text-base"></i>
+                            查詢
+                        </button>
+                        <button type="button"
+                            class="bg-gray-medium text-white px-3 py-2 rounded flex items-center gap-1 justify-center text-sm">
+                            <i class="far fa-list-alt fa-fw text-base"></i>
+                            列出全部
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- 功能按鈕與表格 -->
+        <div class="bg-white shadow-lg rounded-lg p-2 md:p-4 mb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-3">
+                <div class="flex flex-wrap gap-2 md:gap-4">
+                    <button class="bg-primary text-white px-2 py-1 rounded text-sm flex items-center gap-1">
+                        <i class="fas fa-plus fa-fw text-base"></i>
+                        新增
+                    </button>
+                    <button
+                        class="bg-white border border-primary text-primary px-2 py-1 rounded text-sm flex items-center gap-1">
+                        <i class="fas fa-paper-plane fa-fw text-base"></i>
+                        送審
+                    </button>
+                    <button class="bg-danger text-white px-2 py-1 rounded text-sm flex items-center gap-1">
+                        <i class="fas fa-trash-alt fa-fw text-base"></i>
+                        刪除
+                    </button>
+                </div>
+                <div class="flex flex-wrap gap-2 md:gap-4">
+                    <button class="bg-accent text-white px-2 py-1 rounded text-sm flex items-center gap-1">
+                        <i class="fas fa-file-export fa-fw text-base"></i>
+                        匯出
+                    </button>
+                </div>
+            </div>
+
+            <!-- 資料表格 -->
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-xs md:text-sm min-w-[1000px]">
+                    <thead>
+                        <tr class="bg-green-light">
+                            <th class="border-b border-gray-200 p-2 align-middle text-center w-12">
+                                <input type="checkbox" class="w-4 h-4 mx-auto">
+                            </th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">通報來源</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">立案編號</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">鄉鎮</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">案件類型</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">物種</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">作業人員</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">進度</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">是否已點交</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">異常</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">通報時間</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">編輯</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">T1130701001</td>
+                            <td class="border-b border-gray-200 p-2">屏東市</td>
+                            <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">長腳蜂</td>
+                            <td class="border-b border-gray-200 p-2">王大明</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-check text-primary text-xl"></i>審核完成</span></td>
+                            <td class="border-b border-gray-200 p-2">是</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
+                                    title="異常說明"></i></td>
+                            <td class="border-b border-gray-200 p-2">2025/07/10 09:12:01</td>
+                            <td class="border-b border-gray-200 p-2 text-center">
+                                <a href="DutyCaseManagement_Edit.html" class="p-1 inline-block">
+                                    <i class="fas fa-edit fa-fw text-base"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="bg-gray-light hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">1999</td>
+                            <td class="border-b border-gray-200 p-2">T1130701002</td>
+                            <td class="border-b border-gray-200 p-2">潮州鎮</td>
+                            <td class="border-b border-gray-200 p-2">捉蛇</td>
+                            <td class="border-b border-gray-200 p-2">赤尾青竹絲</td>
+                            <td class="border-b border-gray-200 p-2">林美玉</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-history text-primary text-xl"></i>審核中</span></td>
+                            <td class="border-b border-gray-200 p-2">否</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-check-circle fa-fw text-primary text-base cursor-pointer"
+                                    title="正常"></i></td>
+                            <td class="border-b border-gray-200 p-2">2025/07/09 14:22:11</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
+                        </tr>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">T1130701003</td>
+                            <td class="border-b border-gray-200 p-2">萬丹鄉</td>
+                            <td class="border-b border-gray-200 p-2">動物救援</td>
+                            <td class="border-b border-gray-200 p-2">白鼻心</td>
+                            <td class="border-b border-gray-200 p-2">陳志強</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-edit text-primary text-xl"></i>審核退回</span></td>
+                            <td class="border-b border-gray-200 p-2">否</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-times-circle fa-fw text-danger text-base cursor-pointer"
+                                    title="異常"></i></td>
+                            <td class="border-b border-gray-200 p-2">2025/07/08 18:45:33</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
+                        </tr>
+                        <tr class="bg-gray-light hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">T1130701004</td>
+                            <td class="border-b border-gray-200 p-2">東港鎮</td>
+                            <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">虎頭蜂</td>
+                            <td class="border-b border-gray-200 p-2">王大明</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-check text-primary text-xl"></i>審核完成</span></td>
+                            <td class="border-b border-gray-200 p-2">是</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
+                                    title="異常說明"></i></td>
+                            <td class="border-b border-gray-200 p-2">2025/07/07 11:10:09</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
+                        </tr>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">1999</td>
+                            <td class="border-b border-gray-200 p-2">T1130701005</td>
+                            <td class="border-b border-gray-200 p-2">恆春鎮</td>
+                            <td class="border-b border-gray-200 p-2">捉蛇</td>
+                            <td class="border-b border-gray-200 p-2">赤尾青竹絲</td>
+                            <td class="border-b border-gray-200 p-2">林美玉</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-history text-primary text-xl"></i>審核中</span></td>
+                            <td class="border-b border-gray-200 p-2">否</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-check-circle fa-fw text-primary text-base cursor-pointer"
+                                    title="正常"></i></td>
+                            <td class="border-b border-gray-200 p-2">2025/07/06 16:32:45</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
+                        </tr>
+                        <tr class="bg-gray-light hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">T1130701006</td>
+                            <td class="border-b border-gray-200 p-2">麟洛鄉</td>
+                            <td class="border-b border-gray-200 p-2">動物救援</td>
+                            <td class="border-b border-gray-200 p-2">白鼻心</td>
+                            <td class="border-b border-gray-200 p-2">陳志強</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-edit text-primary text-xl"></i>審核退回</span></td>
+                            <td class="border-b border-gray-200 p-2">否</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-times-circle fa-fw text-danger text-base cursor-pointer"
+                                    title="異常"></i></td>
+                            <td class="border-b border-gray-200 p-2">2025/07/05 19:55:21</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
+                        </tr>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">T1130701007</td>
+                            <td class="border-b border-gray-200 p-2">新園鄉</td>
+                            <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">長腳蜂</td>
+                            <td class="border-b border-gray-200 p-2">王大明</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-check text-primary text-xl"></i>審核完成</span></td>
+                            <td class="border-b border-gray-200 p-2">是</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
+                                    title="異常說明"></i></td>
+                            <td class="border-b border-gray-200 p-2">2025/07/04 08:12:01</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
+                        </tr>
+                        <tr class="bg-gray-light hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">1999</td>
+                            <td class="border-b border-gray-200 p-2">T1130701008</td>
+                            <td class="border-b border-gray-200 p-2">枋寮鄉</td>
+                            <td class="border-b border-gray-200 p-2">捉蛇</td>
+                            <td class="border-b border-gray-200 p-2">赤尾青竹絲</td>
+                            <td class="border-b border-gray-200 p-2">林美玉</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-history text-primary text-xl"></i>審核中</span></td>
+                            <td class="border-b border-gray-200 p-2">否</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-check-circle fa-fw text-primary text-base cursor-pointer"
+                                    title="正常"></i></td>
+                            <td class="border-b border-gray-200 p-2">2025/07/03 13:22:11</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
+                        </tr>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">T1130701009</td>
+                            <td class="border-b border-gray-200 p-2">南州鄉</td>
+                            <td class="border-b border-gray-200 p-2">動物救援</td>
+                            <td class="border-b border-gray-200 p-2">白鼻心</td>
+                            <td class="border-b border-gray-200 p-2">陳志強</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-edit text-primary text-xl"></i>審核退回</span></td>
+                            <td class="border-b border-gray-200 p-2">否</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-times-circle fa-fw text-danger text-base cursor-pointer"
+                                    title="異常"></i></td>
+                            <td class="border-b border-gray-200 p-2">2025/07/02 18:45:33</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
+                        </tr>
+                        <tr class="bg-gray-light hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">T1130701010</td>
+                            <td class="border-b border-gray-200 p-2">林邊鄉</td>
+                            <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">虎頭蜂</td>
+                            <td class="border-b border-gray-200 p-2">王大明</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-check text-primary text-xl"></i>審核完成</span></td>
+                            <td class="border-b border-gray-200 p-2">是</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
+                                    title="異常說明"></i></td>
+                            <td class="border-b border-gray-200 p-2">2025/07/01 11:10:09</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 分頁 -->
+        <div class="bg-white shadow-lg rounded p-2 md:p-4">
+            <div class="flex flex-col sm:flex-row sm:justify-center sm:items-center gap-2 text-xs md:text-sm">
+                <div class="flex items-center gap-2 justify-center">
+                    <span>每頁</span>
+                    <select class="border border-border rounded px-2 py-1 text-xs md:text-sm w-16">
+                        <option>10</option>
+                        <option>25</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                    <span>筆</span>
+                </div>
+                <div class="flex items-center gap-2 justify-center">
+                    <span>第 1/44 頁，共 880 筆</span>
+                </div>
+                <div class="flex items-center gap-2 justify-center">
+                    <a href="#" class="text-primary hover:underline">上一頁</a>
+                    <span>｜跳至第</span>
+                    <input type="number"
+                        class="border border-border rounded px-2 py-1 text-xs md:text-sm w-14 text-center" value="1"
+                        min="1" max="44">
+                    <span>頁｜</span>
+                    <a href="#" class="text-primary hover:underline">下一頁</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 完成案件視窗 JS -->
+    <script>
+        document.getElementById('mobileMenuBtn').addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // ...existing code...
+
+        // 完成案件視窗觸發範例（可根據實際流程呼叫 showCompleteCaseModal()）
+        function showCompleteCaseModal() {
+            let modal = document.getElementById('completeCaseModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'completeCaseModal';
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100vw';
+                modal.style.height = '100vh';
+                modal.style.background = 'rgba(0,0,0,0.5)';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                modal.style.zIndex = '9999';
+                modal.innerHTML = `
+                    <div style='background:#fff;padding:32px 40px;border-radius:12px;box-shadow:0 2px 16px #0008;text-align:center;min-width:320px;'>
+                        <h2 style='font-size:1.5rem;font-weight:bold;margin-bottom:16px;'>案件已完成</h2>
+                        <p style='margin-bottom:24px;'>所有外勤作業紀錄已填寫，案件完成！<br>五秒後自動返回列表</p>
+                        <button id='closeCompleteCaseModalBtn' style='background:#198754;color:#fff;padding:8px 24px;border:none;border-radius:6px;font-size:1rem;font-weight:bold;cursor:pointer;'>確定</button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                document.getElementById('closeCompleteCaseModalBtn').onclick = function () {
+                    modal.style.display = 'none';
+                    window.location.replace('DutyCaseManagement_List.html');
+                };
+            } else {
+                modal.style.display = 'flex';
+            }
+            // 五秒後自動跳轉
+            setTimeout(function () {
+                window.location.replace('DutyCaseManagement_List.html');
+            }, 5000);
+        }
+        // 範例：可在完成案件時呼叫 showCompleteCaseModal();
+        // showCompleteCaseModal();
+    </script>
+</body>
+
+</html>
