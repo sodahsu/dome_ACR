@@ -1,0 +1,21 @@
+{
+    "servers": {
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "d:\\git\\PJ2025042_捕蜂捉蛇及動物救援業務管理系統建置案\\Project-Docs\\02系統設計\\Prototype"
+            ]
+        },
+        "Framelink Figma MCP": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "figma-developer-mcp",
+                "--figma-api-key=figd_Il_VKd-j-DnJ5GTs7bGyD20CmCf-nS7dEPkCEYN_",
+                "--stdio"
+            ]
+        }
+    }
+}

@@ -271,7 +271,7 @@
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:119</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1999</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1959</th>
-                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:其他</th>
+                                <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:其他</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
@@ -449,6 +449,12 @@
                 chart.data.labels = chartData.labels;
                 chart.data.datasets = chartData.datasets;
                 chart.update();
+                // 更新資料表格
+                if (tab === 'source') {
+                    renderSourceTable();
+                } else if (tab === 'species') {
+                    renderSpeciesTable();
+                }
             });
         });
         function randomInt(min, max) {
