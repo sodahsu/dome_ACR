@@ -37,19 +37,80 @@
 
 <body class="bg-bg-light font-noto">
     <!-- 引入 header.html -->
-    <div id="header"></div>
-    <script>
-        fetch('header.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('header').innerHTML = html;
-                // 手動初始化 header 功能
-                if (window.initializeHeader) {
-                    window.initializeHeader();
-                }
-            });
-    </script>
-    <script src="header-utils.js"></script>
+    <!-- 共用導覽列元件 header.html -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="bg-secondary shadow-md">
+            <div class="px-4 py-1 flex justify-end items-center gap-2">
+                <div class="flex items-center gap-1 text-white text-sm">
+                    <span class="hidden sm:inline">您好，</span>
+                    <i class="fas fa-user w-4 h-4"></i>
+                    <span class="hidden sm:inline">王小明(linkchain0000)</span>
+                    <span class="mx-1 hidden sm:inline">｜</span>
+                    <i class="fas fa-home w-4 h-4"></i>
+                    <span class="hidden sm:inline">前台</span>
+                    <span class="mx-1 hidden sm:inline">｜</span>
+                    <i class="fas fa-sign-out-alt w-4 h-4"></i>
+                    <span class="hidden sm:inline">登出</span>
+                </div>
+            </div>
+        </div>
+        <div class="px-4 py-2">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo.png" alt="logo" class="w-8 h-8 md:w-10 md:h-10 rounded-full">
+                    <a href="HomeDashboard.html" class="flex flex-col">
+                        <p class="text-xs md:text-sm font-medium text-gray-dark">屏東縣政府</p>
+                        <h1 class="text-sm md:text-xl font-bold text-secondary">捕蜂捉蛇及動物救援業務管理系統</h1>
+                    </a>
+                </div>
+                <!-- 漢堡選單按鈕（僅手機顯示） -->
+                <button id="mobile-menu-btn"
+                    class="lg:hidden flex items-center px-2 py-1 border rounded text-secondary focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <!-- 桌面選單 -->
+                <div class="hidden lg:flex items-center gap-8">
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="DutyCaseManagement_List.html" id="menu-duty" class="hover:underline">
+                                <span>勤務案件管理</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="ReviewCaseManagement_List.html" id="menu-review" class="hover:underline">
+                                <span>審核案件管理</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="DataStatistics.html" id="menu-stat" class="hover:underline">
+                                <span>數據統計</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
+                            <a href="#" id="menu-setting" class="hover:underline">
+                                <span>系統設定管理(X)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 手機版選單 -->
+            <div id="mobile-menu"
+                class="lg:hidden mt-2 flex flex-col gap-2 bg-white shadow rounded px-4 py-2 absolute w-full left-0 top-full z-50 hidden">
+                <a href="DutyCaseManagement_List.html" class="py-2 border-b hover:text-primary">勤務案件管理</a>
+                <a href="ReviewCaseManagement_List.html" class="py-2 border-b hover:text-primary">審核案件管理</a>
+                <a href="DataStatistics.html" class="py-2 border-b hover:text-primary">數據統計</a>
+                <a href="#" class="py-2 hover:text-primary">系統設定管理(X)</a>
+            </div>
+        </div>
+    </nav>
+    <!-- 結束導覽元件 -->
 
     <nav class="p-2 md:p-4 max-w-[1440px] mx-auto">
         <!-- 頁面標題 -->
@@ -70,26 +131,21 @@
         <div class="bg-white shadow-lg rounded-lg p-2 md:p-4 mb-4">
             <form>
                 <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-4">
-                    <!-- 依欄位查詢 + 關鍵字 並列 -->
-                    <div class="col-span-2 lg:col-span-1">
-                        <div class="flex gap-2">
-                            <div class="flex flex-col gap-2 flex-1">
-                                <label class="text-secondary font-medium text-sm">依欄位查詢</label>
-                                <select
-                                    class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                                    <option>不拘</option>
-                                    <option>立案編號</option>
-                                    <option>通報人</option>
-                                    <option>作業人員</option>
-                                    <option>作業廠商</option>
-                                </select>
-                            </div>
-                            <div class="flex flex-col gap-2 flex-1">
-                                <label class="text-secondary font-medium text-sm">關鍵字</label>
-                                <input type="text" placeholder="請輸入查詢關鍵字"
-                                    class="border border-border rounded px-3 py-2 text-gray-medium text-sm">
-                            </div>
-                        </div>
+                    <!-- 依欄位查詢 -->
+                    <div class="flex flex-col gap-2 col-span-2 lg:col-span-1">
+                        <label class="text-secondary font-medium text-sm">依欄位查詢</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>不拘</option>
+                            <option>立案編號</option>
+                            <option>通報人</option>
+                            <option>作業人員</option>
+                            <option>作業廠商</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2 col-span-2 lg:col-span-1">
+                        <label class="text-secondary font-medium text-sm">關鍵字</label>
+                        <input type="text" placeholder="請輸入查詢關鍵字"
+                            class="border border-border rounded px-3 py-2 text-gray-medium text-sm">
                     </div>
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">通報來源</label>
@@ -126,6 +182,14 @@
                             <option>審核退回</option>
                         </select>
                     </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">是否已點交</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>不拘</option>
+                            <option>是</option>
+                            <option>否</option>
+                        </select>
+                    </div>
                     <div class="flex flex-col gap-2 col-span-2 lg:col-span-1">
                         <label class="text-secondary font-medium text-sm">案件完成日期</label>
                         <div class="flex items-center gap-2">
@@ -136,26 +200,16 @@
                                 class="border border-border rounded px-3 py-2 text-gray-medium flex-1 text-sm">
                         </div>
                     </div>
-                    <div class="flex gap-2 col-span-2 lg:col-span-1">
-                        <div class="flex flex-col gap-2 flex-1">
-                            <label class="text-secondary font-medium text-sm">是否已點交</label>
-                            <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                                <option>不拘</option>
-                                <option>是</option>
-                                <option>否</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col gap-2 flex-1">
-                            <label class="text-secondary font-medium text-sm">物種</label>
-                            <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                                <option>不拘</option>
-                                <!-- 兩層關聯式選單，預設皆為不拘 -->
-                            </select>
-                        </div>
+                    <div class="flex flex-col gap-2 col-span-2 lg:col-span-1">
+                        <label class="text-secondary font-medium text-sm">物種</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>不拘</option>
+                            <!-- 兩層關聯式選單，預設皆為不拘 -->
+                        </select>
                     </div>
                 </div>
                 <div class="border-t border-gray-300 pt-4">
-                    <div class="flex gap-4">
+                    <div class="flex flex-col sm:flex-row gap-4">
                         <button type="submit"
                             class="bg-[#6C8C6B] text-white px-3 py-2 rounded flex items-center gap-1 justify-center text-sm hover:bg-[#5a7359] transition">
                             <i class="fas fa-search fa-fw text-base"></i>
@@ -215,6 +269,7 @@
                             <th class="border-b border-gray-200 p-2 text-left font-bold">是否已點交</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">異常</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">通報時間</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">編輯</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -222,11 +277,7 @@
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">119</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701001
-                                </a>
-                            </td>
+                            <td class="border-b border-gray-200 p-2">T1130701001</td>
                             <td class="border-b border-gray-200 p-2">屏東市</td>
                             <td class="border-b border-gray-200 p-2">捕蜂</td>
                             <td class="border-b border-gray-200 p-2">長腳蜂</td>
@@ -238,16 +289,17 @@
                                     class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
                                     title="異常說明"></i></td>
                             <td class="border-b border-gray-200 p-2">2025/07/10 09:12:01</td>
+                            <td class="border-b border-gray-200 p-2 text-center">
+                                <a href="DutyCaseManagement_Edit.html" class="p-1 inline-block">
+                                    <i class="fas fa-edit fa-fw text-base"></i>
+                                </a>
+                            </td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">1999</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701002
-                                </a>
-                            </td>
+                            <td class="border-b border-gray-200 p-2">T1130701002</td>
                             <td class="border-b border-gray-200 p-2">潮州鎮</td>
                             <td class="border-b border-gray-200 p-2">捉蛇</td>
                             <td class="border-b border-gray-200 p-2">赤尾青竹絲</td>
@@ -259,16 +311,14 @@
                                     class="fas fa-check-circle fa-fw text-primary text-base cursor-pointer"
                                     title="正常"></i></td>
                             <td class="border-b border-gray-200 p-2">2025/07/09 14:22:11</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
                         </tr>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">1959</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701003
-                                </a>
-                            </td>
+                            <td class="border-b border-gray-200 p-2">T1130701003</td>
                             <td class="border-b border-gray-200 p-2">萬丹鄉</td>
                             <td class="border-b border-gray-200 p-2">動物救援</td>
                             <td class="border-b border-gray-200 p-2">白鼻心</td>
@@ -280,16 +330,14 @@
                                     class="fas fa-times-circle fa-fw text-danger text-base cursor-pointer"
                                     title="異常"></i></td>
                             <td class="border-b border-gray-200 p-2">2025/07/08 18:45:33</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">119</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701004
-                                </a>
-                            </td>
+                            <td class="border-b border-gray-200 p-2">T1130701004</td>
                             <td class="border-b border-gray-200 p-2">東港鎮</td>
                             <td class="border-b border-gray-200 p-2">捕蜂</td>
                             <td class="border-b border-gray-200 p-2">虎頭蜂</td>
@@ -301,16 +349,14 @@
                                     class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
                                     title="異常說明"></i></td>
                             <td class="border-b border-gray-200 p-2">2025/07/07 11:10:09</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
                         </tr>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">1999</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701005
-                                </a>
-                            </td>
+                            <td class="border-b border-gray-200 p-2">T1130701005</td>
                             <td class="border-b border-gray-200 p-2">恆春鎮</td>
                             <td class="border-b border-gray-200 p-2">捉蛇</td>
                             <td class="border-b border-gray-200 p-2">赤尾青竹絲</td>
@@ -322,16 +368,14 @@
                                     class="fas fa-check-circle fa-fw text-primary text-base cursor-pointer"
                                     title="正常"></i></td>
                             <td class="border-b border-gray-200 p-2">2025/07/06 16:32:45</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">1959</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701006
-                                </a>
-                            </td>
+                            <td class="border-b border-gray-200 p-2">T1130701006</td>
                             <td class="border-b border-gray-200 p-2">麟洛鄉</td>
                             <td class="border-b border-gray-200 p-2">動物救援</td>
                             <td class="border-b border-gray-200 p-2">白鼻心</td>
@@ -343,16 +387,14 @@
                                     class="fas fa-times-circle fa-fw text-danger text-base cursor-pointer"
                                     title="異常"></i></td>
                             <td class="border-b border-gray-200 p-2">2025/07/05 19:55:21</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
                         </tr>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">119</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701007
-                                </a>
-                            </td>
+                            <td class="border-b border-gray-200 p-2">T1130701007</td>
                             <td class="border-b border-gray-200 p-2">新園鄉</td>
                             <td class="border-b border-gray-200 p-2">捕蜂</td>
                             <td class="border-b border-gray-200 p-2">長腳蜂</td>
@@ -364,16 +406,14 @@
                                     class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
                                     title="異常說明"></i></td>
                             <td class="border-b border-gray-200 p-2">2025/07/04 08:12:01</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">1999</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701008
-                                </a>
-                            </td>
+                            <td class="border-b border-gray-200 p-2">T1130701008</td>
                             <td class="border-b border-gray-200 p-2">枋寮鄉</td>
                             <td class="border-b border-gray-200 p-2">捉蛇</td>
                             <td class="border-b border-gray-200 p-2">赤尾青竹絲</td>
@@ -385,16 +425,14 @@
                                     class="fas fa-check-circle fa-fw text-primary text-base cursor-pointer"
                                     title="正常"></i></td>
                             <td class="border-b border-gray-200 p-2">2025/07/03 13:22:11</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
                         </tr>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">1959</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701009
-                                </a>
-                            </td>
+                            <td class="border-b border-gray-200 p-2">T1130701009</td>
                             <td class="border-b border-gray-200 p-2">南州鄉</td>
                             <td class="border-b border-gray-200 p-2">動物救援</td>
                             <td class="border-b border-gray-200 p-2">白鼻心</td>
@@ -406,16 +444,14 @@
                                     class="fas fa-times-circle fa-fw text-danger text-base cursor-pointer"
                                     title="異常"></i></td>
                             <td class="border-b border-gray-200 p-2">2025/07/02 18:45:33</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">119</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701010
-                                </a>
-                            </td>
+                            <td class="border-b border-gray-200 p-2">T1130701010</td>
                             <td class="border-b border-gray-200 p-2">林邊鄉</td>
                             <td class="border-b border-gray-200 p-2">捕蜂</td>
                             <td class="border-b border-gray-200 p-2">虎頭蜂</td>
@@ -427,6 +463,8 @@
                                     class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
                                     title="異常說明"></i></td>
                             <td class="border-b border-gray-200 p-2">2025/07/01 11:10:09</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><button class="p-1"><i
+                                        class="fas fa-edit fa-fw text-base"></i></button></td>
                         </tr>
                     </tbody>
                 </table>
