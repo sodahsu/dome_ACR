@@ -435,7 +435,7 @@
     <!-- 底部按鈕 -->
     <div class="fixed-bottom-bar bg-white shadow-lg border-t border-gray-200 py-2">
         <div class="bottom-btns flex flex-wrap justify-center items-center gap-2 max-w-[1440px] mx-auto px-4">
-            <button type="button"
+            <button type="button" id="cancelBtn"
                 class="min-w-[96px] bg-white text-gray-medium border border-gray-medium px-4 py-2 rounded hover:bg-gray-100 transition">取消</button>
             <button type="button"
                 class="min-w-[96px] bg-gray-medium text-white px-4 py-2 rounded hover:bg-gray-dark transition flex items-center gap-1">
@@ -458,6 +458,14 @@
     <script>
         // 全部互動功能
         document.addEventListener('DOMContentLoaded', function () {
+            // 取消按鈕返回上一頁
+            const cancelBtn = document.getElementById('cancelBtn');
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', function () {
+                    window.history.back();
+                });
+            }
+
             // 是否已點交預設選「是」
             var handoverYesRadio = document.getElementById('handoverYes');
             if (handoverYesRadio) {
