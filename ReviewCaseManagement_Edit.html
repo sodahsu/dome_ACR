@@ -174,15 +174,13 @@
         <!-- 頁面標題 -->
         <div class="bg-white shadow-lg rounded-lg border-l-4 border-primary p-2 mb-4">
             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center px-2 md:px-4 py-2 gap-2">
-                <h2 class="text-xl md:text-2xl font-bold text-secondary">審核案件管理-編輯(縣府)</h2>
+                <h2 class="text-xl md:text-2xl font-bold text-secondary">審核案件管理-編輯</h2>
                 <div class="flex items-center gap-1 text-gray-medium text-sm">
                     <span>首頁</span>
                     <span>/</span>
                     <span>審核案件管理</span>
                     <span>/</span>
-                    <span>審核案件</span>
-                    <span>/</span>
-                    <span class="text-primary font-bold">編輯(縣府)</span>
+                    <span class="text-primary font-bold">編輯</span>
                 </div>
             </div>
         </div>
@@ -319,33 +317,65 @@
                     <span class="text-sm text-gray-dark">回報日期： yyy/mm/dd</span>
                 </div>
                 <div class="border border-border rounded p-4" id="fieldWorkBlock">
+                    <!-- 第一行：值勤人員抵達時間和座標 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                         <div class="min-w-0 md:col-span-2 flex flex-col">
                             <label class="block text-gray-dark font-medium mb-1">值勤人員抵達時間</label>
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">2025/07/13 10:30:00</span>
                         </div>
-                        <div class="min-w-0">
-                            <label class="block text-gray-dark font-medium mb-1">物種</label>
-                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">蛇類</span>
-                        </div>
-                        <div class="min-w-0">
-                            <label class="block text-gray-dark font-medium mb-1">數量</label>
-                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">1</span>
-                        </div>
-                        <div class="min-w-0">
-                            <label class="block text-gray-dark font-medium mb-1">物種狀況</label>
-                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">健康</span>
+                        <div class="min-w-0 md:col-span-2">
+                            <label class="block text-gray-dark font-medium mb-1">座標</label>
+                            <span
+                                class="block text-gray-700 bg-gray-100 rounded px-2 py-1">23.1291823,120.2520685</span>
                         </div>
                     </div>
+                    <!-- 第二行：四個radio欄位 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">通報人仍在現場</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">通報物仍在現場，尚未脫逃</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">是否為通報案件類型</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
                         <div>
                             <label class="block text-gray-dark font-medium mb-1">是否有飼主</label>
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
                         </div>
+                    </div>
+                    <!-- 第三行：物種相關欄位 -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">物種名稱</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">蛇類</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">數量</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">1</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">物種狀況</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">健康</span>
+                        </div>
                         <div>
                             <label class="block text-gray-dark font-medium mb-1">處理情形</label>
-                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">已逃跑</span>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">後送</span>
                         </div>
+                    </div>
+                    <!-- 第四行：通報人是否願意支付費用 -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">通報人是否願意支付費用</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
                     </div>
                     <!-- 外勤作業照片上傳區 -->
                     <div class="mt-6">
@@ -425,20 +455,13 @@
                             <label class="block text-gray-dark font-medium mb-1">
                                 <span class="text-danger">*</span> 後送單位
                             </label>
-                            <select
-                                class="block w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
-                                <option value="動物之家" selected>動物之家</option>
-                                <option value="收容所">收容所</option>
-                                <option value="其他">其他</option>
-                            </select>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">動物之家</span>
                         </div>
                         <div>
                             <label class="block text-gray-dark font-medium mb-1">
                                 <span class="text-danger">*</span> 後送日期
                             </label>
-                            <input type="text"
-                                class="block w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
-                                value="2024/04/28 20:20:21" />
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">2024/04/28 20:20:21</span>
                         </div>
                     </div>
                 </div>
@@ -544,9 +567,9 @@
                                         <select id="handoverResult"
                                             class="w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
                                             <option value="">請選擇</option>
-                                            <option value="動物之家" selected>動物之家</option>
-                                            <option value="野放">野放</option>
-                                            <option value="其他">其他</option>
+                                            <option value="限期交回" selected>限期交回</option>
+                                            <option value="不計價">不計價</option>
+                                            <option value="點交完成">點交完成</option>
                                         </select>
                                     </td>
                                     <td class="border border-gray-300 px-3 py-2">
@@ -647,6 +670,91 @@
                         };
                     } else {
                         modal.style.display = 'flex';
+                    }
+                }
+            }
+
+            // 退回按鈕功能
+            var reviewRejectBtn = document.getElementById('reviewRejectBtn');
+            if (reviewRejectBtn) {
+                reviewRejectBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    showReviewRejectModal();
+                });
+
+                // 審核退回視窗
+                function showReviewRejectModal() {
+                    let modal = document.getElementById('reviewRejectModal');
+                    if (!modal) {
+                        modal = document.createElement('div');
+                        modal.id = 'reviewRejectModal';
+                        modal.style.position = 'fixed';
+                        modal.style.top = '0';
+                        modal.style.left = '0';
+                        modal.style.width = '100vw';
+                        modal.style.height = '100vh';
+                        modal.style.background = 'rgba(0,0,0,0.5)';
+                        modal.style.display = 'flex';
+                        modal.style.justifyContent = 'center';
+                        modal.style.alignItems = 'center';
+                        modal.style.zIndex = '9999';
+                        modal.innerHTML = `
+                            <div style='background:#fff;padding:32px;border-radius:12px;box-shadow:0 2px 16px #0008;min-width:400px;max-width:500px;'>
+                                <h2 style='font-size:1.25rem;font-weight:bold;margin-bottom:20px;text-align:center;color:#dc3545;'>審核退回</h2>
+                                <div style='margin-bottom:16px;'>
+                                    <label style='display:block;font-weight:bold;margin-bottom:8px;color:#333;'>
+                                        <span style='color:#dc3545;margin-right:4px;'>*</span>退回原因類別
+                                    </label>
+                                    <select id='rejectCategorySelect' style='width:100%;padding:8px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px;'>
+                                        <option value=''>請選擇</option>
+                                        <option value='照片問題'>照片問題</option>
+                                        <option value='資料填寫不完整'>資料填寫不完整</option>
+                                        <option value='處理程序錯誤'>處理程序錯誤</option>
+                                        <option value='其他'>其他</option>
+                                    </select>
+                                </div>
+                                <div style='margin-bottom:24px;'>
+                                    <label style='display:block;font-weight:bold;margin-bottom:8px;color:#333;'>
+                                        <span style='color:#dc3545;margin-right:4px;'>*</span>退回說明
+                                    </label>
+                                    <textarea id='rejectReasonTextarea' placeholder='請詳細說明退回原因...' 
+                                        style='width:100%;height:100px;padding:8px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px;resize:vertical;'></textarea>
+                                </div>
+                                <div style='text-align:center;'>
+                                    <button id='confirmRejectBtn' style='background:#dc3545;color:#fff;padding:10px 24px;border:none;border-radius:6px;font-size:1rem;font-weight:bold;cursor:pointer;margin-right:16px;'>確定退回</button>
+                                    <button id='cancelRejectBtn' style='background:#6c757d;color:#fff;padding:10px 24px;border:none;border-radius:6px;font-size:1rem;font-weight:bold;cursor:pointer;'>取消</button>
+                                </div>
+                            </div>
+                        `;
+                        document.body.appendChild(modal);
+
+                        document.getElementById('confirmRejectBtn').onclick = function () {
+                            const category = document.getElementById('rejectCategorySelect').value;
+                            const reason = document.getElementById('rejectReasonTextarea').value.trim();
+
+                            if (!category) {
+                                alert('請選擇退回原因類別');
+                                return;
+                            }
+                            if (!reason) {
+                                alert('請填寫退回說明');
+                                return;
+                            }
+
+                            // 這裡可以加入提交退回資料的邏輯
+                            modal.style.display = 'none';
+                            alert('案件已退回');
+                            window.location.href = 'ReviewCaseManagement_List.html';
+                        };
+
+                        document.getElementById('cancelRejectBtn').onclick = function () {
+                            modal.style.display = 'none';
+                        };
+                    } else {
+                        modal.style.display = 'flex';
+                        // 清空之前的輸入
+                        document.getElementById('rejectCategorySelect').value = '';
+                        document.getElementById('rejectReasonTextarea').value = '';
                     }
                 }
             }
