@@ -58,7 +58,7 @@
                 <h2 class="text-xl md:text-2xl font-bold text-secondary">勤務案件管理</h2>
                 <div class="flex items-center gap-1 text-gray-medium text-sm">
                     <span>首頁</span>
-     
+
                     <span>/</span>
                     <span class="text-primary font-bold">勤務案件管理</span>
                 </div>
@@ -313,7 +313,7 @@
                             <td class="border-b border-gray-200 p-2">-</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
                                     class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
-                                    onclick="showReminderModal('T1130428003')"></i></td>
+                                    onclick="showReminderModal()"></i></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
@@ -336,7 +336,7 @@
                             <td class="border-b border-gray-200 p-2">待點交</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
                                     class="fas fa-info-circle text-yellow-500 cursor-pointer" title="警告"
-                                    onclick="showReminderModal('T1130428002')"></i></td>
+                                    onclick="showReminderModal()"></i></td>
                         </tr>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
@@ -359,7 +359,7 @@
                             <td class="border-b border-gray-200 p-2">不須點交</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
                                     class="fas fa-info-circle text-red-500 cursor-pointer" title="錯誤"
-                                    onclick="showReminderModal('A1130428005')"></i></td>
+                                    onclick="showReminderModal()"></i></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
@@ -382,7 +382,7 @@
                             <td class="border-b border-gray-200 p-2">待點交</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
                                     class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
-                                    onclick="showReminderModal('T1130428001')"></i></td>
+                                    onclick="showReminderModal()"></i></td>
                         </tr>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
@@ -404,7 +404,8 @@
                                         class="fas fa-undo text-orange-500"></i>審核退回</span></td>
                             <td class="border-b border-gray-200 p-2">待點交</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-exclamation-circle text-red-500 cursor-pointer" title="錯誤"></i></td>
+                                    class="fas fa-exclamation-circle text-red-500 cursor-pointer" title="錯誤"
+                                    onclick="showReminderModal()"></i></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
@@ -472,7 +473,7 @@
                             <td class="border-b border-gray-200 p-2">點交完成</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
                                     class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
-                                    onclick="showReminderModal('F1130428001')"></i></td>
+                                    onclick="showReminderModal()"></i></td>
                         </tr>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
@@ -495,7 +496,7 @@
                             <td class="border-b border-gray-200 p-2">點交完成</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
                                     class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
-                                    onclick="showReminderModal('A1130428003')"></i></td>
+                                    onclick="showReminderModal()"></i></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
@@ -518,7 +519,7 @@
                             <td class="border-b border-gray-200 p-2">點交完成</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
                                     class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
-                                    onclick="showReminderModal('A1130428002')"></i></td>
+                                    onclick="showReminderModal()"></i></td>
                         </tr>
                     </tbody>
                 </table>
@@ -553,12 +554,12 @@
             </div>
         </div>
     </nav>
+    </nav>
 
-    <!-- 提醒燈箱視窗 -->
+    <!-- 提醒燈箱 -->
     <div id="reminderModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg shadow-lg max-w-2xl w-full mx-4 max-h-[80vh] overflow-hidden">
-            <!-- 標題列 -->
-            <div class="flex items-center justify-between p-4 border-b bg-green-light">
+        <div class="bg-white rounded-lg shadow-lg max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between p-4 border-b bg-white">
                 <div class="flex items-center gap-2">
                     <i class="fas fa-bell text-primary"></i>
                     <h3 class="text-lg font-bold text-secondary">提醒紀錄</h3>
@@ -567,88 +568,66 @@
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-
-            <!-- 內容區域 -->
-            <div class="overflow-y-auto max-h-96">
+            <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                     <thead class="bg-green-light sticky top-0">
                         <tr>
-                            <th class="p-3 text-left font-bold border-b">項次</th>
-                            <th class="p-3 text-left font-bold border-b">提醒說明</th>
-                            <th class="p-3 text-left font-bold border-b">紀錄時間</th>
+                            <th class="p-3 text-left font-bold">項次</th>
+                            <th class="p-3 text-left font-bold">提醒說明</th>
+                            <th class="p-3 text-left font-bold">紀錄時間</th>
                         </tr>
                     </thead>
-                    <tbody id="reminderTableBody">
-                        <!-- 動態內容將在這裡填入 -->
+                    <tbody>
+                        <tr>
+                            <td class="p-3">1.</td>
+                            <td class="p-3">點交限期交回：點交物有問題，請儘快確認，並於限期交回日期(114/05/28)前完成處理。</td>
+                            <td class="p-3">2024/05/10 05:20:00</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">2.</td>
+                            <td class="p-3">案件審核退回：紀錄內容有問題或上傳照片/影片有問題，請儘快確認紀錄內容，進行補正說明。</td>
+                            <td class="p-3">2024/05/02 05:20:00</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">3.</td>
+                            <td class="p-3">資料送審時間逾時(10小時)：案件完成時間 2024/04/28 20:20:21，請儘快確認通報案件處理內容，並點擊送審提交縣府審核。</td>
+                            <td class="p-3">2024/04/29 05:20:00</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">4.</td>
+                            <td class="p-3">案件處理時間逾時(150分鐘)：通報時間 2024/04/28 18:20:21，請提醒外勤人員留意案件處理作業時間。</td>
+                            <td class="p-3">2024/04/28 20:20:00</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">5.</td>
+                            <td class="p-3">派遣回應時間(10分鐘)：指派時間 2024/04/28 18:32:21，請通知外勤人員接收案件或指派其他人員前往。</td>
+                            <td class="p-3">2024/04/28 18:42:00</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">6.</td>
+                            <td class="p-3">廠商回報時效(10分鐘)：通報時間 2024/04/28 18:20:21，請儘快處理通報案件。</td>
+                            <td class="p-3">2024/04/28 18:15:00</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- 完成案件視窗 JS -->
     <script>
-        // 提醒紀錄資料
-        const reminderData = {
-            'T1130428003': [
-                { seq: 1, message: '點交時間逾期：點交時間預期，請盡快確認。並依規定交回前期(114/05/28)前完成處理。', time: '2024/05/10 05:20:00' },
-                { seq: 2, message: '案件審核逾期：紀錄內容有問題至上傳照片/影片有問題，請盡快修正紀錄內容，進行審核。', time: '2024/05/02 05:20:00' },
-                { seq: 3, message: '資料送審時間逾期(10小時)：案件完成時間 2024/04/28 20:20:21，請盡快修正紀錄內容完成簽章。', time: '2024/04/29 05:20:00' },
-                { seq: 4, message: '案件處理時間逾期(150分鐘)：通報時間 2024/04/28 18:20:21，請盡快外勤人員盡快處理案件處理作業時間。', time: '2024/04/28 20:20:00' },
-                { seq: 5, message: '派遣回應時間逾期(10分鐘)：指派時間 2024/04/28 18:32:21，請盡快外勤人員確認案件或指派負責人員前往。', time: '2024/04/28 18:42:00' },
-                { seq: 6, message: '廠商回應時間逾期(10分鐘)：通報時間 2024/04/28 18:20:21，請盡快處理通報案件。', time: '2024/04/28 18:15:00' }
-            ],
-            'T1130428002': [
-                { seq: 1, message: '案件審核逾期：紀錄內容需要補充相關資料。', time: '2024/05/01 10:30:00' }
-            ],
-            'A1130428005': [
-                { seq: 1, message: '資料送審錯誤：請檢查填寫內容是否正確。', time: '2024/04/29 14:20:00' }
-            ]
-        };
-
-        // 顯示提醒燈箱
-        function showReminderModal(caseId) {
-            const modal = document.getElementById('reminderModal');
-            const tableBody = document.getElementById('reminderTableBody');
-
-            // 清空表格內容
-            tableBody.innerHTML = '';
-
-            // 統一使用 T1130428003 的提醒紀錄資料
-            const reminders = reminderData['T1130428003'] || [];
-
-            if (reminders.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="3" class="p-4 text-center text-gray-500">無提醒紀錄</td></tr>';
-            } else {
-                reminders.forEach(reminder => {
-                    const row = document.createElement('tr');
-                    row.className = 'hover:bg-gray-50';
-                    row.innerHTML = `
-                        <td class="p-3 border-b">${reminder.seq}.</td>
-                        <td class="p-3 border-b">${reminder.message}</td>
-                        <td class="p-3 border-b">${reminder.time}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            }
-
-            // 顯示燈箱
-            modal.classList.remove('hidden');
+        function showReminderModal() {
+            document.getElementById('reminderModal').classList.remove('hidden');
         }
-
-        // 關閉提醒燈箱
         function closeReminderModal() {
-            const modal = document.getElementById('reminderModal');
-            modal.classList.add('hidden');
+            document.getElementById('reminderModal').classList.add('hidden');
         }
-
         // 點擊燈箱外部關閉
         document.getElementById('reminderModal').addEventListener('click', function (e) {
-            if (e.target === this) {
-                closeReminderModal();
-            }
+            if (e.target === this) closeReminderModal();
         });
-
+    </script>
+    <!-- 完成案件視窗 JS -->
+    <script>
         document.getElementById('mobileMenuBtn').addEventListener('click', function () {
             const mobileMenu = document.getElementById('mobileMenu');
             mobileMenu.classList.toggle('hidden');
