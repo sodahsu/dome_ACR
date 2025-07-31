@@ -171,7 +171,7 @@
                     <!-- Tab 區域 -->
                     <div class="px-4 bg-white">
                         <div class="flex border-b flex-wrap" id="caseTabs">
-                            <button class="px-3 py-2 border-b-4 border-secondary text-secondary font-bold text-sm"
+                            <button class="px-3 py-2 border-b-4 border-transparent text-gray-medium text-sm"
                                 data-tab="all">全部
                             </button>
                             <button class="px-3 py-2 border-b-4 border-transparent text-gray-medium text-sm"
@@ -184,11 +184,61 @@
                                 data-tab="reviewing">審核中</button>
                             <button class="px-3 py-2 border-b-4 border-transparent text-gray-medium text-sm"
                                 data-tab="completed">審核完成</button>
+                            <button class="px-3 py-2 border-b-4 border-danger text-danger font-bold text-sm"
+                                data-tab="alert">提醒/異常</button>
                         </div>
                     </div>
 
                     <!-- 案件列表 -->
                     <div class="p-4 space-y-4" id="caseList">
+                        <!-- 提醒/異常案件 -->
+                        <div class="case-card" data-status="alert">
+                            <div class="border border-danger rounded-lg p-3 bg-bg-danger">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex gap-2 items-center">
+                                        <span
+                                            class="text-sm font-bold text-danger bg-white px-2 py-1 rounded">提醒/異常</span>
+                                        <span class="text-sm text-gray-dark ml-2">20250131115010006</span>
+                                    </div>
+                                    <span class="text-danger font-bold flex items-center gap-1">
+                                        <i class="fas fa-exclamation-triangle"></i>異常提醒
+                                    </span>
+                                </div>
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-clock w-4 h-4"></i>
+                                            <span>通報</span>
+                                            <span>11:20:00</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-map-marker-alt w-4 h-4"></i>
+                                            <span>地址</span>
+                                            <span>屏東縣屏東市復興路999號</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-user-circle w-4 h-4"></i>
+                                            <span>通報人</span>
+                                            <span>李先生 0911-111111</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-end justify-start lg:justify-end">
+                                        <div class="text-left lg:text-right space-y-2">
+                                            <div class="flex items-center gap-2 bg-danger px-3 py-1 rounded">
+                                                <i class="fas fa-bell w-4 h-4"></i>
+                                                <span class="text-sm font-medium text-white">異常提醒</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="bg-danger px-2 py-1 rounded text-xs text-white">異常</div>
+                                                <i class="fas fa-user-alt w-4 h-4"></i>
+                                                <span class="text-sm text-gray-dark">外勤人員：未回報</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- 待處理案件 -->
                         <div class="case-card" data-status="pending">
                             <div class="border border-gray-300 rounded-lg p-3">
@@ -699,11 +749,16 @@
         const cards = document.querySelectorAll('#caseList .case-card');
         function showTab(status) {
             tabs.forEach(t => {
-                t.classList.remove('border-secondary', 'text-secondary', 'font-bold');
+                t.classList.remove('border-secondary', 'text-secondary', 'font-bold', 'border-danger', 'text-danger');
                 t.classList.add('border-transparent', 'text-gray-medium');
                 if (t.getAttribute('data-tab') === status) {
-                    t.classList.remove('border-transparent', 'text-gray-medium');
-                    t.classList.add('border-secondary', 'text-secondary', 'font-bold');
+                    if (status === 'alert') {
+                        t.classList.remove('border-transparent', 'text-gray-medium');
+                        t.classList.add('border-danger', 'text-danger', 'font-bold');
+                    } else {
+                        t.classList.remove('border-transparent', 'text-gray-medium');
+                        t.classList.add('border-secondary', 'text-secondary', 'font-bold');
+                    }
                 }
             });
 
@@ -733,8 +788,8 @@
                 showTab(this.getAttribute('data-tab'));
             });
         });
-        // 預設顯示全部
-        showTab('all');
+        // 預設顯示提醒/異常
+        showTab('alert');
 
         // 地圖縮放功能
         let currentZoom = 1;
