@@ -54,11 +54,10 @@
     <nav class="p-2 md:p-4 max-w-[1440px] mx-auto">
         <!-- 頁面標題 -->
         <div class="bg-white shadow-lg rounded-lg border-l-4 border-primary p-2 mb-4">
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center px-2 md:px-4 py-2 gap-2">
-                <h2 class="text-xl md:text-2xl font-bold text-secondary">勤務案件管理</h2>
-                <div class="flex items-center gap-1 text-gray-medium text-sm">
+            <div class="flex justify-between items-center px-2 md:px-4 py-2 gap-2">
+                <h2 class="text-lg md:text-2xl font-bold text-secondary">勤務案件管理</h2>
+                <div class="flex items-center gap-1 text-gray-medium text-xs md:text-sm">
                     <span>首頁</span>
-
                     <span>/</span>
                     <span class="text-primary font-bold">勤務案件管理</span>
                 </div>
@@ -67,9 +66,18 @@
 
         <!-- 搜尋表單 -->
         <div class="bg-white shadow-lg rounded-lg p-2 md:p-4 mb-4">
-            <form>
-                <!-- 第一行：依欄位查詢 + 關鍵字, 通報來源, 通報時間, 案件完成時間 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
+            <!-- 手機版收納按鈕 -->
+            <div class="md:hidden mb-3">
+                <button type="button" id="toggleSearchForm"
+                    class="w-full bg-primary text-white px-3 py-2 rounded flex items-center justify-between text-sm">
+                    <span>搜尋條件</span>
+                    <i id="toggleIcon" class="fas fa-chevron-down transition-transform duration-300"></i>
+                </button>
+            </div>
+
+            <form id="searchForm" class="md:block hidden">
+                <!-- 第一行：依欄位查詢 + 通報來源 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">依欄位查詢</label>
                         <div class="flex gap-2">
@@ -94,6 +102,10 @@
                             <option>1959</option>
                         </select>
                     </div>
+                </div>
+
+                <!-- 第二行：通報時間 + 案件完成時間 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">通報時間</label>
                         <div class="flex items-center gap-2">
@@ -116,8 +128,8 @@
                     </div>
                 </div>
 
-                <!-- 第二行：案件類型, 鄉鎮, 物種, 作業人員 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
+                <!-- 第三行：案件類型, 鄉鎮 -->
+                <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">案件類型</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
@@ -167,6 +179,10 @@
                             <option>牡丹鄉</option>
                         </select>
                     </div>
+                </div>
+
+                <!-- 第四行：物種, 作業人員 -->
+                <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">物種</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
@@ -191,8 +207,9 @@
                     </div>
                 </div>
 
-                <!-- 第三行：案件進度, 點交進度, 提醒, 處理狀態 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
+                <!-- 第五行：案件進度, 點交進度 -->
+                <!-- 第五行：案件進度, 點交進度 -->
+                <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">案件進度</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
@@ -216,6 +233,10 @@
                             <option>點交完成</option>
                         </select>
                     </div>
+                </div>
+
+                <!-- 第六行：提醒 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">提醒</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
@@ -246,7 +267,7 @@
 
         <!-- 功能按鈕與表格 -->
         <div class="bg-white shadow-lg rounded-lg p-2 md:p-4 mb-4">
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-3">
+            <div class="flex justify-between items-center mb-4 gap-3">
                 <div class="flex flex-wrap gap-2 md:gap-4">
                     <button class="bg-primary text-white px-2 py-1 rounded text-sm flex items-center gap-1">
                         <i class="fas fa-plus fa-fw text-base"></i>
@@ -615,6 +636,29 @@
     </div>
 
     <script>
+        // 搜尋表單收納功能
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.getElementById('toggleSearchForm');
+            const searchForm = document.getElementById('searchForm');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (toggleBtn && searchForm && toggleIcon) {
+                toggleBtn.addEventListener('click', function () {
+                    searchForm.classList.toggle('hidden');
+                    searchForm.classList.toggle('block');
+
+                    // 切換圖標方向
+                    if (searchForm.classList.contains('hidden')) {
+                        toggleIcon.classList.remove('fa-chevron-up');
+                        toggleIcon.classList.add('fa-chevron-down');
+                    } else {
+                        toggleIcon.classList.remove('fa-chevron-down');
+                        toggleIcon.classList.add('fa-chevron-up');
+                    }
+                });
+            }
+        });
+
         function showReminderModal() {
             document.getElementById('reminderModal').classList.remove('hidden');
         }
