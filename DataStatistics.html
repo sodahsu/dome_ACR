@@ -66,130 +66,157 @@
         </div>
 
         <!-- 查詢表單區塊 -->
-        <div class="bg-white shadow-lg rounded-lg p-4 mb-4">
-            <form class="flex flex-wrap gap-4 items-end">
-                <div class="min-w-[200px] flex-shrink-0">
-                    <label class="block text-gray-dark font-medium mb-2">年度 (區間)</label>
-                    <div class="flex gap-2 items-center">
-                        <div class="relative">
-                            <input type="date" class="date-input w-full border border-border rounded px-3 py-2"
-                                value="2022-01-01">
+        <div class="bg-white shadow-lg rounded-lg p-2 md:p-4 mb-4">
+            <!-- 手機版收納按鈕 -->
+            <div class="md:hidden mb-3">
+                <button type="button" id="toggleSearchForm"
+                    class="w-full bg-primary text-white px-3 py-2 rounded flex items-center justify-between text-sm">
+                    <span>搜尋條件</span>
+                    <i id="toggleIcon" class="fas fa-chevron-down transition-transform duration-300"></i>
+                </button>
+            </div>
+
+            <form id="searchForm" class="md:block hidden space-y-4">
+                <!-- 第一行：年度區間 + 鄉鎮 + 案件類型 + 物種類型 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-gray-dark font-medium text-sm">年度 (區間)</label>
+                        <div class="flex gap-2 items-center">
+                            <div class="relative flex-1">
+                                <input type="date"
+                                    class="date-input w-full border border-border rounded px-3 py-2 text-sm"
+                                    value="2022-01-01">
+                            </div>
+                            <span class="text-black">～</span>
+                            <div class="relative flex-1">
+                                <input type="date"
+                                    class="date-input w-full border border-border rounded px-3 py-2 text-sm"
+                                    value="2024-12-31">
+                            </div>
                         </div>
-                        <span class="text-black">～</span>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-gray-dark font-medium text-sm">鄉鎮</label>
                         <div class="relative">
-                            <input type="date" class="date-input w-full border border-border rounded px-3 py-2"
-                                value="2024-12-31">
+                            <select
+                                class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10 text-sm">
+                                <option>不拘</option>
+                                <option>屏東市</option>
+                                <option>潮州鎮</option>
+                                <option>東港鎮</option>
+                                <option>恆春鎮</option>
+                                <option>萬丹鄉</option>
+                                <option>內埔鄉</option>
+                                <option>長治鄉</option>
+                                <option>麟洛鄉</option>
+                                <option>九如鄉</option>
+                                <option>里港鄉</option>
+                                <option>鹽埔鄉</option>
+                                <option>高樹鄉</option>
+                                <option>萬巒鄉</option>
+                                <option>崁頂鄉</option>
+                                <option>新埤鄉</option>
+                                <option>佳冬鄉</option>
+                                <option>新園鄉</option>
+                                <option>林邊鄉</option>
+                                <option>南州鄉</option>
+                                <option>琉球鄉</option>
+                                <option>枋寮鄉</option>
+                                <option>枋山鄉</option>
+                                <option>春日鄉</option>
+                                <option>獅子鄉</option>
+                                <option>車城鄉</option>
+                                <option>滿州鄉</option>
+                                <option>三地門鄉</option>
+                                <option>霧台鄉</option>
+                                <option>瑪家鄉</option>
+                                <option>泰武鄉</option>
+                                <option>來義鄉</option>
+                                <option>竹田鄉</option>
+                                <option>東源鄉</option>
+                            </select>
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                                <i class="fa-solid fa-chevron-down w-4 h-4"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-gray-dark font-medium text-sm">案件類型</label>
+                        <div class="relative">
+                            <select id="caseTypeSelect"
+                                class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10 text-sm">
+                                <option value="">請選擇</option>
+                                <option value="bee">補蜂</option>
+                                <option value="snake">捉蛇</option>
+                                <option value="rescue">動物救援</option>
+                                <option value="lizard">綠鬣蜥</option>
+                            </select>
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                                <i class="fa-solid fa-chevron-down w-4 h-4"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-gray-dark font-medium text-sm">物種類型</label>
+                        <div class="relative">
+                            <select id="speciesSelect"
+                                class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10 text-sm"
+                                disabled>
+                                <option value="">請先選擇案件類型</option>
+                            </select>
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                                <i class="fa-solid fa-chevron-down w-4 h-4"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
-                <div class="min-w-[160px] flex-shrink-0">
-                    <label class="block text-gray-dark font-medium mb-2">鄉鎮</label>
-                    <div class="relative">
-                        <select class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
-                            <option>不拘</option>
-                            <option>屏東市</option>
-                            <option>潮州鎮</option>
-                            <option>東港鎮</option>
-                            <option>恆春鎮</option>
-                            <option>萬丹鄉</option>
-                            <option>內埔鄉</option>
-                            <option>長治鄉</option>
-                            <option>麟洛鄉</option>
-                            <option>九如鄉</option>
-                            <option>里港鄉</option>
-                            <option>鹽埔鄉</option>
-                            <option>高樹鄉</option>
-                            <option>萬巒鄉</option>
-                            <option>崁頂鄉</option>
-                            <option>新埤鄉</option>
-                            <option>佳冬鄉</option>
-                            <option>新園鄉</option>
-                            <option>林邊鄉</option>
-                            <option>南州鄉</option>
-                            <option>琉球鄉</option>
-                            <option>枋寮鄉</option>
-                            <option>枋山鄉</option>
-                            <option>春日鄉</option>
-                            <option>獅子鄉</option>
-                            <option>車城鄉</option>
-                            <option>滿州鄉</option>
-                            <option>三地門鄉</option>
-                            <option>霧台鄉</option>
-                            <option>瑪家鄉</option>
-                            <option>泰武鄉</option>
-                            <option>來義鄉</option>
-                            <option>竹田鄉</option>
-                            <option>東源鄉</option>
-                        </select>
-                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
-                            <i class="fa-solid fa-chevron-down w-4 h-4"></i>
-                        </span>
+
+                <!-- 第二行：通報來源 + 圖表類型 + 搜尋按鈕 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-gray-dark font-medium text-sm">通報來源</label>
+                        <div class="relative">
+                            <select
+                                class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10 text-sm">
+                                <option>不拘</option>
+                                <option>119</option>
+                                <option>1999</option>
+                                <option>1959</option>
+                            </select>
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                                <i class="fa-solid fa-chevron-down w-4 h-4"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-gray-dark font-medium text-sm">圖表類型</label>
+                        <div class="relative">
+                            <select id="chartTypeSelect"
+                                class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10 text-sm">
+                                <option value="line" selected>折線圖</option>
+                                <option value="bar">直條圖</option>
+                                <option value="pie">圓餅圖</option>
+                            </select>
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                                <i class="fa-solid fa-chevron-down w-4 h-4"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="min-w-[160px] flex-shrink-0">
-                    <label class="block text-gray-dark font-medium mb-2">案件類型</label>
-                    <div class="relative">
-                        <select id="caseTypeSelect"
-                            class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
-                            <option value="">請選擇</option>
-                            <option value="bee">補蜂</option>
-                            <option value="snake">捉蛇</option>
-                            <option value="rescue">動物救援</option>
-                            <option value="lizard">綠鬣蜥</option>
-                        </select>
-                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
-                            <i class="fa-solid fa-chevron-down w-4 h-4"></i>
-                        </span>
+
+                <div class="border-t border-gray-300 pt-4">
+                    <div class="flex gap-4">
+                        <button type="submit"
+                            class="bg-[#6C8C6B] text-white px-3 py-2 rounded flex items-center gap-1 justify-center text-sm hover:bg-[#5a7359] transition">
+                            <i class="fas fa-search fa-fw text-base"></i>
+                            搜尋
+                        </button>
+                        <button type="button"
+                            class="bg-gray-medium text-white px-3 py-2 rounded flex items-center gap-1 justify-center text-sm">
+                            <i class="far fa-list-alt fa-fw text-base"></i>
+                            列出全部
+                        </button>
                     </div>
-                </div>
-                <div class="min-w-[160px] flex-shrink-0">
-                    <label class="block text-gray-dark font-medium mb-2">物種類型</label>
-                    <div class="relative">
-                        <select id="speciesSelect"
-                            class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10"
-                            disabled>
-                            <option value="">請先選擇案件類型</option>
-                        </select>
-                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
-                            <i class="fa-solid fa-chevron-down w-4 h-4"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="min-w-[160px] flex-shrink-0">
-                    <label class="block text-gray-dark font-medium mb-2">通報來源</label>
-                    <div class="relative">
-                        <select class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
-                            <option>不拘</option>
-                            <option>119</option>
-                            <option>1999</option>
-                            <option>1959</option>
-                        </select>
-                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
-                            <i class="fa-solid fa-chevron-down w-4 h-4"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="min-w-[160px] flex-shrink-0">
-                    <label class="block text-gray-dark font-medium mb-2">圖表類型</label>
-                    <div class="relative">
-                        <select id="chartTypeSelect"
-                            class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
-                            <option value="line" selected>折線圖</option>
-                            <option value="bar">直條圖</option>
-                            <option value="pie">圓餅圖</option>
-                        </select>
-                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
-                            <i class="fa-solid fa-chevron-down w-4 h-4"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="flex gap-2">
-                    <button type="submit"
-                        class="bg-primary text-white px-6 py-2 rounded hover:bg-green-700 transition flex items-center gap-2">
-                        <!-- 搜尋 icon -->
-                        <i class="fa-solid fa-magnifying-glass w-4 h-4"></i>
-                        搜尋
-                    </button>
                 </div>
             </form>
         </div>
@@ -286,11 +313,11 @@
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">鄉鎮</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:119</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1999</th>
-                                <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:1959</th>
-                                <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:其他</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1959</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:其他</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
-                                <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">完成率</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
                             </tr>
                         </thead>
                         <tbody class="text-sm" id="data-table-body">
@@ -329,6 +356,33 @@
     </main>
 
     <script>
+        // 搜尋表單收納功能
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.getElementById('toggleSearchForm');
+            const searchForm = document.getElementById('searchForm');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (toggleBtn && searchForm && toggleIcon) {
+                toggleBtn.addEventListener('click', function () {
+                    searchForm.classList.toggle('hidden');
+                    searchForm.classList.toggle('block');
+
+                    // 切換圖標方向
+                    if (searchForm.classList.contains('hidden')) {
+                        toggleIcon.classList.remove('fa-chevron-up');
+                        toggleIcon.classList.add('fa-chevron-down');
+                    } else {
+                        toggleIcon.classList.remove('fa-chevron-down');
+                        toggleIcon.classList.add('fa-chevron-up');
+                    }
+                });
+            }
+
+            // 初始化統計資料
+            initializeTownStats();
+            renderSourceTable();
+        });
+
         // 產生亂數陣列（平均落在10000~13000）
         function randomData(len, min, max) {
             return Array.from({ length: len }, () => Math.floor(Math.random() * (max - min + 1)) + min);
@@ -687,14 +741,14 @@
             document.getElementById("table-head").innerHTML = `
         <tr class="bg-green-light">
             <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">序號</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">鄉鎮</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:119</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:1999</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:1959</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:其他</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">鄉鎮</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:119</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1999</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1959</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:其他</th>
             <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
             <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">完成率</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
         </tr>
     `;
             document.getElementById("data-table-body").innerHTML = html;
@@ -719,25 +773,19 @@
             }
             document.getElementById("table-head").innerHTML = `
         <tr class="bg-green-light">
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">序號</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">鄉鎮</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:補蜂</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:捉蛇</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:動物救援</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:綠鬣蜥</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">序號</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">鄉鎮</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:補蜂</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:捉蛇</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:動物救援</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:綠鬣蜥</th>
             <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">結案數</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">完成率</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
         </tr>
     `;
             document.getElementById("data-table-body").innerHTML = html;
         }
-
-        // 預設載入
-        document.addEventListener("DOMContentLoaded", function () {
-            initializeTownStats();
-            renderSourceTable();
-        });
 
         // 案件類型與物種對應關係
         const caseTypeSpecies = {
