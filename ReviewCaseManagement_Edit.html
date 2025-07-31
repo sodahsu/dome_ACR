@@ -673,6 +673,91 @@
                     }
                 }
             }
+
+            // 退回按鈕功能
+            var reviewRejectBtn = document.getElementById('reviewRejectBtn');
+            if (reviewRejectBtn) {
+                reviewRejectBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    showReviewRejectModal();
+                });
+
+                // 審核退回視窗
+                function showReviewRejectModal() {
+                    let modal = document.getElementById('reviewRejectModal');
+                    if (!modal) {
+                        modal = document.createElement('div');
+                        modal.id = 'reviewRejectModal';
+                        modal.style.position = 'fixed';
+                        modal.style.top = '0';
+                        modal.style.left = '0';
+                        modal.style.width = '100vw';
+                        modal.style.height = '100vh';
+                        modal.style.background = 'rgba(0,0,0,0.5)';
+                        modal.style.display = 'flex';
+                        modal.style.justifyContent = 'center';
+                        modal.style.alignItems = 'center';
+                        modal.style.zIndex = '9999';
+                        modal.innerHTML = `
+                            <div style='background:#fff;padding:32px;border-radius:12px;box-shadow:0 2px 16px #0008;min-width:400px;max-width:500px;'>
+                                <h2 style='font-size:1.25rem;font-weight:bold;margin-bottom:20px;text-align:center;color:#dc3545;'>審核退回</h2>
+                                <div style='margin-bottom:16px;'>
+                                    <label style='display:block;font-weight:bold;margin-bottom:8px;color:#333;'>
+                                        <span style='color:#dc3545;margin-right:4px;'>*</span>退回原因類別
+                                    </label>
+                                    <select id='rejectCategorySelect' style='width:100%;padding:8px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px;'>
+                                        <option value=''>請選擇</option>
+                                        <option value='照片問題'>照片問題</option>
+                                        <option value='資料填寫不完整'>資料填寫不完整</option>
+                                        <option value='處理程序錯誤'>處理程序錯誤</option>
+                                        <option value='其他'>其他</option>
+                                    </select>
+                                </div>
+                                <div style='margin-bottom:24px;'>
+                                    <label style='display:block;font-weight:bold;margin-bottom:8px;color:#333;'>
+                                        <span style='color:#dc3545;margin-right:4px;'>*</span>退回說明
+                                    </label>
+                                    <textarea id='rejectReasonTextarea' placeholder='請詳細說明退回原因...' 
+                                        style='width:100%;height:100px;padding:8px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px;resize:vertical;'></textarea>
+                                </div>
+                                <div style='text-align:center;'>
+                                    <button id='confirmRejectBtn' style='background:#dc3545;color:#fff;padding:10px 24px;border:none;border-radius:6px;font-size:1rem;font-weight:bold;cursor:pointer;margin-right:16px;'>確定退回</button>
+                                    <button id='cancelRejectBtn' style='background:#6c757d;color:#fff;padding:10px 24px;border:none;border-radius:6px;font-size:1rem;font-weight:bold;cursor:pointer;'>取消</button>
+                                </div>
+                            </div>
+                        `;
+                        document.body.appendChild(modal);
+
+                        document.getElementById('confirmRejectBtn').onclick = function () {
+                            const category = document.getElementById('rejectCategorySelect').value;
+                            const reason = document.getElementById('rejectReasonTextarea').value.trim();
+
+                            if (!category) {
+                                alert('請選擇退回原因類別');
+                                return;
+                            }
+                            if (!reason) {
+                                alert('請填寫退回說明');
+                                return;
+                            }
+
+                            // 這裡可以加入提交退回資料的邏輯
+                            modal.style.display = 'none';
+                            alert('案件已退回');
+                            window.location.href = 'ReviewCaseManagement_List.html';
+                        };
+
+                        document.getElementById('cancelRejectBtn').onclick = function () {
+                            modal.style.display = 'none';
+                        };
+                    } else {
+                        modal.style.display = 'flex';
+                        // 清空之前的輸入
+                        document.getElementById('rejectCategorySelect').value = '';
+                        document.getElementById('rejectReasonTextarea').value = '';
+                    }
+                }
+            }
             // 電子簽章預覽功能
             var signaturePreviewLink = document.getElementById('signaturePreviewLink');
             if (signaturePreviewLink) {
