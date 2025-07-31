@@ -66,8 +66,17 @@
         </div>
 
         <!-- 查詢表單區塊 -->
-        <div class="bg-white shadow-lg rounded-lg p-4 mb-4">
-            <form class="space-y-4">
+        <div class="bg-white shadow-lg rounded-lg p-2 md:p-4 mb-4">
+            <!-- 手機版收納按鈕 -->
+            <div class="md:hidden mb-3">
+                <button type="button" id="toggleSearchForm"
+                    class="w-full bg-primary text-white px-3 py-2 rounded flex items-center justify-between text-sm">
+                    <span>搜尋條件</span>
+                    <i id="toggleIcon" class="fas fa-chevron-down transition-transform duration-300"></i>
+                </button>
+            </div>
+
+            <form id="searchForm" class="md:block hidden space-y-4">
                 <!-- 第一行：年度區間 + 鄉鎮 + 案件類型 + 物種類型 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="flex flex-col gap-2">
@@ -304,11 +313,11 @@
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">鄉鎮</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:119</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1999</th>
-                                <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:1959</th>
-                                <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:其他</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1959</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:其他</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
-                                <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">完成率</th>
+                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
                             </tr>
                         </thead>
                         <tbody class="text-sm" id="data-table-body">
@@ -347,6 +356,33 @@
     </main>
 
     <script>
+        // 搜尋表單收納功能
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.getElementById('toggleSearchForm');
+            const searchForm = document.getElementById('searchForm');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (toggleBtn && searchForm && toggleIcon) {
+                toggleBtn.addEventListener('click', function () {
+                    searchForm.classList.toggle('hidden');
+                    searchForm.classList.toggle('block');
+
+                    // 切換圖標方向
+                    if (searchForm.classList.contains('hidden')) {
+                        toggleIcon.classList.remove('fa-chevron-up');
+                        toggleIcon.classList.add('fa-chevron-down');
+                    } else {
+                        toggleIcon.classList.remove('fa-chevron-down');
+                        toggleIcon.classList.add('fa-chevron-up');
+                    }
+                });
+            }
+
+            // 初始化統計資料
+            initializeTownStats();
+            renderSourceTable();
+        });
+
         // 產生亂數陣列（平均落在10000~13000）
         function randomData(len, min, max) {
             return Array.from({ length: len }, () => Math.floor(Math.random() * (max - min + 1)) + min);
@@ -705,14 +741,14 @@
             document.getElementById("table-head").innerHTML = `
         <tr class="bg-green-light">
             <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">序號</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">鄉鎮</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:119</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:1999</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:1959</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:其他</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">鄉鎮</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:119</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1999</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1959</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:其他</th>
             <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
             <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">完成率</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
         </tr>
     `;
             document.getElementById("data-table-body").innerHTML = html;
@@ -737,25 +773,19 @@
             }
             document.getElementById("table-head").innerHTML = `
         <tr class="bg-green-light">
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">序號</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">鄉鎮</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:補蜂</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:捉蛇</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:動物救援</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:綠鬣蜥</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">序號</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">鄉鎮</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:補蜂</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:捉蛇</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:動物救援</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:綠鬣蜥</th>
             <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">結案數</th>
-            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">完成率</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
+            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
         </tr>
     `;
             document.getElementById("data-table-body").innerHTML = html;
         }
-
-        // 預設載入
-        document.addEventListener("DOMContentLoaded", function () {
-            initializeTownStats();
-            renderSourceTable();
-        });
 
         // 案件類型與物種對應關係
         const caseTypeSpecies = {
