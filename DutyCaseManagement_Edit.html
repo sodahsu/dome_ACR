@@ -501,7 +501,7 @@
                     <div class="flex items-center gap-2">
                         <span class="text-sm text-gray-dark">回報日期： yyy/mm/dd</span>
                         <button type="button" id="acceptDispatchBtn"
-                            class="bg-accent text-white px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition">
+                            class="min-w-[96px] bg-primary text-white px-4 py-2 rounded hover:bg-green-700 transition flex items-center gap-1">
                             <i class="fas fa-inbox mr-1"></i>接收派案
                         </button>
                     </div>
@@ -649,10 +649,10 @@
                             </label>
                             <select id="fieldProcessSelect"
                                 class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
-                                <option selected>已逃跑</option>
-                                <option>現場放走</option>
-                                <option>野放</option>
-                                <option>後送</option>
+                                <option>安全處野放</option>
+                                <option>到場無法救援</option>
+                                <option selected>後送</option>
+                                <option>攜回</option>
                             </select>
                         </div>
                     </div>
@@ -846,6 +846,69 @@
                     </div>
                 </div>
             </section>
+            <!-- 後送作業 -->
+            <section id="transferSection" style="display:none;">
+                <div class="flex items-center gap-2 mb-4 bg-gray-light border-l-2 border-primary px-4 py-2">
+                    <!-- 後送作業 icon -->
+                    <i class="fas fa-ambulance text-primary w-4 h-4 mr-1"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-primary">後送作業紀錄</h3>
+                </div>
+                <div class="border border-border rounded p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>後送單位
+                            </label>
+                            <select
+                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                <option value="">請選擇</option>
+                                <option value="屏東科技大學獸醫教學醫院">屏東科技大學獸醫教學醫院</option>
+                                <option value="長治鄉動物醫院">長治鄉動物醫院</option>
+                                <option value="潮州動物醫院">潮州動物醫院</option>
+                                <option value="東港動物醫院">東港動物醫院</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>後送日期
+                            </label>
+                            <input type="datetime-local"
+                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                        </div>
+                        <div></div>
+                    </div>
+
+                    <!-- 後送照片上傳區 -->
+                    <div class="mt-4">
+                        <div class="w-full p-4 rounded-lg border border-gray-200">
+                            <div class="flex items-center text-gray-dark font-medium mb-3">
+                                <span class="text-danger mr-1">*</span><span>後送紀錄</span>
+                                <span class="text-xs text-gray-500 ml-2">(<span
+                                        id="transferPhotoCount">0</span>/1)</span>
+                            </div>
+                            <div id="transferPhotoPreview" class="w-full min-h-[120px] flex items-center">
+                                <!-- 照片預覽區域 -->
+                                <div id="transferPhotoSlot" class="relative w-32 h-32" style="display:none;">
+                                    <img class="w-full h-full object-cover rounded cursor-pointer" alt="後送照片">
+                                    <button type="button"
+                                        class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                </div>
+                                <!-- 上傳按鈕 -->
+                                <label for="transferPhotoInput" id="transferUploadSlot"
+                                    class="bg-white border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 hover:border-primary text-gray-400 hover:text-primary transition-colors w-32 h-32">
+                                    <i class="fas fa-plus text-xl"></i>
+                                    <div class="text-xs font-medium mt-1">新增照片</div>
+                                </label>
+                            </div>
+                            <input type="file" id="transferPhotoInput" accept="image/*" style="display:none;">
+                            <div class="text-xs text-gray-500 mt-2">
+                                可上傳的檔案格式：jpg、jpeg、png，最多1張，每張最大 2MB。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <!-- 電子簽章 -->
             <section>
                 <div class="flex items-center gap-2 mb-4 bg-gray-light border-l-2 border-primary px-4 py-2">
@@ -1018,6 +1081,9 @@
                         // 顯示外勤作業紀錄區塊
                         const fieldWorkBlock = document.getElementById('fieldWorkBlock');
                         if (fieldWorkBlock) fieldWorkBlock.style.display = '';
+                        // 顯示後送作業紀錄區塊
+                        const transferSection = document.getElementById('transferSection');
+                        if (transferSection) transferSection.style.display = '';
                         // 顯示電子簽章區塊
                         const signatureBlock = document.getElementById('signatureBlock');
                         if (signatureBlock) signatureBlock.style.display = '';
@@ -1179,10 +1245,13 @@
                 const speciesSelect = document.getElementById('speciesSelect');
                 const statusSelect_main = document.getElementById('speciesStatusSelect');
                 const processSelect = document.getElementById('processSelect');
+                const fieldProcessSelect = document.getElementById('fieldProcessSelect');
                 const processLabel_main = document.getElementById('processLabel');
                 const processStar_main = processLabel_main ? processLabel_main.querySelector('.text-danger') : null;
                 const workPhotoBlock3 = document.getElementById('workPhotoBlock3');
                 const workPhotoBlock2Star = document.querySelector('#workPhotoBlock2 .work-photo-title .text-danger');
+                const transferSection = document.getElementById('transferSection');
+
                 if (workPhotoBlock2Star) workPhotoBlock2Star.style.display = 'none';
                 if (!speciesSelect || !statusSelect_main || !processSelect) return;
 
@@ -1418,8 +1487,9 @@
                     modal.style.left = '0';
                     modal.style.width = '100vw';
                     modal.style.height = '100vh';
-                    modal.style.background = 'rgba(0,0,0,0.7)';
+                    modal.style.background = 'rgba(0,0,0.7)';
                     modal.style.display = 'none';
+
                     modal.style.justifyContent = 'center';
                     modal.style.alignItems = 'center';
                     modal.style.zIndex = '9999';
@@ -1914,6 +1984,61 @@
                 btn.addEventListener('click', () => {
                     menu.classList.toggle('hidden');
                 });
+            }
+
+            // 外勤處理情形監聽器 - 當選擇「後送」時顯示後送作業區塊
+            const fieldProcessSelect = document.getElementById('fieldProcessSelect');
+            if (fieldProcessSelect) {
+                // 移除自動顯示隱藏邏輯，讓後送作業區塊始終可見
+                fieldProcessSelect.addEventListener('change', function () {
+                    // 可以在這裡添加其他邏輯，但不控制後送區塊的顯示隱藏
+                });
+            }            // 後送作業照片上傳功能
+            const transferPhotoInput = document.getElementById('transferPhotoInput');
+            const transferPhotoSlot = document.getElementById('transferPhotoSlot');
+            const transferUploadSlot = document.getElementById('transferUploadSlot');
+            const transferPhotoCount = document.getElementById('transferPhotoCount');
+
+            if (transferPhotoInput) {
+                transferPhotoInput.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    // 檢查檔案類型
+                    if (!file.type.match('image.*')) {
+                        alert('請選擇圖片檔案（jpg、jpeg、png）');
+                        return;
+                    }
+
+                    // 檢查檔案大小（2MB）
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('檔案大小不能超過 2MB');
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const img = transferPhotoSlot.querySelector('img');
+                        img.src = e.target.result;
+                        transferPhotoSlot.style.display = 'block';
+                        transferUploadSlot.style.display = 'none';
+                        transferPhotoCount.textContent = '1';
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            // 後送照片刪除功能
+            if (transferPhotoSlot) {
+                const deleteBtn = transferPhotoSlot.querySelector('button');
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', function () {
+                        transferPhotoSlot.style.display = 'none';
+                        transferUploadSlot.style.display = 'flex';
+                        transferPhotoCount.textContent = '0';
+                        if (transferPhotoInput) transferPhotoInput.value = '';
+                    });
+                }
             }
 
             // 電子簽章功能
