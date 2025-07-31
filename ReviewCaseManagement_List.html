@@ -243,8 +243,7 @@
                             <td class="border-b border-gray-200 p-2">待點交</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
                                     class="fas fa-exclamation-circle fa-fw text-danger text-base cursor-pointer"
-                                    title="異常說明"
-                                    onclick="showAbnormalModal('照片疑似非通報物件。', '照片疑似車禍傷亡：此案件作業時間過長，請進行確認。', '條件處理時間過時(150分鐘)：通報時間 2024/04/28 13:20:21，案件完成處理時間 2024/04/29 21:10:21。', '廠商回報聯效(10分鐘)：通報時間 2024/04/28 13:20:21，廠商聯繫通報人時間 2024/04/28 18:35:21。')"></i>
+                                    title="異常說明" onclick="showAbnormalModal()"></i>
                             </td>
                         </tr>
                         <tr class="hover:bg-green-50">
@@ -378,7 +377,7 @@
                             <td class="border-b border-gray-200 p-2">不須點交</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
                                     class="fas fa-exclamation-circle fa-fw text-danger text-base cursor-pointer"
-                                    title="異常說明" onclick="showAbnormalModal('照片疑似非通報物件。')"></i></td>
+                                    title="異常說明" onclick="showAbnormalModal()"></i></td>
                         </tr>
                     </tbody>
                 </table>
@@ -388,31 +387,29 @@
         <!-- 異常說明燈箱 -->
         <div id="abnormalModal"
             class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-            <div class="bg-white rounded-lg shadow-lg max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-                <div class="flex justify-between items-center p-4 border-b border-gray-200">
-                    <h3 class="text-lg font-bold text-secondary flex items-center gap-2">
-                        <i class="fas fa-exclamation-triangle text-danger"></i>
-                        異常紀錄
-                    </h3>
+            <div class="bg-white rounded-lg shadow-lg max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between p-4 border-b bg-white">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-exclamation-triangle text-primary"></i>
+                        <h3 class="text-lg font-bold text-secondary">異常紀錄</h3>
+                    </div>
                     <button onclick="closeAbnormalModal()" class="text-gray-500 hover:text-gray-700">
                         <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
-                <div class="p-4">
-                    <div class="bg-green-light rounded-lg p-3 mb-4">
-                        <div class="grid grid-cols-2 gap-4 text-sm">
-                            <div>
-                                <span class="font-medium text-secondary">項次：</span>
-                                <span id="modalItemNumber" class="text-gray-700"></span>
-                            </div>
-                            <div>
-                                <span class="font-medium text-secondary">異常說明：</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="abnormalContent" class="space-y-3">
-                        <!-- 異常內容將由 JavaScript 動態填入 -->
-                    </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="bg-green-light sticky top-0">
+                            <tr>
+                                <th class="p-3 text-left font-bold">項次</th>
+                                <th class="p-3 text-left font-bold">異常說明</th>
+                                <th class="p-3 text-left font-bold">紀錄時間</th>
+                            </tr>
+                        </thead>
+                        <tbody id="abnormalContent">
+                            <!-- 異常內容將由 JavaScript 動態填入 -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -447,22 +444,42 @@
     </main>
 
     <script>
-        function showAbnormalModal(...abnormalItems) {
+        function showAbnormalModal() {
             const modal = document.getElementById('abnormalModal');
             const content = document.getElementById('abnormalContent');
 
             // 清空內容
             content.innerHTML = '';
 
-            // 根據參數數量生成異常項目
+            // 根據截圖生成固定的異常項目
+            const abnormalItems = [
+                {
+                    description: '照片疑似非通報物種，請進行確認。',
+                    time: '2024/05/10 05:20:00'
+                },
+                {
+                    description: '照片疑似重複上傳：此案件上傳照片與資料庫中歷史照片相似，請進行確認。',
+                    time: '2024/05/02 05:20:00'
+                },
+                {
+                    description: '案件處理時間逾時(150分鐘)：通報時間 2024/04/28 18:20:21，案件完成處理時間 2024/04/29 21:10:21。',
+                    time: '2024/04/29 05:20:00'
+                },
+                {
+                    description: '廠商回報時效(10分鐘)：通報時間 2024/04/28 18:20:21，廠商聯繫通報人時間 2024/04/28 18:35:21。',
+                    time: '2024/04/28 20:20:00'
+                }
+            ];
+
+            // 生成表格行
             abnormalItems.forEach((item, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'flex gap-3 p-3 bg-gray-50 rounded';
-                itemDiv.innerHTML = `
-                    <div class="flex-shrink-0 text-secondary font-medium">${index + 1}.</div>
-                    <div class="flex-1 text-gray-700">${item}</div>
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="p-3">${index + 1}.</td>
+                    <td class="p-3">${item.description}</td>
+                    <td class="p-3">${item.time}</td>
                 `;
-                content.appendChild(itemDiv);
+                content.appendChild(row);
             });
 
             modal.classList.remove('hidden');
