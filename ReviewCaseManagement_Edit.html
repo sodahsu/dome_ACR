@@ -208,6 +208,7 @@
                     </div>
                 </div>
                 <div class="border border-border rounded p-4" id="basicInfoBlock">
+                    <!-- 第一行 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                         <div>
                             <label class="block text-gray-dark font-medium mb-1">立案編號</label>
@@ -226,6 +227,7 @@
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">王小明</span>
                         </div>
                     </div>
+                    <!-- 第二行 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                         <div>
                             <label class="block text-gray-dark font-medium mb-1">性別</label>
@@ -239,7 +241,12 @@
                             <label class="block text-gray-dark font-medium mb-1">電話值班人員</label>
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">林值班</span>
                         </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">案件類型</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">捉蛇</span>
+                        </div>
                     </div>
+                    <!-- 第三行 -->
                     <div class="mb-4">
                         <label class="block text-gray-dark font-medium mb-1">通報地址</label>
                         <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">屏東縣不拘自由路527號</span>
@@ -262,11 +269,8 @@
                     </button>
                 </div>
                 <div class="border border-border rounded p-4" id="dutyRecordBlock">
+                    <!-- 第一行 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                        <div>
-                            <label class="block text-gray-dark font-medium mb-1">案件類型</label>
-                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">捉蛇</span>
-                        </div>
                         <div>
                             <label class="block text-gray-dark font-medium mb-1">作業廠商</label>
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">廠商A</span>
@@ -276,8 +280,30 @@
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">許ＯＯ</span>
                         </div>
                         <div>
+                            <label class="block text-gray-dark font-medium mb-1">物種名稱</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">眼鏡蛇</span>
+                        </div>
+                        <div>
                             <label class="block text-gray-dark font-medium mb-1">廠商聯繫通報人時間</label>
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">2025/07/13 10:00:00</span>
+                        </div>
+                    </div>
+                    <!-- 第二行 -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">通報人願意於現場等待</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">通報物仍在現場，尚未脫逃</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">是否有飼主</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
+                        <div>
+                            <!-- 空白或保留未來欄位 -->
                         </div>
                     </div>
                 </div>
@@ -321,28 +347,98 @@
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">已逃跑</span>
                         </div>
                     </div>
-                    <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-                        <div class="work-photo-block flex flex-col h-full flex-1 min-w-0">
-                            <div class="work-photo-title">
-                                <span class="text-danger mr-1">*</span><span>處理前紀錄</span>
+                    <!-- 外勤作業照片上傳區 -->
+                    <div class="mt-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- 處理前紀錄 -->
+                            <div id="workPhotoBlock1"
+                                class="work-photo-block w-full p-4 rounded-lg border border-gray-200">
+                                <div class="work-photo-title flex items-center text-gray-dark font-medium mb-3">
+                                    <span>處理前紀錄</span>
+                                    <span class="text-xs text-gray-500 ml-2">(<span id="photoCount1">2</span>/4)</span>
+                                </div>
+                                <div id="workPhotoPreview1"
+                                    class="work-photo-preview grid grid-cols-4 gap-2 w-full min-h-[80px]">
+                                    <!-- 照片位置1 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:block;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片1"
+                                            src="img/Review01.jpg">
+                                    </div>
+                                    <!-- 照片位置2 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:block;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片2"
+                                            src="img/Review02.jpg">
+                                    </div>
+                                    <!-- 照片位置3 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片3">
+                                    </div>
+                                    <!-- 照片位置4 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片4">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="block bg-gray-100 rounded flex items-center justify-center"
-                                style="width:200px; height:200px;">
-                                <img src="img/Review01.jpg" alt="處理前紀錄-Review01"
-                                    style="width:200px; height:200px; object-fit:cover; cursor:pointer; border-radius:8px;"
-                                    onclick="if(window.showPhotoModal)window.showPhotoModal(0);" />
+
+                            <!-- 處理完成紀錄 -->
+                            <div id="workPhotoBlock3"
+                                class="work-photo-block w-full p-4 rounded-lg border border-gray-200">
+                                <div class="work-photo-title flex items-center text-gray-dark font-medium mb-3">
+                                    <span>處理完成紀錄</span>
+                                    <span class="text-xs text-gray-500 ml-2">(<span id="photoCount3">1</span>/4)</span>
+                                </div>
+                                <div id="workPhotoPreview3"
+                                    class="work-photo-preview grid grid-cols-4 gap-2 w-full min-h-[80px]">
+                                    <!-- 照片位置1 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:block;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片1"
+                                            src="img/Review03.jpg">
+                                    </div>
+                                    <!-- 照片位置2 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片2">
+                                    </div>
+                                    <!-- 照片位置3 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片3">
+                                    </div>
+                                    <!-- 照片位置4 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片4">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="work-photo-block flex flex-col h-full flex-1 min-w-0">
-                            <div class="work-photo-title">
-                                <span class="text-danger mr-1">*</span><span>處理完成紀錄</span>
-                            </div>
-                            <div class="block bg-gray-100 rounded flex items-center justify-center"
-                                style="width:200px; height:200px;">
-                                <img src="img/Review03.jpg" alt="處理完成紀錄-Review03"
-                                    style="width:200px; height:200px; object-fit:cover; cursor:pointer; border-radius:8px;"
-                                    onclick="if(window.showPhotoModal)window.showPhotoModal(2);" />
-                            </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 新增：後送作業紀錄 -->
+            <section>
+                <div class="flex items-center gap-2 mb-4 bg-gray-light border-l-2 border-primary px-4 py-2">
+                    <!-- 後送作業紀錄 icon -->
+                    <i class="fas fa-truck text-primary w-4 h-4 mr-1"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-primary">後送作業紀錄</h3>
+                </div>
+                <div class="border border-border rounded p-4" id="transferRecordBlock">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">
+                                <span class="text-danger">*</span> 後送單位
+                            </label>
+                            <select
+                                class="block w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="動物之家" selected>動物之家</option>
+                                <option value="收容所">收容所</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">
+                                <span class="text-danger">*</span> 後送日期
+                            </label>
+                            <input type="text"
+                                class="block w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
+                                value="2024/04/28 20:20:21" />
                         </div>
                     </div>
                 </div>
@@ -361,11 +457,12 @@
                             <a href="#"
                                 class="block text-gray-700 bg-gray-100 rounded px-2 py-1 underline hover:text-primary"
                                 id="signaturePreviewLink">王小明（已簽名）</a>
-                            <!-- 連結，script 移到下方 -->
                         </div>
                         <div>
-                            <label class="block text-gray-dark font-medium mb-1">業務人員</label>
-                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">王大明 值班人</span>
+                            <label class="block text-gray-dark font-medium mb-1">簽章日期</label>
+                            <input type="date"
+                                class="block w-full bg-gray-100 border border-gray-300 rounded px-2 py-1 text-gray-700"
+                                value="2024-04-28" readonly />
                         </div>
                     </div>
                 </div>
@@ -378,54 +475,97 @@
                     <h3 class="text-lg md:text-xl font-bold text-primary">審核紀錄</h3>
                 </div>
                 <div class="border border-border rounded p-4" id="reviewRecordBlock">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div>
-                            <label class="block text-gray-dark font-medium mb-1">是否已點交 <span
-                                    class="text-danger">*</span></label>
-                            <div class="flex gap-4">
-                                <label class="inline-flex items-center">
-                                    <input type="radio" name="handover" id="handoverYes" value="是"
-                                        class="form-radio text-primary border border-gray-300 focus:ring-primary" />
-                                    <span class="ml-2">是</span>
-                                </label>
-                                <label class="inline-flex items-center">
-                                    <input type="radio" name="handover" id="handoverNo" value="否"
-                                        class="form-radio text-primary border border-gray-300 focus:ring-primary" />
-                                    <span class="ml-2">否</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-gray-dark font-medium mb-1">點交完成日期 <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" id="handoverDate"
-                                class="block w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary" />
-                        </div>
-                        <div>
-                            <label class="block text-gray-dark font-medium mb-1">審核分類 <span
-                                    class="text-danger">*</span></label>
-                            <select id="reviewCategory"
-                                class="block w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
-                                <option value="">請選擇</option>
-                                <option value="待補">待補</option>
-                                <option value="通過">通過</option>
-                                <option value="退回">退回</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-gray-dark font-medium mb-1">審核備註</label>
-                            <textarea id="reviewNote" maxlength="500"
-                                class="block w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
-                                rows="3" placeholder="請輸入審核備註，最多500字"></textarea>
-                        </div>
+                    <!-- 審核記錄表格 -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border border-gray-300 px-3 py-2 text-left text-gray-dark font-medium">
+                                        審核人員</th>
+                                    <th class="border border-gray-300 px-3 py-2 text-left text-gray-dark font-medium">
+                                        審核日期</th>
+                                    <th class="border border-gray-300 px-3 py-2 text-left text-gray-dark font-medium">
+                                        審核結果</th>
+                                    <th class="border border-gray-300 px-3 py-2 text-left text-gray-dark font-medium">
+                                        退回/不通過類別</th>
+                                    <th class="border border-gray-300 px-3 py-2 text-left text-gray-dark font-medium">
+                                        退回/不通過原因</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border border-gray-300 px-3 py-2">李審核員</td>
+                                    <td class="border border-gray-300 px-3 py-2">2025/07/31 14:30:00</td>
+                                    <td class="border border-gray-300 px-3 py-2">通過</td>
+                                    <td class="border border-gray-300 px-3 py-2">-</td>
+                                    <td class="border border-gray-300 px-3 py-2">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <!-- 警告區塊（紅色） -->
-                    <div class="flex items-center bg-red-100 border-l-4 border-red-500 p-3 rounded mb-2">
+                    <div class="flex items-center bg-red-100 border-l-4 border-red-500 p-3 rounded mb-2 mt-4">
                         <img src="img/warning.png" alt="警告" class="w-5 h-5 mr-2"
                             style="filter: grayscale(0) brightness(1) sepia(1) hue-rotate(-20deg) saturate(8) opacity(0.9);">
                         <span class="text-red-800 font-semibold">資料庫中有相同照片，請確認是否重複上傳！</span>
+                    </div>
+                </div>
+            </section>
+            <!-- 點交紀錄 -->
+            <section>
+                <div class="flex items-center gap-2 mb-4 bg-gray-light border-l-2 border-primary px-4 py-2">
+                    <!-- 點交紀錄 icon -->
+                    <i class="fas fa-exchange-alt text-primary w-4 h-4 mr-1"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-primary">點交紀錄</h3>
+                </div>
+                <div class="border border-border rounded p-4" id="handoverRecordBlock">
+                    <!-- 點交紀錄表格 -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border border-gray-300 px-3 py-2 text-left text-gray-dark font-medium">
+                                        點交人員</th>
+                                    <th class="border border-gray-300 px-3 py-2 text-left text-gray-dark font-medium">
+                                        點交日期</th>
+                                    <th class="border border-gray-300 px-3 py-2 text-left text-gray-dark font-medium">
+                                        點交結果</th>
+                                    <th class="border border-gray-300 px-3 py-2 text-left text-gray-dark font-medium">
+                                        點交物現況</th>
+                                    <th class="border border-gray-300 px-3 py-2 text-left text-gray-dark font-medium">
+                                        限期交回日期</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border border-gray-300 px-3 py-2">張點交員</td>
+                                    <td class="border border-gray-300 px-3 py-2">2025/07/30 16:00:00</td>
+                                    <td class="border border-gray-300 px-3 py-2">
+                                        <select id="handoverResult"
+                                            class="w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                                            <option value="">請選擇</option>
+                                            <option value="動物之家" selected>動物之家</option>
+                                            <option value="野放">野放</option>
+                                            <option value="其他">其他</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-3 py-2">
+                                        <select id="handoverStatus"
+                                            class="w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                                            <option value="">請選擇</option>
+                                            <option value="健康">健康</option>
+                                            <option value="受傷">受傷</option>
+                                            <option value="已死亡" selected>已死亡</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-3 py-2">
+                                        <input type="date" id="returnDeadlineDate"
+                                            class="w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
+                                            value="2025-08-15">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
@@ -435,7 +575,7 @@
     <!-- 底部按鈕 -->
     <div class="fixed-bottom-bar bg-white shadow-lg border-t border-gray-200 py-2">
         <div class="bottom-btns flex flex-wrap justify-center items-center gap-2 max-w-[1440px] mx-auto px-4">
-            <button type="button" id="cancelBtn"
+            <button type="button"
                 class="min-w-[96px] bg-white text-gray-medium border border-gray-medium px-4 py-2 rounded hover:bg-gray-100 transition">取消</button>
             <button type="button"
                 class="min-w-[96px] bg-gray-medium text-white px-4 py-2 rounded hover:bg-gray-dark transition flex items-center gap-1">
@@ -450,7 +590,7 @@
             <button type="button" id="reviewPassBtn"
                 class="min-w-[96px] bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition flex items-center gap-1">
                 <i class="fas fa-check-circle w-3.5 h-3.5 mr-1"></i>
-                通過
+                審核完成
             </button>
         </div>
     </div>
@@ -458,52 +598,15 @@
     <script>
         // 全部互動功能
         document.addEventListener('DOMContentLoaded', function () {
-            // 取消按鈕返回上一頁
-            const cancelBtn = document.getElementById('cancelBtn');
-            if (cancelBtn) {
-                cancelBtn.addEventListener('click', function () {
-                    window.history.back();
-                });
-            }
+            // 檢測檔案類型的輔助函數（全域函數）
+            window.isVideoFile = function (dataUrl) {
+                return dataUrl && dataUrl.startsWith('data:video/');
+            };
 
-            // 是否已點交預設選「是」
-            var handoverYesRadio = document.getElementById('handoverYes');
-            if (handoverYesRadio) {
-                handoverYesRadio.checked = true;
-            }
-            // 點交完成日期預設今天含時間
-            var handoverDateInput = document.getElementById('handoverDate');
-            if (handoverDateInput) {
-                var now = new Date();
-                var yyyy = now.getFullYear();
-                var mm = String(now.getMonth() + 1).padStart(2, '0');
-                var dd = String(now.getDate()).padStart(2, '0');
-                var hh = String(now.getHours()).padStart(2, '0');
-                var min = String(now.getMinutes()).padStart(2, '0');
-                var ss = String(now.getSeconds()).padStart(2, '0');
-                handoverDateInput.value = `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}`;
-            }
-
-            // 通過按鈕驗證審核紀錄欄位
+            // 通過按鈕功能（審核記錄已為唯讀，不需驗證）
             var reviewPassBtn = document.getElementById('reviewPassBtn');
             if (reviewPassBtn) {
                 reviewPassBtn.addEventListener('click', function (e) {
-                    // 是否已點交
-                    var handoverRadios = document.getElementsByName('handover');
-                    var handoverChecked = Array.from(handoverRadios).find(r => r.checked);
-                    // 點交完成日期
-                    var handoverDate = document.getElementById('handoverDate')?.value.trim();
-                    // 審核分類
-                    var reviewCategory = document.getElementById('reviewCategory')?.value;
-                    let msg = '';
-                    if (!handoverChecked) msg += '請選擇是否已點交\n';
-                    if (!handoverDate) msg += '請填寫點交完成日期\n';
-                    if (!reviewCategory || reviewCategory === '') msg += '請選擇審核分類\n';
-                    if (msg) {
-                        alert(msg);
-                        e.preventDefault();
-                        return;
-                    }
                     // 驗證通過，跳出確認視窗
                     e.preventDefault();
                     showReviewPassConfirmModal();
@@ -771,10 +874,7 @@
                         const speciesStatus = document.getElementById('speciesStatusSelect')?.value;
                         const owner = Array.from(document.getElementsByName('hasOwner')).find(r => r.checked)?.nextElementSibling?.textContent;
                         const process = document.getElementById('processSelect')?.value;
-                        // 三張照片
-                        const photo1 = document.getElementById('workPhotoInput1')?.files.length;
-                        const photo2 = document.getElementById('workPhotoInput2')?.files.length;
-                        const photo3 = document.getElementById('workPhotoInput3')?.files.length;
+
                         let msg = '';
                         if (!arriveTime) msg += '請填寫值勤人員抵達時間\n';
                         if (!species || species === '不拘') msg += '請選擇物種\n';
@@ -782,9 +882,8 @@
                         if (!speciesStatus) msg += '請選擇物種狀況\n';
                         if (!owner) msg += '請選擇是否有飼主\n';
                         if (!process) msg += '請選擇處理情形\n';
-                        if (!photo1) msg += '請上傳處理前紀錄照片\n';
-                        // 處理中紀錄非必填
-                        if (!photo3) msg += '請上傳處理完成紀錄照片\n';
+                        // 審核頁面不需要驗證照片上傳
+
                         if (msg) {
                             alert(msg);
                             e.preventDefault();
@@ -973,7 +1072,7 @@
                 });
             }
 
-            // 照片上傳和預覽功能
+            // 照片查看功能（僅供查看，不可上傳或刪除）
             function setupPhotoUpload(blockId, inputId, previewId) {
                 let modal = document.getElementById('photoModal');
                 if (!modal) {
@@ -1007,148 +1106,121 @@
                         e.stopPropagation();
                     };
                 }
-                const uploadBtn = document.getElementById(inputId);
+
                 const previewBox = document.getElementById(previewId);
-                if (!uploadBtn || !previewBox) return;
-                if (!window.workPhotoData) {
-                    window.workPhotoData = [null, null, null];
+                if (!previewBox) return;
+
+                // 初始化多照片存儲
+                if (!window.workPhotoDataMulti) {
+                    window.workPhotoDataMulti = [[], [], []]; // 每個階段最多4張照片
                     window.workPhotoTitles = ["處理前紀錄", "處理中紀錄", "處理完成紀錄"];
                 }
+
+                // 在審核頁面，添加示例照片數據
+                if (blockId === 'workPhotoBlock1' && window.workPhotoDataMulti[0].length === 0) {
+                    // 處理前紀錄添加示例照片
+                    window.workPhotoDataMulti[0] = ['img/Review01.jpg', 'img/Review02.jpg'];
+                }
+                if (blockId === 'workPhotoBlock3' && window.workPhotoDataMulti[2].length === 0) {
+                    // 處理完成紀錄添加示例照片
+                    window.workPhotoDataMulti[2] = ['img/Review03.jpg'];
+                }
+
                 const blockIdx = blockId === 'workPhotoBlock1' ? 0 : blockId === 'workPhotoBlock2' ? 1 : 2;
-                uploadBtn.addEventListener('change', function (e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const isImage = file.type.startsWith('image/');
-                        const isVideo = file.type.startsWith('video/');
-                        if (!isImage && !isVideo) {
-                            previewBox.innerHTML = `<div style='color:#DC3545;font-weight:bold;text-align:center;'>無法上傳</div>`;
-                            window.workPhotoData[blockIdx] = null;
-                            return;
-                        }
-                        const reader = new FileReader();
-                        reader.onload = function (evt) {
-                            let title = '';
-                            const block = document.getElementById(blockId);
-                            if (block) {
-                                const titleEl = block.querySelector('.work-photo-title span');
-                                if (titleEl) title = titleEl.textContent.trim();
-                            }
-                            window.workPhotoData[blockIdx] = evt.target.result;
-                            window.workPhotoTitles[blockIdx] = title;
-                            if (isImage) {
-                                previewBox.innerHTML = `<img src='${evt.target.result}' alt='preview' style='width:100%;height:100%;object-fit:cover;border-radius:8px;cursor:pointer;' />`;
-                                const img = previewBox.querySelector('img');
-                                if (img) {
-                                    img.onclick = function () {
-                                        showPhotoModal(blockIdx);
-                                    };
-                                }
-                            } else if (isVideo) {
-                                previewBox.innerHTML = `<video src='${evt.target.result}' controls style='width:100%;height:100%;border-radius:8px;object-fit:cover;'></video>`;
+
+                // 設置照片點擊查看功能
+                const photoSlots = previewBox.querySelectorAll('.photo-slot');
+                photoSlots.forEach((slot, index) => {
+                    const img = slot.querySelector('img');
+                    if (img && img.src) {
+                        img.onclick = (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            if (window.showPhotoModal) {
+                                setTimeout(() => {
+                                    window.showPhotoModal(blockIdx, index);
+                                }, 100);
                             }
                         };
-                        reader.readAsDataURL(file);
-                    } else {
-                        previewBox.innerHTML = '';
-                        window.workPhotoData[blockIdx] = null;
                     }
                 });
-                previewBox.onclick = function () {
-                    if (window.workPhotoData[blockIdx]) {
-                        showPhotoModal(blockIdx);
-                    }
-                };
+
+                // 初始化模態視窗功能
                 if (!window.photoModalSliderInit) {
                     window.photoModalSliderInit = true;
+                    window.currentPhotoBlockIdx = 0;
                     window.currentPhotoIdx = 0;
-                    window.showPhotoModal = function (idx) {
-                        window.currentPhotoIdx = idx;
-                        updatePhotoModal();
-                        document.getElementById("photoModal").style.display = "flex";
-                    };
-                    function updatePhotoModal() {
-                        const img = document.getElementById("photoModalImg");
-                        const title = document.getElementById("photoModalTitle");
-                        if (!img || !title) return;
-                        const dataArr = window.workPhotoData;
-                        const titlesArr = window.workPhotoTitles;
-                        let idx = window.currentPhotoIdx;
-                        if (!dataArr[idx]) {
-                            idx = dataArr.findIndex(d => d);
-                            if (idx === -1) {
-                                img.src = '';
-                                title.textContent = '';
+
+                    window.showPhotoModal = function (blockIdx, photoIdx = 0) {
+                        try {
+                            console.log('Opening photo modal:', { blockIdx, photoIdx });
+
+                            // 確保模態框存在
+                            const modal = document.getElementById("photoModal");
+                            if (!modal) {
+                                console.error('Photo modal not found');
                                 return;
                             }
-                            window.currentPhotoIdx = idx;
+
+                            window.currentPhotoBlockIdx = blockIdx;
+                            window.currentPhotoIdx = photoIdx;
+                            updatePhotoModal();
+
+                            modal.style.display = "flex";
+
+                        } catch (error) {
+                            console.error('Error in showPhotoModal:', error);
                         }
-                        img.src = dataArr[idx];
-                        title.textContent = titlesArr[idx];
+                    };
+
+                    function updatePhotoModal() {
+                        try {
+                            const img = document.getElementById("photoModalImg");
+                            const title = document.getElementById("photoModalTitle");
+                            if (!img || !title) {
+                                console.error('Modal elements not found:', { img: !!img, title: !!title });
+                                return;
+                            }
+
+                            const photos = window.workPhotoDataMulti[window.currentPhotoBlockIdx];
+                            const titlesArr = window.workPhotoTitles;
+
+                            if (photos && photos.length > 0 && photos[window.currentPhotoIdx]) {
+                                const currentFile = photos[window.currentPhotoIdx];
+                                title.textContent = `${titlesArr[window.currentPhotoBlockIdx]} (${window.currentPhotoIdx + 1}/${photos.length})`;
+                                img.style.display = 'block';
+                                img.src = currentFile;
+                            } else {
+                                img.style.display = 'none';
+                                img.src = '';
+                                title.textContent = '';
+                            }
+                        } catch (error) {
+                            console.error('Error in updatePhotoModal:', error);
+                        }
                     }
+
                     document.getElementById('photoModalPrevBtn').onclick = function (e) {
                         e.stopPropagation();
-                        let idx = window.currentPhotoIdx;
-                        for (let i = 1; i <= 3; i++) {
-                            let nextIdx = (idx - i + 3) % 3;
-                            if (window.workPhotoData[nextIdx]) {
-                                window.currentPhotoIdx = nextIdx;
-                                updatePhotoModal();
-                                break;
-                            }
+                        const photos = window.workPhotoDataMulti[window.currentPhotoBlockIdx];
+                        if (photos && photos.length > 0) {
+                            window.currentPhotoIdx = (window.currentPhotoIdx - 1 + photos.length) % photos.length;
+                            updatePhotoModal();
                         }
                     };
+
                     document.getElementById('photoModalNextBtn').onclick = function (e) {
                         e.stopPropagation();
-                        let idx = window.currentPhotoIdx;
-                        for (let i = 1; i <= 3; i++) {
-                            let nextIdx = (idx + i) % 3;
-                            if (window.workPhotoData[nextIdx]) {
-                                window.currentPhotoIdx = nextIdx;
-                                updatePhotoModal();
-                                break;
-                            }
+                        const photos = window.workPhotoDataMulti[window.currentPhotoBlockIdx];
+                        if (photos && photos.length > 0) {
+                            window.currentPhotoIdx = (window.currentPhotoIdx + 1) % photos.length;
+                            updatePhotoModal();
                         }
                     };
                 }
             }
-            setupPhotoUpload('workPhotoBlock1', 'workPhotoInput1', 'workPhotoPreview1');
-            setupPhotoUpload('workPhotoBlock2', 'workPhotoInput2', 'workPhotoPreview2');
-            setupPhotoUpload('workPhotoBlock3', 'workPhotoInput3', 'workPhotoPreview3');
-
-            // 動態檔案上傳限制
-            function updateWorkPhotoTips() {
-                const tip1 = document.getElementById('workPhotoTip1');
-                const tip2 = document.getElementById('workPhotoTip2');
-                const tip3 = document.getElementById('workPhotoTip3');
-                const tip4 = document.getElementById('workPhotoTip4');
-                const input1 = document.getElementById('workPhotoInput1');
-                const input2 = document.getElementById('workPhotoInput2');
-                const input3 = document.getElementById('workPhotoInput3');
-                const input4 = document.getElementById('workPhotoInput4');
-                if (!caseTypeSelect || !speciesSelect) return;
-                if (caseTypeSelect.value === '蜂巢' && (speciesSelect.value === '游離蜂' || speciesSelect.value === '泥壺蜂')) {
-                    if (tip1) tip1.textContent = '只能上傳影片';
-                    if (tip2) tip2.textContent = '只能上傳影片';
-                    if (tip3) tip3.textContent = '只能上傳影片';
-                    if (tip4) tip4.textContent = '只能上傳影片';
-                    if (input1) input1.setAttribute('accept', 'video/*');
-                    if (input2) input2.setAttribute('accept', 'video/*');
-                    if (input3) input3.setAttribute('accept', 'video/*');
-                    if (input4) input4.setAttribute('accept', 'video/*');
-                } else {
-                    if (tip1) tip1.textContent = '可上傳的檔案格式：jpg、jpeg、png，一張照片最大 2MB。';
-                    if (tip2) tip2.textContent = '可上傳的檔案格式：jpg、jpeg、png，一張照片最大 2MB。';
-                    if (tip3) tip3.textContent = '可上傳的檔案格式：jpg、jpeg、png，一張照片最大 2MB。';
-                    if (tip4) tip4.textContent = '可上傳的檔案格式：jpg、jpeg、png，一張照片最大 2MB。';
-                    if (input1) input1.setAttribute('accept', 'image/*');
-                    if (input2) input2.setAttribute('accept', 'image/*');
-                    if (input3) input3.setAttribute('accept', 'image/*');
-                    if (input4) input4.setAttribute('accept', 'image/*');
-                }
-            }
-            if (caseTypeSelect) caseTypeSelect.addEventListener('change', updateWorkPhotoTips);
-            if (speciesSelect) speciesSelect.addEventListener('change', updateWorkPhotoTips);
-            updateWorkPhotoTips();
+            setupPhotoUpload('workPhotoBlock1', '', 'workPhotoPreview1');
+            setupPhotoUpload('workPhotoBlock3', '', 'workPhotoPreview3');
 
             // 定位功能
             const locationBtn = document.getElementById('getLocationBtn');

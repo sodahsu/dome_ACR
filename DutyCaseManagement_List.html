@@ -69,65 +69,34 @@
         <!-- 搜尋表單 -->
         <div class="bg-white shadow-lg rounded-lg p-2 md:p-4 mb-4">
             <form>
-                <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-4">
-                    <!-- 依欄位查詢 + 關鍵字 並列 -->
-                    <div class="col-span-2 lg:col-span-1">
+                <!-- 第一行：依欄位查詢 + 關鍵字, 通報來源, 通報時間, 案件完成時間 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">依欄位查詢</label>
                         <div class="flex gap-2">
-                            <div class="flex flex-col gap-2 flex-1">
-                                <label class="text-secondary font-medium text-sm">依欄位查詢</label>
-                                <select
-                                    class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                                    <option>不拘</option>
-                                    <option>立案編號</option>
-                                    <option>通報人</option>
-                                    <option>作業人員</option>
-                                    <option>作業廠商</option>
-                                </select>
-                            </div>
-                            <div class="flex flex-col gap-2 flex-1">
-                                <label class="text-secondary font-medium text-sm">關鍵字</label>
-                                <input type="text" placeholder="請輸入查詢關鍵字"
-                                    class="border border-border rounded px-3 py-2 text-gray-medium text-sm">
-                            </div>
+                            <select
+                                class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm flex-1">
+                                <option>不拘</option>
+                                <option>立案編號</option>
+                                <option>通報人</option>
+                                <option>作業人員</option>
+                                <option>作業廠商</option>
+                            </select>
+                            <input type="text" placeholder="請輸入"
+                                class="border border-border rounded px-3 py-2 text-gray-medium text-sm flex-1">
                         </div>
                     </div>
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">通報來源</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>不拘</option>
+                            <option>請選擇</option>
                             <option>119</option>
                             <option>1999</option>
                             <option>1959</option>
                         </select>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <label class="text-secondary font-medium text-sm">鄉鎮</label>
-                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>不拘</option>
-                            <!-- 屏東縣鄉鎮市選項 -->
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-secondary font-medium text-sm">案件類型</label>
-                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>不拘</option>
-                            <option>補蜂</option>
-                            <option>捉蛇</option>
-                            <option>動物救援</option>
-                            <option>捉綠鬣蜥</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-secondary font-medium text-sm">進度</label>
-                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>不拘</option>
-                            <option>審核中</option>
-                            <option>審核完成</option>
-                            <option>審核退回</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-2 col-span-2 lg:col-span-1">
-                        <label class="text-secondary font-medium text-sm">案件完成日期</label>
+                        <label class="text-secondary font-medium text-sm">通報時間</label>
                         <div class="flex items-center gap-2">
                             <input type="date"
                                 class="border border-border rounded px-3 py-2 text-gray-medium flex-1 text-sm">
@@ -136,24 +105,129 @@
                                 class="border border-border rounded px-3 py-2 text-gray-medium flex-1 text-sm">
                         </div>
                     </div>
-                    <div class="flex gap-2 col-span-2 lg:col-span-1">
-                        <div class="flex flex-col gap-2 flex-1">
-                            <label class="text-secondary font-medium text-sm">是否已點交</label>
-                            <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                                <option>不拘</option>
-                                <option>是</option>
-                                <option>否</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col gap-2 flex-1">
-                            <label class="text-secondary font-medium text-sm">物種</label>
-                            <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                                <option>不拘</option>
-                                <!-- 兩層關聯式選單，預設皆為不拘 -->
-                            </select>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">案件完成時間</label>
+                        <div class="flex items-center gap-2">
+                            <input type="date"
+                                class="border border-border rounded px-3 py-2 text-gray-medium flex-1 text-sm">
+                            <span class="text-black">～</span>
+                            <input type="date"
+                                class="border border-border rounded px-3 py-2 text-gray-medium flex-1 text-sm">
                         </div>
                     </div>
                 </div>
+
+                <!-- 第二行：案件類型, 鄉鎮, 物種, 作業人員 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">案件類型</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>請選擇</option>
+                            <option>捕蜂</option>
+                            <option>捉蛇</option>
+                            <option>動物救援</option>
+                            <option>綠鬣蜥</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">鄉鎮</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>請選擇</option>
+                            <option>屏東市</option>
+                            <option>潮州鎮</option>
+                            <option>東港鎮</option>
+                            <option>恆春鎮</option>
+                            <option>萬丹鄉</option>
+                            <option>長治鄉</option>
+                            <option>麟洛鄉</option>
+                            <option>九如鄉</option>
+                            <option>里港鄉</option>
+                            <option>鹽埔鄉</option>
+                            <option>高樹鄉</option>
+                            <option>萬巒鄉</option>
+                            <option>內埔鄉</option>
+                            <option>竹田鄉</option>
+                            <option>新埤鄉</option>
+                            <option>枋寮鄉</option>
+                            <option>新園鄉</option>
+                            <option>崁頂鄉</option>
+                            <option>林邊鄉</option>
+                            <option>南州鄉</option>
+                            <option>佳冬鄉</option>
+                            <option>琉球鄉</option>
+                            <option>車城鄉</option>
+                            <option>滿州鄉</option>
+                            <option>枋山鄉</option>
+                            <option>三地門鄉</option>
+                            <option>霧臺鄉</option>
+                            <option>瑪家鄉</option>
+                            <option>泰武鄉</option>
+                            <option>來義鄉</option>
+                            <option>春日鄉</option>
+                            <option>獅子鄉</option>
+                            <option>牡丹鄉</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">物種</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>請選擇</option>
+                            <option>虎頭蜂</option>
+                            <option>長腳蜂</option>
+                            <option>球蟒</option>
+                            <option>赤尾青竹絲</option>
+                            <option>白鼻心</option>
+                            <option>綠鬣蜥</option>
+                            <option>受傷犬隻</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">作業人員</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>請選擇</option>
+                            <option>王大明</option>
+                            <option>林曉明</option>
+                            <option>劉順風</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 第三行：案件進度, 點交進度, 提醒, 處理狀態 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">案件進度</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>請選擇</option>
+                            <option>待處理</option>
+                            <option>已指派</option>
+                            <option>已處理</option>
+                            <option>審核中</option>
+                            <option>審核完成</option>
+                            <option>審核退回</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">點交進度</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>請選擇</option>
+                            <option>待點交</option>
+                            <option>不須點交</option>
+                            <option>限期交回</option>
+                            <option>不計價</option>
+                            <option>點交完成</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">提醒</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option>請選擇</option>
+                            <option>提醒</option>
+                            <option>警告</option>
+                            <option>錯誤</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="border-t border-gray-300 pt-4">
                     <div class="flex gap-4">
                         <button type="submit"
@@ -182,7 +256,7 @@
                     <button
                         class="bg-white border border-primary text-primary px-2 py-1 rounded text-sm flex items-center gap-1">
                         <i class="fas fa-paper-plane fa-fw text-base"></i>
-                        送審
+                        批次送審
                     </button>
                     <button class="bg-danger text-white px-2 py-1 rounded text-sm flex items-center gap-1">
                         <i class="fas fa-trash-alt fa-fw text-base"></i>
@@ -205,228 +279,247 @@
                             <th class="border-b border-gray-200 p-2 align-middle text-center w-12">
                                 <input type="checkbox" class="w-4 h-4 mx-auto">
                             </th>
-                            <th class="border-b border-gray-200 p-2 text-left font-bold">通報來源</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">序號</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">立案編號</th>
-                            <th class="border-b border-gray-200 p-2 text-left font-bold">鄉鎮</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">通報來源</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">通報時間</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">案件類型</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">鄉鎮</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">物種</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">作業人員</th>
-                            <th class="border-b border-gray-200 p-2 text-left font-bold">進度</th>
-                            <th class="border-b border-gray-200 p-2 text-left font-bold">是否已點交</th>
-                            <th class="border-b border-gray-200 p-2 text-left font-bold">異常</th>
-                            <th class="border-b border-gray-200 p-2 text-left font-bold">通報時間</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">案件進度</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">點交進度</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">提醒</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
-                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">1</td>
                             <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701001
+                                <a href="DutyCaseManagement_Edit.html"
+                                    class="text-blue-600 underline hover:text-blue-800">
+                                    T1130428003
                                 </a>
                             </td>
-                            <td class="border-b border-gray-200 p-2">屏東市</td>
-                            <td class="border-b border-gray-200 p-2">捕蜂</td>
-                            <td class="border-b border-gray-200 p-2">長腳蜂</td>
-                            <td class="border-b border-gray-200 p-2">王大明</td>
+                            <td class="border-b border-gray-200 p-2">1999</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 20:30:21</td>
+                            <td class="border-b border-gray-200 p-2">捉蛇</td>
+                            <td class="border-b border-gray-200 p-2">高樹鄉</td>
+                            <td class="border-b border-gray-200 p-2">球蟒</td>
+                            <td class="border-b border-gray-200 p-2">-</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
-                                        class="fas fa-check text-primary text-xl"></i>審核完成</span></td>
-                            <td class="border-b border-gray-200 p-2">是</td>
+                                        class="fas fa-hourglass-half text-gray-500"></i>待處理</span></td>
+                            <td class="border-b border-gray-200 p-2">-</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
-                                    title="異常說明"></i></td>
-                            <td class="border-b border-gray-200 p-2">2025/07/10 09:12:01</td>
+                                    class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
+                                    onclick="showReminderModal('T1130428003')"></i></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
-                            <td class="border-b border-gray-200 p-2">1999</td>
+                            <td class="border-b border-gray-200 p-2">2</td>
                             <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701002
+                                <a href="DutyCaseManagement_Edit.html"
+                                    class="text-blue-600 underline hover:text-blue-800">
+                                    T1130428002
                                 </a>
                             </td>
-                            <td class="border-b border-gray-200 p-2">潮州鎮</td>
-                            <td class="border-b border-gray-200 p-2">捉蛇</td>
-                            <td class="border-b border-gray-200 p-2">赤尾青竹絲</td>
-                            <td class="border-b border-gray-200 p-2">林美玉</td>
+                            <td class="border-b border-gray-200 p-2">1999</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 20:25:21</td>
+                            <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">九如鄉</td>
+                            <td class="border-b border-gray-200 p-2">長腳蜂</td>
+                            <td class="border-b border-gray-200 p-2">王大明</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
-                                        class="fas fa-history text-primary text-xl"></i>審核中</span></td>
-                            <td class="border-b border-gray-200 p-2">否</td>
+                                        class="fas fa-check-circle text-green-600"></i>已指派</span></td>
+                            <td class="border-b border-gray-200 p-2">待點交</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-check-circle fa-fw text-primary text-base cursor-pointer"
-                                    title="正常"></i></td>
-                            <td class="border-b border-gray-200 p-2">2025/07/09 14:22:11</td>
+                                    class="fas fa-info-circle text-yellow-500 cursor-pointer" title="警告"
+                                    onclick="showReminderModal('T1130428002')"></i></td>
                         </tr>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
-                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">3</td>
                             <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701003
+                                <a href="DutyCaseManagement_Edit.html"
+                                    class="text-blue-600 underline hover:text-blue-800">
+                                    A1130428005
                                 </a>
                             </td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 16:20:21</td>
+                            <td class="border-b border-gray-200 p-2">動物救援</td>
                             <td class="border-b border-gray-200 p-2">萬丹鄉</td>
-                            <td class="border-b border-gray-200 p-2">動物救援</td>
                             <td class="border-b border-gray-200 p-2">白鼻心</td>
-                            <td class="border-b border-gray-200 p-2">陳志強</td>
+                            <td class="border-b border-gray-200 p-2">林曉明</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
-                                        class="fas fa-edit text-primary text-xl"></i>審核退回</span></td>
-                            <td class="border-b border-gray-200 p-2">否</td>
+                                        class="fas fa-check-circle text-green-600"></i>已指派</span></td>
+                            <td class="border-b border-gray-200 p-2">不須點交</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-times-circle fa-fw text-danger text-base cursor-pointer"
-                                    title="異常"></i></td>
-                            <td class="border-b border-gray-200 p-2">2025/07/08 18:45:33</td>
+                                    class="fas fa-info-circle text-red-500 cursor-pointer" title="錯誤"
+                                    onclick="showReminderModal('A1130428005')"></i></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
-                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">4</td>
                             <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701004
+                                <a href="DutyCaseManagement_Edit.html"
+                                    class="text-blue-600 underline hover:text-blue-800">
+                                    T1130428001
                                 </a>
                             </td>
-                            <td class="border-b border-gray-200 p-2">東港鎮</td>
-                            <td class="border-b border-gray-200 p-2">捕蜂</td>
-                            <td class="border-b border-gray-200 p-2">虎頭蜂</td>
-                            <td class="border-b border-gray-200 p-2">王大明</td>
-                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
-                                        class="fas fa-check text-primary text-xl"></i>審核完成</span></td>
-                            <td class="border-b border-gray-200 p-2">是</td>
-                            <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
-                                    title="異常說明"></i></td>
-                            <td class="border-b border-gray-200 p-2">2025/07/07 11:10:09</td>
-                        </tr>
-                        <tr class="hover:bg-green-50">
-                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
-                                    class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2">1999</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701005
-                                </a>
-                            </td>
-                            <td class="border-b border-gray-200 p-2">恆春鎮</td>
-                            <td class="border-b border-gray-200 p-2">捉蛇</td>
-                            <td class="border-b border-gray-200 p-2">赤尾青竹絲</td>
-                            <td class="border-b border-gray-200 p-2">林美玉</td>
-                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
-                                        class="fas fa-history text-primary text-xl"></i>審核中</span></td>
-                            <td class="border-b border-gray-200 p-2">否</td>
-                            <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-check-circle fa-fw text-primary text-base cursor-pointer"
-                                    title="正常"></i></td>
-                            <td class="border-b border-gray-200 p-2">2025/07/06 16:32:45</td>
-                        </tr>
-                        <tr class="bg-gray-light hover:bg-green-50">
-                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
-                                    class="w-4 h-4 mx-auto"></td>
-                            <td class="border-b border-gray-200 p-2">1959</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701006
-                                </a>
-                            </td>
-                            <td class="border-b border-gray-200 p-2">麟洛鄉</td>
-                            <td class="border-b border-gray-200 p-2">動物救援</td>
-                            <td class="border-b border-gray-200 p-2">白鼻心</td>
-                            <td class="border-b border-gray-200 p-2">陳志強</td>
-                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
-                                        class="fas fa-edit text-primary text-xl"></i>審核退回</span></td>
-                            <td class="border-b border-gray-200 p-2">否</td>
-                            <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-times-circle fa-fw text-danger text-base cursor-pointer"
-                                    title="異常"></i></td>
-                            <td class="border-b border-gray-200 p-2">2025/07/05 19:55:21</td>
-                        </tr>
-                        <tr class="hover:bg-green-50">
-                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
-                                    class="w-4 h-4 mx-auto"></td>
-                            <td class="border-b border-gray-200 p-2">119</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701007
-                                </a>
-                            </td>
-                            <td class="border-b border-gray-200 p-2">新園鄉</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 15:20:21</td>
                             <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">九如鄉</td>
                             <td class="border-b border-gray-200 p-2">長腳蜂</td>
                             <td class="border-b border-gray-200 p-2">王大明</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
-                                        class="fas fa-check text-primary text-xl"></i>審核完成</span></td>
-                            <td class="border-b border-gray-200 p-2">是</td>
+                                        class="fas fa-check text-green-600"></i>已處理</span></td>
+                            <td class="border-b border-gray-200 p-2">待點交</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
-                                    title="異常說明"></i></td>
-                            <td class="border-b border-gray-200 p-2">2025/07/04 08:12:01</td>
-                        </tr>
-                        <tr class="bg-gray-light hover:bg-green-50">
-                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
-                                    class="w-4 h-4 mx-auto"></td>
-                            <td class="border-b border-gray-200 p-2">1999</td>
-                            <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701008
-                                </a>
-                            </td>
-                            <td class="border-b border-gray-200 p-2">枋寮鄉</td>
-                            <td class="border-b border-gray-200 p-2">捉蛇</td>
-                            <td class="border-b border-gray-200 p-2">赤尾青竹絲</td>
-                            <td class="border-b border-gray-200 p-2">林美玉</td>
-                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
-                                        class="fas fa-history text-primary text-xl"></i>審核中</span></td>
-                            <td class="border-b border-gray-200 p-2">否</td>
-                            <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-check-circle fa-fw text-primary text-base cursor-pointer"
-                                    title="正常"></i></td>
-                            <td class="border-b border-gray-200 p-2">2025/07/03 13:22:11</td>
+                                    class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
+                                    onclick="showReminderModal('T1130428001')"></i></td>
                         </tr>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
-                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">5</td>
                             <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701009
+                                <a href="DutyCaseManagement_Edit.html"
+                                    class="text-blue-600 underline hover:text-blue-800">
+                                    A1130428004
                                 </a>
                             </td>
-                            <td class="border-b border-gray-200 p-2">南州鄉</td>
-                            <td class="border-b border-gray-200 p-2">動物救援</td>
-                            <td class="border-b border-gray-200 p-2">白鼻心</td>
-                            <td class="border-b border-gray-200 p-2">陳志強</td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 13:20:21</td>
+                            <td class="border-b border-gray-200 p-2">綠鬣蜥</td>
+                            <td class="border-b border-gray-200 p-2">林邊鄉</td>
+                            <td class="border-b border-gray-200 p-2">綠鬣蜥</td>
+                            <td class="border-b border-gray-200 p-2">王大明</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
-                                        class="fas fa-edit text-primary text-xl"></i>審核退回</span></td>
-                            <td class="border-b border-gray-200 p-2">否</td>
+                                        class="fas fa-undo text-orange-500"></i>審核退回</span></td>
+                            <td class="border-b border-gray-200 p-2">待點交</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-times-circle fa-fw text-danger text-base cursor-pointer"
-                                    title="異常"></i></td>
-                            <td class="border-b border-gray-200 p-2">2025/07/02 18:45:33</td>
+                                    class="fas fa-exclamation-circle text-red-500 cursor-pointer" title="錯誤"></i></td>
                         </tr>
                         <tr class="bg-gray-light hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
-                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">6</td>
                             <td class="border-b border-gray-200 p-2">
-                                <a href="DutyCaseManagement_Edit.html" class="text-primary underline hover:text-accent">
-                                    T1130701010
+                                <a href="DutyCaseManagement_Edit.html"
+                                    class="text-blue-600 underline hover:text-blue-800">
+                                    F1130428003
                                 </a>
                             </td>
-                            <td class="border-b border-gray-200 p-2">林邊鄉</td>
+                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 12:30:21</td>
                             <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">枋山鄉</td>
                             <td class="border-b border-gray-200 p-2">虎頭蜂</td>
+                            <td class="border-b border-gray-200 p-2">劉順風</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-check text-green-600"></i>審核中</span></td>
+                            <td class="border-b border-gray-200 p-2">限期交回</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-exclamation-circle text-red-500 cursor-pointer" title="錯誤"></i></td>
+                        </tr>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">7</td>
+                            <td class="border-b border-gray-200 p-2">
+                                <a href="DutyCaseManagement_Edit.html"
+                                    class="text-blue-600 underline hover:text-blue-800">
+                                    F1130428002
+                                </a>
+                            </td>
+                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 12:27:21</td>
+                            <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">枋山鄉</td>
+                            <td class="border-b border-gray-200 p-2">虎頭蜂</td>
+                            <td class="border-b border-gray-200 p-2">劉順風</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-check text-green-600"></i>審核完成</span></td>
+                            <td class="border-b border-gray-200 p-2">不計價</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
+                                    onclick="showReminderModal('F1130428002')"></i></td>
+                        </tr>
+                        <tr class="bg-gray-light hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">8</td>
+                            <td class="border-b border-gray-200 p-2">
+                                <a href="DutyCaseManagement_Edit.html"
+                                    class="text-blue-600 underline hover:text-blue-800">
+                                    F1130428001
+                                </a>
+                            </td>
+                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 11:22:21</td>
+                            <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">枋山鄉</td>
+                            <td class="border-b border-gray-200 p-2">虎頭蜂</td>
+                            <td class="border-b border-gray-200 p-2">劉順風</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-check text-green-600"></i>審核完成</span></td>
+                            <td class="border-b border-gray-200 p-2">點交完成</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
+                                    onclick="showReminderModal('F1130428001')"></i></td>
+                        </tr>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">9</td>
+                            <td class="border-b border-gray-200 p-2">
+                                <a href="DutyCaseManagement_Edit.html"
+                                    class="text-blue-600 underline hover:text-blue-800">
+                                    A1130428003
+                                </a>
+                            </td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 11:20:21</td>
+                            <td class="border-b border-gray-200 p-2">綠鬣蜥</td>
+                            <td class="border-b border-gray-200 p-2">萬巒鄉</td>
+                            <td class="border-b border-gray-200 p-2">綠鬣蜥</td>
                             <td class="border-b border-gray-200 p-2">王大明</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
-                                        class="fas fa-check text-primary text-xl"></i>審核完成</span></td>
-                            <td class="border-b border-gray-200 p-2">是</td>
+                                        class="fas fa-check text-green-600"></i>審核完成</span></td>
+                            <td class="border-b border-gray-200 p-2">點交完成</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-exclamation-circle fa-fw text-warning text-base cursor-pointer"
-                                    title="異常說明"></i></td>
-                            <td class="border-b border-gray-200 p-2">2025/07/01 11:10:09</td>
+                                    class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
+                                    onclick="showReminderModal('A1130428003')"></i></td>
+                        </tr>
+                        <tr class="bg-gray-light hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
+                                    class="w-4 h-4 mx-auto"></td>
+                            <td class="border-b border-gray-200 p-2">10</td>
+                            <td class="border-b border-gray-200 p-2">
+                                <a href="DutyCaseManagement_Edit.html"
+                                    class="text-blue-600 underline hover:text-blue-800">
+                                    A1130428002
+                                </a>
+                            </td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 11:10:21</td>
+                            <td class="border-b border-gray-200 p-2">綠鬣蜥</td>
+                            <td class="border-b border-gray-200 p-2">萬巒鄉</td>
+                            <td class="border-b border-gray-200 p-2">綠鬣蜥</td>
+                            <td class="border-b border-gray-200 p-2">王大明</td>
+                            <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
+                                        class="fas fa-check text-green-600"></i>審核完成</span></td>
+                            <td class="border-b border-gray-200 p-2">點交完成</td>
+                            <td class="border-b border-gray-200 p-2 text-center"><i
+                                    class="fas fa-info-circle text-green-500 cursor-pointer" title="提醒"
+                                    onclick="showReminderModal('A1130428002')"></i></td>
                         </tr>
                     </tbody>
                 </table>
@@ -462,8 +555,101 @@
         </div>
     </nav>
 
+    <!-- 提醒燈箱視窗 -->
+    <div id="reminderModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg max-w-2xl w-full mx-4 max-h-[80vh] overflow-hidden">
+            <!-- 標題列 -->
+            <div class="flex items-center justify-between p-4 border-b bg-green-light">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-bell text-primary"></i>
+                    <h3 class="text-lg font-bold text-secondary">提醒紀錄</h3>
+                </div>
+                <button onclick="closeReminderModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- 內容區域 -->
+            <div class="overflow-y-auto max-h-96">
+                <table class="w-full text-sm">
+                    <thead class="bg-green-light sticky top-0">
+                        <tr>
+                            <th class="p-3 text-left font-bold border-b">項次</th>
+                            <th class="p-3 text-left font-bold border-b">提醒說明</th>
+                            <th class="p-3 text-left font-bold border-b">紀錄時間</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reminderTableBody">
+                        <!-- 動態內容將在這裡填入 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <!-- 完成案件視窗 JS -->
     <script>
+        // 提醒紀錄資料
+        const reminderData = {
+            'T1130428003': [
+                { seq: 1, message: '點交時間逾期：點交時間預期，請盡快確認。並依規定交回前期(114/05/28)前完成處理。', time: '2024/05/10 05:20:00' },
+                { seq: 2, message: '案件審核逾期：紀錄內容有問題至上傳照片/影片有問題，請盡快修正紀錄內容，進行審核。', time: '2024/05/02 05:20:00' },
+                { seq: 3, message: '資料送審時間逾期(10小時)：案件完成時間 2024/04/28 20:20:21，請盡快修正紀錄內容完成簽章。', time: '2024/04/29 05:20:00' },
+                { seq: 4, message: '案件處理時間逾期(150分鐘)：通報時間 2024/04/28 18:20:21，請盡快外勤人員盡快處理案件處理作業時間。', time: '2024/04/28 20:20:00' },
+                { seq: 5, message: '派遣回應時間逾期(10分鐘)：指派時間 2024/04/28 18:32:21，請盡快外勤人員確認案件或指派負責人員前往。', time: '2024/04/28 18:42:00' },
+                { seq: 6, message: '廠商回應時間逾期(10分鐘)：通報時間 2024/04/28 18:20:21，請盡快處理通報案件。', time: '2024/04/28 18:15:00' }
+            ],
+            'T1130428002': [
+                { seq: 1, message: '案件審核逾期：紀錄內容需要補充相關資料。', time: '2024/05/01 10:30:00' }
+            ],
+            'A1130428005': [
+                { seq: 1, message: '資料送審錯誤：請檢查填寫內容是否正確。', time: '2024/04/29 14:20:00' }
+            ]
+        };
+
+        // 顯示提醒燈箱
+        function showReminderModal(caseId) {
+            const modal = document.getElementById('reminderModal');
+            const tableBody = document.getElementById('reminderTableBody');
+
+            // 清空表格內容
+            tableBody.innerHTML = '';
+
+            // 統一使用 T1130428003 的提醒紀錄資料
+            const reminders = reminderData['T1130428003'] || [];
+
+            if (reminders.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="3" class="p-4 text-center text-gray-500">無提醒紀錄</td></tr>';
+            } else {
+                reminders.forEach(reminder => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-gray-50';
+                    row.innerHTML = `
+                        <td class="p-3 border-b">${reminder.seq}.</td>
+                        <td class="p-3 border-b">${reminder.message}</td>
+                        <td class="p-3 border-b">${reminder.time}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // 顯示燈箱
+            modal.classList.remove('hidden');
+        }
+
+        // 關閉提醒燈箱
+        function closeReminderModal() {
+            const modal = document.getElementById('reminderModal');
+            modal.classList.add('hidden');
+        }
+
+        // 點擊燈箱外部關閉
+        document.getElementById('reminderModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeReminderModal();
+            }
+        });
+
         document.getElementById('mobileMenuBtn').addEventListener('click', function () {
             const mobileMenu = document.getElementById('mobileMenu');
             mobileMenu.classList.toggle('hidden');
