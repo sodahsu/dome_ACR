@@ -634,7 +634,6 @@
                                 <option value="">請選擇</option>
                                 <option value="健康">健康</option>
                                 <option value="受傷">受傷</option>
-                                <option value="受困">受困</option>
                                 <option value="到場前已自行脫逃">到場前已自行脫逃</option>
                             </select>
                         </div>
@@ -693,17 +692,6 @@
                     </div>
                     <div id="strayInjuredToolBlock" style="display:none;">
                         <!-- 已移除「是否可用工具處理？」欄位 -->
-                    </div>
-                    <div id="strayTrappedAbilityBlock" style="display:none;">
-                        <label class="flex items-center text-gray-dark font-medium mb-1">
-                            <span class="text-danger mr-1">*</span>是否有脫困能力？
-                        </label>
-                        <select id="strayTrappedAbilitySelect"
-                            class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
-                            <option value="">請選擇</option>
-                            <option value="有">有</option>
-                            <option value="無">無</option>
-                        </select>
                     </div>
 
                     <!-- 外勤作業照片上傳區 -->
@@ -1134,6 +1122,7 @@
             // 內勤作業物種名稱與通報資料案件類型聯動
             const basicCaseTypeSelect = document.getElementById('basicCaseTypeSelect');
             const dutySpeciesSelect = document.getElementById('dutySpeciesSelect');
+            const fieldSpeciesSelect = document.getElementById('fieldSpeciesSelect');
 
             function updateDutySpeciesOptions() {
                 if (!basicCaseTypeSelect || !dutySpeciesSelect) return;
@@ -1152,12 +1141,30 @@
                 dutySpeciesSelect.innerHTML = dutyOptions.map((o, i) =>
                     `<option${i === 1 ? ' selected' : ''}>${o}</option>`
                 ).join('');
+
+                // 同步更新外勤物種名稱
+                if (fieldSpeciesSelect) {
+                    fieldSpeciesSelect.innerHTML = dutyOptions.map((o, i) =>
+                        `<option${i === 1 ? ' selected' : ''}>${o}</option>`
+                    ).join('');
+                }
+            }
+
+            // 內勤物種名稱變更時，同步外勤物種名稱
+            function syncSpeciesSelection() {
+                if (dutySpeciesSelect && fieldSpeciesSelect) {
+                    fieldSpeciesSelect.value = dutySpeciesSelect.value;
+                }
             }
 
             if (basicCaseTypeSelect) {
                 basicCaseTypeSelect.addEventListener('change', updateDutySpeciesOptions);
                 // 頁面載入時執行一次
                 updateDutySpeciesOptions();
+            }
+
+            if (dutySpeciesSelect) {
+                dutySpeciesSelect.addEventListener('change', syncSpeciesSelection);
             }
 
             // 處理情形動態調整
@@ -1205,23 +1212,16 @@
                     // 刪除到場前已逃跑欄位
                     const strayEscapeBlock = document.getElementById('strayEscapeBlock');
                     if (strayEscapeBlock) strayEscapeBlock.remove();
-                    let strayTrappedAbilityBlock = document.getElementById('strayTrappedAbilityBlock');
-                    if (!strayTrappedAbilityBlock) {
-                        strayTrappedAbilityBlock = document.createElement('div');
-                        strayTrappedAbilityBlock.id = 'strayTrappedAbilityBlock';
-                        strayTrappedAbilityBlock.style.display = 'none';
-                        strayTrappedAbilityBlock.innerHTML = `<label class=\"flex items-center text-gray-dark font-medium mb-1\"><span class=\"text-danger mr-1\">*</span>是否有脫困能力？</label><select id=\"strayTrappedAbilitySelect\" class=\"w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary\"><option value=\"\">請選擇</option><option value=\"有\">有</option><option value=\"無\">無</option></select>`;
-                        dogCatOwnerBlock.parentNode.insertBefore(strayTrappedAbilityBlock, dogCatOwnerBlock.nextSibling);
-                    }
+                    // 刪除脫困能力欄位
+                    const strayTrappedAbilityBlock = document.getElementById('strayTrappedAbilityBlock');
+                    if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.remove();
                     // 取得欄位值
                     const hasOwner = ownerSelect?.value;
                     const speciesStatus = statusSelect_main.value;
-                    const trappedAbility = document.getElementById('strayTrappedAbilitySelect')?.value;
                     // 顯示/隱藏欄位
                     if (dogCatOwnerBlock) dogCatOwnerBlock.style.display = '';
                     if (hasOwner === '是') {
                         // 有飼主
-                        if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
                         if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = 'none';
                         options = ['飼主處理', '到場無法救援', '到場無動物', '棄養'];
                     } else if (hasOwner === '否') {
@@ -1239,59 +1239,24 @@
                             } else {
                                 options = ['到場無法救援', '到場無動物', '棄養'];
                             }
-                            if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
-                        } else if (speciesStatus === '受困') {
-                            // 顯示通報人支付費用欄位
-                            if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = '';
-                            const paymentSelect = document.getElementById('dogCatPaymentSelect');
-                            const payment = paymentSelect?.value;
-
-                            if (payment === '是') {
-                                options = ['後送', '到場無法救援', '到場無動物', '棄養'];
-                            } else if (payment === '否') {
-                                options = ['安全處野放', '到場無法救援', '到場無動物', '棄養'];
-                            } else {
-                                options = ['到場無法救援', '到場無動物', '棄養'];
-                            }
-                            if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
                         } else if (speciesStatus === '健康') {
-                            if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
                             if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = 'none';
                             options = ['安全處野放', '到場無法救援', '到場無動物', '棄養'];
                         } else {
-                            if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
                             if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = 'none';
                             options = ['到場無法救援', '到場無動物', '棄養'];
                         }
                     } else {
                         // 尚未選擇有無飼主
-                        if (strayInjuredToolBlock) strayInjuredToolBlock.style.display = 'none';
-                        if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
                         if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = 'none';
                         options = ['到場無法救援', '到場無動物', '棄養'];
                     }
                     // 綁定事件
                     if (ownerSelect) ownerSelect.onchange = updateProcessOptions;
-                    if (document.getElementById('strayTrappedAbilitySelect')) document.getElementById('strayTrappedAbilitySelect').onchange = updateProcessOptions;
                     if (document.getElementById('dogCatPaymentSelect')) document.getElementById('dogCatPaymentSelect').onchange = updateProcessOptions;
                 } else if (species === '野生動物(一般)') {
                     // 野生動物(一般)的處理邏輯
-                    if (status === '受困') {
-                        // 受困的野生動物，需要檢查受困類型
-                        const subSelect = document.getElementById('speciesStatusSubSelect');
-                        const subStatus = subSelect?.value;
-
-                        if (subStatus === '受傷') {
-                            // 受困且受傷 = 後送
-                            options = ['後送'];
-                        } else if (subStatus && subStatus !== '') {
-                            // 受困但健康（獸鋏、網拒、其他） = 只能安全處野放
-                            options = ['安全處野放'];
-                        } else {
-                            // 尚未選擇受困類型，顯示可能選項
-                            options = ['安全處野放', '後送'];
-                        }
-                    } else if (status === '受傷') {
+                    if (status === '受傷') {
                         // 受傷 = 後送(動物之家)
                         options = ['後送'];
                     } else if (status === '健康') {
@@ -1366,7 +1331,6 @@
             if (document.getElementById('caseTypeSelect')) document.getElementById('caseTypeSelect').addEventListener('change', updateProcessOptions);
             if (document.getElementById('speciesSelect')) document.getElementById('speciesSelect').addEventListener('change', updateProcessOptions);
             if (document.getElementById('speciesStatusSelect')) document.getElementById('speciesStatusSelect').addEventListener('change', updateProcessOptions);
-            if (document.getElementById('speciesStatusSubSelect')) document.getElementById('speciesStatusSubSelect').addEventListener('change', updateProcessOptions);
             if (document.getElementById('dogCatOwnerSelect')) document.getElementById('dogCatOwnerSelect').addEventListener('change', updateProcessOptions);
             if (document.getElementById('dogCatPaymentSelect')) document.getElementById('dogCatPaymentSelect').addEventListener('change', updateProcessOptions);
             if (document.getElementById('processSelect')) document.getElementById('processSelect').addEventListener('change', function () {
@@ -1415,9 +1379,6 @@
 
             // 物種狀況管理
             const statusSelect_cascade = document.getElementById('speciesStatusSelect');
-            const subBlock = document.getElementById('speciesStatusSubBlock');
-            const subSelect = document.getElementById('speciesStatusSubSelect');
-            const otherInput = document.getElementById('speciesStatusOtherInput');
             const star = document.getElementById('speciesStatusStar');
             const processLabel_cascade = document.getElementById('processLabel');
             const processStar_cascade = processLabel_cascade ? processLabel_cascade.querySelector('.text-danger') : null;
@@ -1435,24 +1396,8 @@
             }
             if (statusSelect_cascade) {
                 statusSelect_cascade.addEventListener('change', function () {
-                    if (this.value === '受困') {
-                        subBlock.style.display = '';
-                    } else {
-                        subBlock.style.display = 'none';
-                        otherInput.style.display = 'none';
-                        if (subSelect) subSelect.value = '';
-                    }
                     updateRequiredFields(this.value);
                     updateProcessOptions();
-                });
-            }
-            if (subSelect) {
-                subSelect.addEventListener('change', function () {
-                    if (this.value === '其他') {
-                        otherInput.style.display = '';
-                    } else {
-                        otherInput.style.display = 'none';
-                    }
                 });
             }
 
