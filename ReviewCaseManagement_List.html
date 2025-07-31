@@ -74,8 +74,8 @@
             </div>
 
             <form id="searchForm" class="md:block hidden">
-                <!-- 第一行：依欄位查詢, 通報時間, 案件完成時間 -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-4">
+                <!-- 第一行：依欄位查詢 + 通報時間 + 案件完成時間 + 關鍵字 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">依欄位查詢</label>
                         <div class="flex gap-2">
@@ -111,14 +111,15 @@
                                 class="border border-border rounded px-3 py-2 text-gray-medium flex-1 text-sm">
                         </div>
                     </div>
-                </div>
-                <!-- 第二行：其他欄位 -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">關鍵字</label>
                         <input type="text" placeholder="請輸入"
                             class="border border-border rounded px-3 py-2 text-gray-medium text-sm">
                     </div>
+                </div>
+
+                <!-- 第二行：通報來源 + 案件類型 + 鄉鎮 + 物種 -->
+                <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">通報來源</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
@@ -150,7 +151,10 @@
                             <option>請選擇</option>
                         </select>
                     </div>
-                    <!-- 第三列 -->
+                </div>
+
+                <!-- 第三行：案件進度 + 點交進度 + 點交人員 + 異常 -->
+                <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">案件進度</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
