@@ -498,7 +498,13 @@
                         <i class="fas fa-image text-primary w-4 h-4 mr-1"></i>
                         <h3 class="text-lg md:text-xl font-bold text-primary">外勤作業紀錄</h3>
                     </div>
-                    <span class="text-sm text-gray-dark">回報日期： yyy/mm/dd</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm text-gray-dark">回報日期： yyy/mm/dd</span>
+                        <button type="button" id="acceptDispatchBtn"
+                            class="bg-accent text-white px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition">
+                            <i class="fas fa-inbox mr-1"></i>接收派案
+                        </button>
+                    </div>
                 </div>
                 <div class="border border-border rounded p-4" id="fieldWorkBlock" style="display:none;">
                     <!-- 第一行：值勤人員抵達時間 -->
@@ -634,7 +640,7 @@
                                 <option value="">請選擇</option>
                                 <option value="健康">健康</option>
                                 <option value="受傷">受傷</option>
-                                <option value="到場前已自行脫逃">到場前已自行脫逃</option>
+                                <!-- <option value="到場前已自行脫逃">到場前已自行脫逃</option> -->
                             </select>
                         </div>
                         <div>
@@ -859,10 +865,10 @@
                             </div>
                         </div>
                         <div>
-                            <label class="block text-gray-dark font-medium mb-1">業務人員</label>
+                            <label class="block text-gray-dark font-medium mb-1">簽章日期</label>
                             <div class="w-full border border-border rounded bg-gray-light flex items-center justify-center"
                                 style="height: 120px;">
-                                <span class="ml-4 text-gray-dark font-bold text-base">王大明 值班人</span>
+                                <span class="ml-4 text-gray-dark font-bold text-base">2025/07/28</span>
                             </div>
                         </div>
                     </div>
