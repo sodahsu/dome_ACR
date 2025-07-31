@@ -174,15 +174,13 @@
         <!-- 頁面標題 -->
         <div class="bg-white shadow-lg rounded-lg border-l-4 border-primary p-2 mb-4">
             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center px-2 md:px-4 py-2 gap-2">
-                <h2 class="text-xl md:text-2xl font-bold text-secondary">審核案件管理-編輯(縣府)</h2>
+                <h2 class="text-xl md:text-2xl font-bold text-secondary">審核案件管理-編輯</h2>
                 <div class="flex items-center gap-1 text-gray-medium text-sm">
                     <span>首頁</span>
                     <span>/</span>
                     <span>審核案件管理</span>
                     <span>/</span>
-                    <span>審核案件</span>
-                    <span>/</span>
-                    <span class="text-primary font-bold">編輯(縣府)</span>
+                    <span class="text-primary font-bold">編輯</span>
                 </div>
             </div>
         </div>
@@ -319,33 +317,65 @@
                     <span class="text-sm text-gray-dark">回報日期： yyy/mm/dd</span>
                 </div>
                 <div class="border border-border rounded p-4" id="fieldWorkBlock">
+                    <!-- 第一行：值勤人員抵達時間和座標 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                         <div class="min-w-0 md:col-span-2 flex flex-col">
                             <label class="block text-gray-dark font-medium mb-1">值勤人員抵達時間</label>
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">2025/07/13 10:30:00</span>
                         </div>
-                        <div class="min-w-0">
-                            <label class="block text-gray-dark font-medium mb-1">物種</label>
-                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">蛇類</span>
-                        </div>
-                        <div class="min-w-0">
-                            <label class="block text-gray-dark font-medium mb-1">數量</label>
-                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">1</span>
-                        </div>
-                        <div class="min-w-0">
-                            <label class="block text-gray-dark font-medium mb-1">物種狀況</label>
-                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">健康</span>
+                        <div class="min-w-0 md:col-span-2">
+                            <label class="block text-gray-dark font-medium mb-1">座標</label>
+                            <span
+                                class="block text-gray-700 bg-gray-100 rounded px-2 py-1">23.1291823,120.2520685</span>
                         </div>
                     </div>
+                    <!-- 第二行：四個radio欄位 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">通報人仍在現場</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">通報物仍在現場，尚未脫逃</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">是否為通報案件類型</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
                         <div>
                             <label class="block text-gray-dark font-medium mb-1">是否有飼主</label>
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
                         </div>
+                    </div>
+                    <!-- 第三行：物種相關欄位 -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">物種名稱</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">蛇類</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">數量</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">1</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">物種狀況</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">健康</span>
+                        </div>
                         <div>
                             <label class="block text-gray-dark font-medium mb-1">處理情形</label>
-                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">已逃跑</span>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">後送</span>
                         </div>
+                    </div>
+                    <!-- 第四行：通報人是否願意支付費用 -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">通報人是否願意支付費用</label>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">否</span>
+                        </div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
                     </div>
                     <!-- 外勤作業照片上傳區 -->
                     <div class="mt-6">
@@ -425,20 +455,13 @@
                             <label class="block text-gray-dark font-medium mb-1">
                                 <span class="text-danger">*</span> 後送單位
                             </label>
-                            <select
-                                class="block w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
-                                <option value="動物之家" selected>動物之家</option>
-                                <option value="收容所">收容所</option>
-                                <option value="其他">其他</option>
-                            </select>
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">動物之家</span>
                         </div>
                         <div>
                             <label class="block text-gray-dark font-medium mb-1">
                                 <span class="text-danger">*</span> 後送日期
                             </label>
-                            <input type="text"
-                                class="block w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
-                                value="2024/04/28 20:20:21" />
+                            <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">2024/04/28 20:20:21</span>
                         </div>
                     </div>
                 </div>
@@ -544,9 +567,9 @@
                                         <select id="handoverResult"
                                             class="w-full bg-white border border-gray-300 rounded px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
                                             <option value="">請選擇</option>
-                                            <option value="動物之家" selected>動物之家</option>
-                                            <option value="野放">野放</option>
-                                            <option value="其他">其他</option>
+                                            <option value="限期交回" selected>限期交回</option>
+                                            <option value="不計價">不計價</option>
+                                            <option value="點交完成">點交完成</option>
                                         </select>
                                     </td>
                                     <td class="border border-gray-300 px-3 py-2">
