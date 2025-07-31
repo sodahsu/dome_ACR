@@ -45,11 +45,26 @@
                         </a>
                     </div>
                 </div>
-                <div class="relative group">
-                    <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary">
-                        <a href="DataStatistics.html" id="menu-stat" class="hover:underline">
-                            <span>數據統計</span>
-                        </a>
+                <div class="relative group" id="desktop-data-menu">
+                    <div class="flex items-center gap-1 text-lg cursor-pointer hover:text-primary"
+                        id="desktop-data-trigger">
+                        <span>數據統計分析</span>
+                        <i class="fas fa-chevron-down text-sm" id="desktop-data-icon"></i>
+                    </div>
+                    <!-- 下拉選單 -->
+                    <div class="absolute top-full left-0 mt-1 w-48 bg-white shadow-lg rounded-lg border hidden z-50"
+                        id="desktop-data-submenu">
+                        <div class="py-2">
+                            <a href="https://reurl.cc/ax15R4"
+                                class="block px-4 py-2 text-sm text-gray-dark hover:bg-gray-100 hover:text-primary"
+                                target="_blank" rel="noopener">
+                                數據儀表板
+                            </a>
+                            <a href="DataStatistics.html"
+                                class="block px-4 py-2 text-sm text-gray-dark hover:bg-gray-100 hover:text-primary">
+                                統計報表
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="relative group">
@@ -67,7 +82,18 @@
             class="lg:hidden mt-2 flex flex-col gap-2 bg-white shadow rounded px-4 py-2 absolute w-full left-0 top-full z-50 hidden">
             <a href="DutyCaseManagement_List.html" class="py-2 border-b hover:text-primary">勤務案件管理</a>
             <a href="ReviewCaseManagement_List.html" class="py-2 border-b hover:text-primary">審核案件管理</a>
-            <a href="DataStatistics.html" class="py-2 border-b hover:text-primary">數據統計</a>
+            <div class="border-b">
+                <div class="py-2 cursor-pointer hover:text-primary flex items-center justify-between"
+                    id="mobile-data-menu">
+                    <span>數據統計分析</span>
+                    <i class="fas fa-chevron-down text-sm" id="mobile-data-icon"></i>
+                </div>
+                <div class="hidden pl-4 pb-2" id="mobile-data-submenu">
+                    <a href="https://reurl.cc/Qa431p" class="block py-1 text-sm text-gray-dark hover:text-primary"
+                        target="_blank" rel="noopener">數據儀表板</a>
+                    <a href="DataStatistics.html" class="block py-1 text-sm text-gray-dark hover:text-primary">統計報表</a>
+                </div>
+            </div>
             <a href="https://reurl.cc/Qa6Q1O" class="py-2 hover:text-primary" target="_blank" rel="noopener">系統設定管理</a>
         </div>
     </div>

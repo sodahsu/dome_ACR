@@ -20,8 +20,6 @@
 
         .work-photo-preview {
             min-height: 200px;
-            background: #f8f9fa;
-            border: 2px dashed #dee2e6;
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -89,7 +87,6 @@
             height: 100px;
             border-radius: 0.5rem;
             overflow: hidden;
-            background: #f3f3f3;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
@@ -208,6 +205,13 @@
     <script src="header-utils.js"></script>
 
     <main class="p-2 md:p-4 max-w-[1440px] mx-auto">
+        <!-- 指派倒數計時區塊 -->
+        <div id="assignCountdownBar" style="display:none;"
+            class="mb-4 flex items-center gap-2 bg-warning bg-opacity-80 text-gray-dark rounded px-4 py-2 font-bold text-lg">
+            <i class="fas fa-hourglass-half text-danger"></i>
+            <span>指派後倒數：</span>
+            <span id="assignCountdownText">10:00</span>
+        </div>
         <!-- 頁面標題 -->
         <div class="bg-white shadow-lg rounded-lg border-l-4 border-primary p-2 mb-4">
             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center px-2 md:px-4 py-2 gap-2">
@@ -317,59 +321,58 @@
                                 class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary "
                                 placeholder="請輸入" value="林值班">
                         </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>案件類型
+                            </label>
+                            <select id="basicCaseTypeSelect"
+                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                <option>補蜂</option>
+                                <option selected>捉蛇</option>
+                                <option>動物救援</option>
+                                <option>綠鬣蜥</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label class="flex items-center text-gray-dark font-medium mb-1">
                             <span class="text-danger mr-1">*</span>通報地址
                         </label>
-                        <div class="address-row flex flex-row gap-2 min-w-0 w-full"
-                            style="background:none;padding:0;margin:0;">
-                            <select
-                                class="border border-r border-border px-3 py-2 bg-white focus:outline-primary min-w-0"
-                                style="min-width:90px;max-width:120px;">
-                                <option>屏東市</option>
-                                <option selected>屏東縣</option>
-                            </select>
-                            <select
-                                class="border border-border rounded-r px-3 py-2 bg-white focus:outline-primary min-w-0"
-                                style="min-width:90px;max-width:120px;">
-                                <option selected>不拘</option>
-                                <option>潮州鎮</option>
-                                <option>東港鎮</option>
-                                <option>恆春鎮</option>
-                                <option>萬丹鄉</option>
-                                <option>長治鄉</option>
-                                <option>麟洛鄉</option>
-                                <option>九如鄉</option>
-                                <option>里港鄉</option>
-                                <option>鹽埔鄉</option>
-                                <option>高樹鄉</option>
-                                <option>萬巒鄉</option>
-                                <option>內埔鄉</option>
-                                <option>竹田鄉</option>
-                                <option>新埤鄉</option>
-                                <option>枋寮鄉</option>
-                                <option>新園鄉</option>
-                                <option>崁頂鄉</option>
-                                <option>林邊鄉</option>
-                                <option>南州鄉</option>
-                                <option>佳冬鄉</option>
-                                <option>琉球鄉</option>
-                                <option>車城鄉</option>
-                                <option>滿州鄉</option>
-                                <option>枋山鄉</option>
-                                <option>三地門鄉</option>
-                                <option>霧台鄉</option>
-                                <option>瑪家鄉</option>
-                                <option>泰武鄉</option>
-                                <option>來義鄉</option>
-                                <option>春日鄉</option>
-                                <option>獅子鄉</option>
-                                <option>牡丹鄉</option>
-                            </select>
-                            <input type="text"
-                                class="address-input border border-border rounded px-3 py-2 bg-gray-light min-w-0 flex-1"
-                                value="自由路527號">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
+                            <!-- 鄉鎮市 -->
+                            <div>
+                                <select
+                                    class="w-full border border-border rounded px-2 py-2 bg-white focus:outline-primary text-sm">
+                                    <option>屏東市</option>
+                                    <option selected>潮州鎮</option>
+                                </select>
+                            </div>
+                            <!-- 路街段 -->
+                            <div>
+                                <select
+                                    class="w-full border border-border rounded px-2 py-2 bg-white focus:outline-primary text-sm">
+                                    <option>八德路</option>
+                                    <option>八龍路</option>
+                                    <option>力行巷</option>
+                                    <option>三水街</option>
+                                    <option>三民路</option>
+                                    <option>三光路</option>
+                                    <option>三合路</option>
+                                    <option>三林路</option>
+                                    <option>三城路</option>
+                                    <option>三春路</option>
+                                    <option>三星一巷</option>
+                                    <option>三星二巷</option>
+                                    <option>三星路</option>
+                                    <option>三蒼路</option>
+                                </select>
+                            </div>
+                            <!-- 詳細地址 -->
+                            <div>
+                                <input type="text"
+                                    class="w-full border border-border rounded px-2 py-2 bg-white focus:outline-primary text-sm"
+                                    placeholder="請輸入詳細地址">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -393,24 +396,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                         <div>
                             <label class="flex items-center text-gray-dark font-medium mb-1">
-                                <span class="text-danger mr-1">*</span>案件類型
-                            </label>
-                            <select id="caseTypeSelect"
-                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
-                                <option selected>補蜂</option>
-                                <option>捉蛇</option>
-                                <option>動物救援</option>
-                                <option>綠鬣蜥</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="flex items-center text-gray-dark font-medium mb-1">
                                 <span class="text-danger mr-1">*</span>作業廠商
                             </label>
                             <select
                                 class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
-                                <option selected>請選擇</option>
-                                <option>廠商A</option>
+                                <option>請選擇</option>
+                                <option selected>廠商A</option>
                                 <option>廠商B</option>
                             </select>
                         </div>
@@ -420,16 +411,83 @@
                             </label>
                             <select
                                 class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
-                                <!-- 作業人員選項將由 JS 動態產生，初始留空 -->
+                                <option>請選擇</option>
+                                <option selected>許○○</option>
+                                <option>王○○</option>
+                                <option>李○○</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-dark font-medium mb-1">物種名稱</label>
+                            <select id="dutySpeciesSelect"
+                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                <option>請選擇</option>
+                                <option selected>眼鏡蛇</option>
+                                <option>虎頭蜂</option>
+                                <option>長腳蜂</option>
+                                <option>球蟒</option>
+                                <option>白鼻心</option>
+                                <option>綠鬣蜥</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-gray-dark font-medium mb-1">廠商聯繫通報人時間</label>
                             <input type="text"
                                 class="w-full border border-border rounded px-3 py-2 bg-gray-light focus:outline-primary"
-                                value="2024/04/28 22:20:21" readonly>
+                                value="2025/07/28 04:37:50" readonly>
                         </div>
                     </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>通報人願意於現場等待
+                            </label>
+                            <div class="flex items-center gap-4 mt-1">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="waitOnSite" class="text-primary mr-2" value="是">
+                                    <span>是</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="waitOnSite" class="text-primary mr-2" value="否" checked>
+                                    <span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>通報物仍在現場，尚未脫逃
+                            </label>
+                            <div class="flex items-center gap-4 mt-1">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="stillOnSite" class="text-primary mr-2" value="是">
+                                    <span>是</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="stillOnSite" class="text-primary mr-2" value="否" checked>
+                                    <span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>是否有飼主
+                            </label>
+                            <div class="flex items-center gap-4 mt-1">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="hasOwner" class="text-primary mr-2" value="是">
+                                    <span>是</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="hasOwner" class="text-primary mr-2" value="否" checked>
+                                    <span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <!-- 空白欄位 -->
+                        </div>
+                    </div>
+                </div>
                 </div>
             </section>
             <!-- 外勤作業紀錄 -->
@@ -443,10 +501,24 @@
                     <span class="text-sm text-gray-dark">回報日期： yyy/mm/dd</span>
                 </div>
                 <div class="border border-border rounded p-4" id="fieldWorkBlock" style="display:none;">
+                    <!-- 第一行：值勤人員抵達時間 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                         <div class="min-w-0 md:col-span-2 flex flex-col">
                             <label class="flex items-center text-gray-dark font-medium mb-1">
                                 <span class="text-danger mr-1">*</span>值勤人員抵達時間
+                                <script>
+                                    // radio預設都設為「是」
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var waitYes = document.querySelector('input[name="waitOnSite"][value="是"]');
+                                        var waitNo = document.querySelector('input[name="waitOnSite"][value="否"]');
+                                        var stillYes = document.querySelector('input[name="stillOnSite"][value="是"]');
+                                        var stillNo = document.querySelector('input[name="stillOnSite"][value="否"]');
+                                        if (waitYes) waitYes.checked = true;
+                                        if (waitNo) waitNo.checked = false;
+                                        if (stillYes) stillYes.checked = true;
+                                        if (stillNo) stillNo.checked = false;
+                                    });
+                                </script>
                             </label>
                             <div class="flex flex-col md:flex-row gap-2 min-w-0 w-full">
                                 <input type="text" id="arriveTimeField"
@@ -463,139 +535,318 @@
                                     placeholder="座標" readonly>
                             </div>
                         </div>
-                        <div class="min-w-0">
-                            <label class="flex items-center text-gray-dark font-medium mb-1">
-                                <span class="text-danger mr-1">*</span>物種
-                            </label>
-                            <select id="speciesSelect"
-                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary">
-                                <!-- 物種選項由 JS 動態產生 -->
-                            </select>
-                        </div>
-                        <div class="min-w-0">
-                            <label class="flex items-center text-gray-dark font-medium mb-1">
-                                <span class="text-danger mr-1">*</span>數量
-                            </label>
-                            <input type="text"
-                                class="w-full min-w-0 border border-border rounded px-3 py-2 bg-white focus:outline-primary"
-                                placeholder="請輸入" value="1">
-                        </div>
-                        <div class="min-w-0">
-                            <label id="speciesStatusLabel" class="flex items-center text-gray-dark font-medium mb-1">
-                                <span id="speciesStatusStar" class="text-danger mr-1">*</span>物種狀況
-                            </label>
-                            <div class="species-status-row flex flex-col gap-2 min-w-0">
-                                <select id="speciesStatusSelect"
-                                    class="border border-border rounded px-3 py-2 bg-white focus:outline-primary">
-                                    <option value="">請選擇</option>
-                                    <option value="健康">健康</option>
-                                    <option value="受困">受困</option>
-                                    <option value="受傷">受傷</option>
-                                    <option value="到場前已自行逃脫">到場前已自行逃脫</option>
-                                    <option value="已死亡">已死亡</option>
-                                </select>
-                                <div id="speciesStatusSubBlock" style="display:none;">
-                                    <select id="speciesStatusSubSelect"
-                                        class="border border-border rounded px-3 py-2 bg-white focus:outline-primary mt-0">
-                                        <option value="">請選擇受困類型</option>
-                                        <option value="獸鋏">獸鋏</option>
-                                        <option value="網拒">網拒</option>
-                                        <option value="其他">其他</option>
-                                    </select>
-                                    <input id="speciesStatusOtherInput" type="text"
-                                        class="border border-border rounded px-3 py-2 bg-white focus:outline-primary mt-0"
-                                        placeholder="請輸入其他受困類型" style="display:none;">
-                                </div>
-                            </div>
-                        </div>
+                        <div></div>
+                        <div></div>
                     </div>
+                    <!-- 第二行：四個radio欄位 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                         <div>
-                            <label id="ownerLabel" class="flex items-center text-gray-dark font-medium mb-1">
-                                <span class="text-danger mr-1">*</span>是否有飼主
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>通報人仍在現場
                             </label>
                             <div class="flex items-center gap-4 mt-1">
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="hasOwner" class="text-primary mr-2">
+                                    <input type="radio" name="waitOnSite" class="text-primary mr-2" value="是">
                                     <span>是</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="hasOwner" class="text-primary mr-2" checked>
+                                    <input type="radio" name="waitOnSite" class="text-primary mr-2" value="否">
                                     <span>否</span>
                                 </label>
                             </div>
                         </div>
                         <div>
-                            <label id="processLabel" class="flex items-center text-gray-dark font-medium mb-1">
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>通報物仍在現場，尚未脫逃
+                            </label>
+                            <div class="flex items-center gap-4 mt-1">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="stillOnSite" class="text-primary mr-2" value="是">
+                                    <span>是</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="stillOnSite" class="text-primary mr-2" value="否">
+                                    <span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>是否為通報案件類型
+                            </label>
+                            <div class="flex items-center gap-4 mt-1">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="correctCaseType" class="text-primary mr-2" value="是">
+                                    <span>是</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="correctCaseType" class="text-primary mr-2" value="否">
+                                    <span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>是否有飼主
+                            </label>
+                            <div class="flex items-center gap-4 mt-1">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="hasOwnerField" class="text-primary mr-2" value="是">
+                                    <span>是</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="hasOwnerField" class="text-primary mr-2" value="否">
+                                    <span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 第三行：物種相關欄位 -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>物種名稱
+                            </label>
+                            <select id="fieldSpeciesSelect"
+                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                <option value="">眼鏡蛇</option>
+                                <option value="虎頭蜂">虎頭蜂</option>
+                                <option value="長腳蜂">長腳蜂</option>
+                                <option value="球蟒">球蟒</option>
+                                <option value="白鼻心">白鼻心</option>
+                                <option value="綠鬣蜥">綠鬣蜥</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>數量
+                            </label>
+                            <input type="text"
+                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary"
+                                placeholder="1" value="1">
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>物種狀況
+                            </label>
+                            <select id="fieldSpeciesStatusSelect"
+                                class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                                <option value="">請選擇</option>
+                                <option value="健康">健康</option>
+                                <option value="受傷">受傷</option>
+                                <option value="受困">受困</option>
+                                <option value="到場前已自行脫逃">到場前已自行脫逃</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
                                 <span class="text-danger mr-1">*</span>處理情形
                             </label>
-                            <select id="processSelect"
+                            <select id="fieldProcessSelect"
                                 class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
                                 <option selected>已逃跑</option>
                                 <option>現場放走</option>
                                 <option>野放</option>
                                 <option>後送</option>
                             </select>
-                            <input id="transferHospitalInput" type="text"
-                                class="mt-2 w-full border border-border rounded px-3 py-2 bg-gray-light"
-                                style="display:none;" value="移送指定動物醫院/單位">
                         </div>
+                    </div>
+                    <!-- 第四行：通報人是否願意支付費用 -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                            <label class="flex items-center text-gray-dark font-medium mb-1">
+                                <span class="text-danger mr-1">*</span>通報人是否願意支付費用
+                            </label>
+                            <div class="flex items-center gap-4 mt-1">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="paymentWilling" class="text-primary mr-2" value="是">
+                                    <span>是</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="paymentWilling" class="text-primary mr-2" value="否">
+                                    <span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div></div>
+                        <div></div>
                         <div></div>
                         <div></div>
                     </div>
 
-                    <!-- 圖片上傳區塊 -->
-                    <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-                        <!-- 處理前紀錄 -->
-                        <div id="workPhotoBlock1" class="work-photo-block flex flex-col h-full flex-1 min-w-0">
-                            <div class="work-photo-title">
-                                <span class="text-danger mr-1">*</span><span>處理前紀錄</span>
+                    <!-- 新增犬貓案件細部選項區塊 -->
+                    <div id="strayEscapeBlock" style="display:none;">
+                        <label class="flex items-center text-gray-dark font-medium mb-1">
+                            <span class="text-danger mr-1">*</span>到場前已逃跑？
+                        </label>
+                        <select id="strayEscapeSelect"
+                            class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                            <option value="">請選擇</option>
+                            <option value="是">是</option>
+                            <option value="否">否</option>
+                        </select>
+                    </div>
+                    <div id="strayInjuredToolBlock" style="display:none;">
+                        <!-- 已移除「是否可用工具處理？」欄位 -->
+                    </div>
+                    <div id="strayTrappedAbilityBlock" style="display:none;">
+                        <label class="flex items-center text-gray-dark font-medium mb-1">
+                            <span class="text-danger mr-1">*</span>是否有脫困能力？
+                        </label>
+                        <select id="strayTrappedAbilitySelect"
+                            class="w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary">
+                            <option value="">請選擇</option>
+                            <option value="有">有</option>
+                            <option value="無">無</option>
+                        </select>
+                    </div>
+
+                    <!-- 外勤作業照片上傳區 -->
+                    <div class="mt-6 px-4">
+                        <h4 class="text-lg font-bold mb-4 text-gray-dark">外勤作業照片</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- 處理前紀錄 -->
+                            <div id="workPhotoBlock1"
+                                class="work-photo-block w-full p-4 rounded-lg border border-gray-200">
+                                <div class="work-photo-title flex items-center text-gray-dark font-medium mb-3">
+                                    <span class="text-danger mr-1">*</span><span>處理前紀錄</span>
+                                    <span class="text-xs text-gray-500 ml-2">(<span id="photoCount1">0</span>/4)</span>
+                                </div>
+                                <div id="workPhotoPreview1"
+                                    class="work-photo-preview grid grid-cols-4 gap-2 w-full min-h-[80px]">
+                                    <!-- 照片位置1 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片1">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 照片位置2 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片2">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 照片位置3 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片3">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 照片位置4 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片4">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 上傳按鈕 -->
+                                    <label for="workPhotoInput1"
+                                        class="upload-slot bg-white border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 hover:border-primary text-gray-400 hover:text-primary transition-colors aspect-square w-full">
+                                        <i class="fas fa-plus text-xl"></i>
+                                        <div class="text-xs font-medium mt-1">新增照片</div>
+                                    </label>
+                                </div>
+                                <input type="file" id="workPhotoInput1" accept="image/*" multiple style="display:none;">
+                                <div id="workPhotoTip1" class="text-xs text-gray-500 mt-2">
+                                    可上傳的檔案格式：jpg、jpeg、png，最多4張，每張最大 2MB。
+                                </div>
                             </div>
-                            <label
-                                class="work-photo-upload bg-primary text-white px-3 py-2 rounded text-base flex items-center gap-2 font-bold cursor-pointer">
-                                <i class="fas fa-upload w-4 h-4"></i>
-                                上傳檔案
-                                <input type="file" id="workPhotoInput1" accept="image/*" style="display:none;">
-                            </label>
-                            <p class="text-xs text-gray-medium mb-2" id="workPhotoTip1">可上傳的檔案格式：jpg、jpeg、png，一張照片最大
-                                2MB。</p>
-                            <div id="workPhotoPreview1" class="work-photo-preview relative">
-                                <span style="color: #6c757d;">點擊上方按鈕選擇檔案</span>
+
+                            <!-- 處理中紀錄 -->
+                            <div id="workPhotoBlock2"
+                                class="work-photo-block w-full p-4 rounded-lg border border-gray-200">
+                                <div class="work-photo-title flex items-center text-gray-dark font-medium mb-3">
+                                    <span class="text-danger mr-1"
+                                        style="visibility:hidden;">*</span><span>處理中紀錄(非必填)</span>
+                                    <span class="text-xs text-gray-500 ml-2">(<span id="photoCount2">0</span>/4)</span>
+                                </div>
+                                <div id="workPhotoPreview2"
+                                    class="work-photo-preview grid grid-cols-4 gap-2 w-full min-h-[80px]">
+                                    <!-- 照片位置1 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片1">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 照片位置2 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片2">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 照片位置3 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片3">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 照片位置4 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片4">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 上傳按鈕 -->
+                                    <label for="workPhotoInput2"
+                                        class="upload-slot bg-white border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 hover:border-primary text-gray-400 hover:text-primary transition-colors aspect-square w-full">
+                                        <i class="fas fa-plus text-xl"></i>
+                                        <div class="text-xs font-medium mt-1">新增照片</div>
+                                    </label>
+                                </div>
+                                <input type="file" id="workPhotoInput2" accept="image/*" multiple style="display:none;">
+                                <div id="workPhotoTip2" class="text-xs text-gray-500 mt-2">
+                                    可上傳的檔案格式：jpg、jpeg、png，最多4張，每張最大 2MB。
+                                </div>
                             </div>
-                        </div>
-                        <!-- 處理中紀錄 -->
-                        <div id="workPhotoBlock2" class="work-photo-block flex flex-col h-full flex-1 min-w-0">
-                            <div class="work-photo-title">
-                                <span class="text-danger mr-1" style="display:none;"></span><span>處理中紀錄（非必填）</span>
-                            </div>
-                            <label
-                                class="work-photo-upload bg-primary text-white px-3 py-2 rounded text-base flex items-center gap-2 font-bold cursor-pointer">
-                                <i class="fas fa-upload w-4 h-4"></i>
-                                上傳檔案
-                                <input type="file" id="workPhotoInput2" accept="image/*" style="display:none;">
-                            </label>
-                            <p class="text-xs text-gray-medium mb-2" id="workPhotoTip2">可上傳的檔案格式：jpg、jpeg、png，一張照片最大
-                                2MB。</p>
-                            <div id="workPhotoPreview2" class="work-photo-preview relative">
-                                <span style="color: #6c757d;">點擊上方按鈕選擇檔案</span>
-                            </div>
-                        </div>
-                        <!-- 處理完成紀錄 -->
-                        <div id="workPhotoBlock3" class="work-photo-block flex flex-col h-full flex-1 min-w-0"
-                            style="display: none;">
-                            <div class="work-photo-title">
-                                <span class="text-danger mr-1">*</span><span>處理完成紀錄</span>
-                            </div>
-                            <label
-                                class="work-photo-upload bg-primary text-white px-3 py-2 rounded text-base flex items-center gap-2 font-bold cursor-pointer">
-                                <i class="fas fa-upload w-4 h-4"></i>
-                                上傳檔案
-                                <input type="file" id="workPhotoInput3" accept="image/*" style="display:none;">
-                            </label>
-                            <p class="text-xs text-gray-medium mb-2" id="workPhotoTip3">可上傳的檔案格式：jpg、jpeg、png，一張照片最大
-                                2MB。</p>
-                            <div id="workPhotoPreview3" class="work-photo-preview relative">
-                                <span style="color: #6c757d;">點擊上方按鈕選擇檔案</span>
+
+                            <!-- 處理完成紀錄 -->
+                            <div id="workPhotoBlock3"
+                                class="work-photo-block w-full p-4 rounded-lg border border-gray-200">
+                                <div class="work-photo-title flex items-center text-gray-dark font-medium mb-3">
+                                    <span class="text-danger mr-1">*</span><span>處理完成紀錄</span>
+                                    <span class="text-xs text-gray-500 ml-2">(<span id="photoCount3">0</span>/4)</span>
+                                </div>
+                                <div id="workPhotoPreview3"
+                                    class="work-photo-preview grid grid-cols-4 gap-2 w-full min-h-[80px]">
+                                    <!-- 照片位置1 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片1">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 照片位置2 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片2">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 照片位置3 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片3">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 照片位置4 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片4">
+                                        <button type="button"
+                                            class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10">&times;</button>
+                                    </div>
+                                    <!-- 上傳按鈕 -->
+                                    <label for="workPhotoInput3"
+                                        class="upload-slot bg-white border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 hover:border-primary text-gray-400 hover:text-primary transition-colors aspect-square w-full">
+                                        <i class="fas fa-plus text-xl"></i>
+                                        <div class="text-xs font-medium mt-1">新增照片</div>
+                                    </label>
+                                </div>
+                                <input type="file" id="workPhotoInput3" accept="image/*" multiple style="display:none;">
+                                <div id="workPhotoTip3" class="text-xs text-gray-500 mt-2">
+                                    可上傳的檔案格式：jpg、jpeg、png，最多4張，每張最大 2MB。
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -679,6 +930,11 @@
     <script>
         // 全部互動功能
         document.addEventListener('DOMContentLoaded', function () {
+            // 檢測檔案類型的輔助函數（全域函數）
+            window.isVideoFile = function (dataUrl) {
+                return dataUrl && dataUrl.startsWith('data:video/');
+            };
+
             // 作業廠商與作業人員連動
             // 取得正確的作業廠商與作業人員 select
             const selects = document.querySelectorAll('#dutyRecordBlock select');
@@ -695,11 +951,20 @@
                 if (!vendorSelect2 || !staffSelect2) return;
                 const vendor = vendorSelect2.value;
                 let staffList = vendorStaffMap[vendor] || [];
-                // 第一個選項永遠是「請選擇」
-                let options = [`<option selected>請選擇</option>`];
-                staffList.forEach(s => {
-                    options.push(`<option>${s}</option>`);
-                });
+                // 如果有人員清單，預設選擇第一個人員
+                let options = [];
+                if (staffList.length > 0) {
+                    options.push(`<option>請選擇</option>`);
+                    staffList.forEach((s, index) => {
+                        if (index === 0) {
+                            options.push(`<option selected>${s}</option>`);
+                        } else {
+                            options.push(`<option>${s}</option>`);
+                        }
+                    });
+                } else {
+                    options = [`<option selected>請選擇</option>`];
+                }
                 staffSelect2.innerHTML = options.join('');
             }
             if (vendorSelect2) {
@@ -717,11 +982,13 @@
                     let staffValue = '';
                     if (vendorSelect2) vendorValue = vendorSelect2.value;
                     if (staffSelect2) staffValue = staffSelect2.value;
-                    if (!vendorValue || vendorValue === '請選擇') {
+
+                    // 只有在沒有選擇或是預設值時才提示
+                    if (!vendorValue || vendorValue === '請選擇' || vendorValue === '') {
                         alert('請選擇作業廠商');
                         return;
                     }
-                    if (!staffValue || staffValue === '請選擇') {
+                    if (!staffValue || staffValue === '請選擇' || staffValue === '') {
                         alert('請選擇作業人員');
                         return;
                     }
@@ -737,55 +1004,54 @@
                         const ss = String(now.getSeconds()).padStart(2, '0');
                         vendorContactTimeInput.value = `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}`;
                     }
-                    // 通過驗證才可執行後續動作
-                    // 顯示外勤作業紀錄區塊
-                    const fieldWorkBlock = document.getElementById('fieldWorkBlock');
-                    if (fieldWorkBlock) fieldWorkBlock.style.display = '';
-                    // 顯示電子簽章區塊
-                    const signatureBlock = document.getElementById('signatureBlock');
-                    if (signatureBlock) signatureBlock.style.display = '';
-                    // 將指派案件按鈕變成回報完成
-                    const assignBtn = document.getElementById('assignCaseBtn');
-                    if (assignBtn) {
-                        assignBtn.innerHTML = '<i class="fas fa-check-circle w-3.5 h-3.5 mr-1"></i>回報完成';
-                        assignBtn.type = 'submit';
+                    // 檢查內勤三個欄位是否符合案件取消條件
+                    const dutyHasOwner = document.querySelector('input[name="hasOwner"]:checked')?.value;
+                    const dutyReporterOnSite = document.querySelector('input[name="waitOnSite"]:checked')?.value;
+                    const dutyStillOnSite = document.querySelector('input[name="stillOnSite"]:checked')?.value;
+                    const shouldCancelCase = (dutyHasOwner === '是') || (dutyReporterOnSite === '否') || (dutyStillOnSite === '否');
+
+                    if (shouldCancelCase) {
+                        // 案件取消流程
+                        const assignBtn = document.getElementById('assignCaseBtn');
+                        if (assignBtn) {
+                            assignBtn.innerHTML = '<i class="fas fa-times-circle w-3.5 h-3.5 mr-1"></i>案件取消';
+                            assignBtn.type = 'submit';
+                        }
+                        // 顯示案件取消提示
+                        alert('符合案件取消條件，案件將被取消');
+                    } else {
+                        // 正常指派流程
+                        // 顯示外勤作業紀錄區塊
+                        const fieldWorkBlock = document.getElementById('fieldWorkBlock');
+                        if (fieldWorkBlock) fieldWorkBlock.style.display = '';
+                        // 顯示電子簽章區塊
+                        const signatureBlock = document.getElementById('signatureBlock');
+                        if (signatureBlock) signatureBlock.style.display = '';
+                        // 將指派案件按鈕變成回報完成
+                        const assignBtn = document.getElementById('assignCaseBtn');
+                        if (assignBtn) {
+                            assignBtn.innerHTML = '<i class="fas fa-check-circle w-3.5 h-3.5 mr-1"></i>回報完成';
+                            assignBtn.type = 'submit';
+                        }
+                        // (已移除倒數計時條功能)
                     }
                 });
             }
-            // 回報完成驗證外勤作業紀錄
+            // 回報完成處理（已移除驗證）
             const assignBtn = document.getElementById('assignCaseBtn');
             if (assignBtn) {
                 assignBtn.addEventListener('click', function (e) {
                     if (assignBtn.type === 'submit' && assignBtn.innerText.includes('回報完成')) {
-                        // 驗證外勤作業紀錄必填欄位
-                        const arriveTime = document.getElementById('arriveTimeField')?.value.trim();
-                        const species = document.getElementById('speciesSelect')?.value;
-                        const quantity = document.querySelector('#fieldWorkBlock input[type="text"]')?.value.trim();
-                        const speciesStatus = document.getElementById('speciesStatusSelect')?.value;
-                        const owner = Array.from(document.getElementsByName('hasOwner')).find(r => r.checked)?.nextElementSibling?.textContent;
-                        const process = document.getElementById('processSelect')?.value;
-                        // 三張照片
-                        const photo1 = document.getElementById('workPhotoInput1')?.files.length;
-                        const photo2 = document.getElementById('workPhotoInput2')?.files.length;
-                        const photo3 = document.getElementById('workPhotoInput3')?.files.length;
-                        let msg = '';
-                        if (!arriveTime) msg += '請填寫值勤人員抵達時間\n';
-                        if (!species || species === '不拘') msg += '請選擇物種\n';
-                        if (!quantity) msg += '請填寫數量\n';
-                        if (!speciesStatus) msg += '請選擇物種狀況\n';
-                        if (!owner) msg += '請選擇是否有飼主\n';
-                        if (!process) msg += '請選擇處理情形\n';
-                        if (!photo1) msg += '請上傳處理前紀錄照片\n';
-                        // 處理中紀錄非必填
-                        if (!photo3) msg += '請上傳處理完成紀錄照片\n';
-                        if (msg) {
-                            alert(msg);
-                            e.preventDefault();
-                            return;
-                        }
-                        // 驗證通過，跳出完成案件視窗
+                        // 直接顯示完成案件視窗，不進行驗證
                         e.preventDefault();
                         showCompleteCaseModal();
+                    } else if (assignBtn.type === 'submit' && assignBtn.innerText.includes('案件取消')) {
+                        // 案件取消處理
+                        e.preventDefault();
+                        if (confirm('確定要取消此案件嗎？')) {
+                            alert('案件已取消');
+                            window.location.href = 'DutyCaseManagement_List.html';
+                        }
                     }
                 }, true);
             }
@@ -841,8 +1107,8 @@
             // 關聯設定
             const speciesOptionsMap = {
                 '補蜂': ['蜜蜂', '虎頭蜂', '游離蜂', '泥壺蜂'],
-                '捉蛇': ['蛇類'],
-                '動物救援': ['犬', '貓', '經濟動物', '野生動物'],
+                '捉蛇': ['蛇類(保育)', '蛇類(一般)'],
+                '動物救援': ['犬', '貓', '經濟動物', '其他寵物', '野生動物(一般)', '野生動物(保育)'],
                 '綠鬣蜥': ['綠鬣蜥']
             };
             function updateSpeciesOptionsByCaseType() {
@@ -865,11 +1131,40 @@
                 });
             }
 
+            // 內勤作業物種名稱與通報資料案件類型聯動
+            const basicCaseTypeSelect = document.getElementById('basicCaseTypeSelect');
+            const dutySpeciesSelect = document.getElementById('dutySpeciesSelect');
+
+            function updateDutySpeciesOptions() {
+                if (!basicCaseTypeSelect || !dutySpeciesSelect) return;
+                const type = basicCaseTypeSelect.value;
+                const options = speciesOptionsMap[type] || [];
+
+                // 根據案件類型更新內勤作業的物種選項
+                let dutyOptions = ['請選擇'];
+                if (options.length > 0) {
+                    dutyOptions = dutyOptions.concat(options);
+                } else {
+                    // 如果沒有對應的物種，保留原有的通用選項
+                    dutyOptions = dutyOptions.concat(['眼鏡蛇', '虎頭蜂', '長腳蜂', '球蟒', '白鼻心', '綠鬣蜥']);
+                }
+
+                dutySpeciesSelect.innerHTML = dutyOptions.map((o, i) =>
+                    `<option${i === 1 ? ' selected' : ''}>${o}</option>`
+                ).join('');
+            }
+
+            if (basicCaseTypeSelect) {
+                basicCaseTypeSelect.addEventListener('change', updateDutySpeciesOptions);
+                // 頁面載入時執行一次
+                updateDutySpeciesOptions();
+            }
+
             // 處理情形動態調整
             function updateProcessOptions() {
+                const caseTypeSelect = document.getElementById('caseTypeSelect');
                 const speciesSelect = document.getElementById('speciesSelect');
                 const statusSelect_main = document.getElementById('speciesStatusSelect');
-                const ownerRadios = document.getElementsByName('hasOwner');
                 const processSelect = document.getElementById('processSelect');
                 const processLabel_main = document.getElementById('processLabel');
                 const processStar_main = processLabel_main ? processLabel_main.querySelector('.text-danger') : null;
@@ -877,51 +1172,241 @@
                 const workPhotoBlock2Star = document.querySelector('#workPhotoBlock2 .work-photo-title .text-danger');
                 if (workPhotoBlock2Star) workPhotoBlock2Star.style.display = 'none';
                 if (!speciesSelect || !statusSelect_main || !processSelect) return;
+
+                const caseType = caseTypeSelect?.value;
                 const species = speciesSelect.value;
                 const status = statusSelect_main.value;
-                let owner = '否';
-                if (ownerRadios && ownerRadios.length) {
-                    owner = Array.from(ownerRadios).find(r => r.checked)?.nextElementSibling?.textContent || '否';
-                }
                 let options = [];
                 let required = true;
-                if (species === '野生動物' && status === '受傷') {
-                    options = ['已逃跑', '後送'];
-                } else if ((species === '犬' || species === '貓' || species === '經濟動物') && status === '受傷' && owner === '否') {
-                    options = ['後送'];
-                } else if ((species === '犬' || species === '貓' || species === '經濟動物') && status === '受傷' && owner === '是') {
-                    options = ['後送'];
-                    required = false;
+
+                // 如果案件類型是補蜂，使用特殊的處理情形選項
+                if (caseType === '補蜂') {
+                    options = ['銷毀、驅離', '攜回'];
+                } else if (caseType === '捉蛇') {
+                    // 捉蛇案件根據物種狀況決定處理情形
+                    if (status === '健康') {
+                        options = ['攜回'];
+                    } else if (status === '受傷') {
+                        options = ['後送'];
+                    } else if (status === '到場前已自行逃脫') {
+                        options = ['到場前已自行脫逃'];
+                    } else {
+                        // 如果還沒選擇狀況，顯示所有可能選項
+                        options = ['攜回', '後送', '到場前已自行脫逃'];
+                    }
+                } else if (caseType === '綠鬣蜥') {
+                    // 綠鬣蜥案件的處理情形
+                    options = ['捕獲', '未捕獲'];
+                } else if (caseType === '動物救援' && (species === '犬' || species === '貓' || species === '經濟動物' || species === '其他寵物')) {
+                    // 犬貓、經濟動物和其他寵物案件的處理情形 - 依有無飼主與現場狀況動態決定
+                    const dogCatOwnerBlock = document.getElementById('dogCatOwnerBlock');
+                    const dogCatPaymentBlock = document.getElementById('dogCatPaymentBlock');
+                    const ownerSelect = document.getElementById('dogCatOwnerSelect');
+                    // 刪除到場前已逃跑欄位
+                    const strayEscapeBlock = document.getElementById('strayEscapeBlock');
+                    if (strayEscapeBlock) strayEscapeBlock.remove();
+                    let strayTrappedAbilityBlock = document.getElementById('strayTrappedAbilityBlock');
+                    if (!strayTrappedAbilityBlock) {
+                        strayTrappedAbilityBlock = document.createElement('div');
+                        strayTrappedAbilityBlock.id = 'strayTrappedAbilityBlock';
+                        strayTrappedAbilityBlock.style.display = 'none';
+                        strayTrappedAbilityBlock.innerHTML = `<label class=\"flex items-center text-gray-dark font-medium mb-1\"><span class=\"text-danger mr-1\">*</span>是否有脫困能力？</label><select id=\"strayTrappedAbilitySelect\" class=\"w-full border border-border rounded px-3 py-2 bg-white focus:outline-primary\"><option value=\"\">請選擇</option><option value=\"有\">有</option><option value=\"無\">無</option></select>`;
+                        dogCatOwnerBlock.parentNode.insertBefore(strayTrappedAbilityBlock, dogCatOwnerBlock.nextSibling);
+                    }
+                    // 取得欄位值
+                    const hasOwner = ownerSelect?.value;
+                    const speciesStatus = statusSelect_main.value;
+                    const trappedAbility = document.getElementById('strayTrappedAbilitySelect')?.value;
+                    // 顯示/隱藏欄位
+                    if (dogCatOwnerBlock) dogCatOwnerBlock.style.display = '';
+                    if (hasOwner === '是') {
+                        // 有飼主
+                        if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
+                        if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = 'none';
+                        options = ['飼主處理', '到場無法救援', '到場無動物', '棄養'];
+                    } else if (hasOwner === '否') {
+                        // 無飼主（流浪）
+                        if (speciesStatus === '受傷') {
+                            // 顯示通報人支付費用欄位
+                            if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = '';
+                            const paymentSelect = document.getElementById('dogCatPaymentSelect');
+                            const payment = paymentSelect?.value;
+
+                            if (payment === '是') {
+                                options = ['後送', '到場無法救援', '到場無動物', '棄養'];
+                            } else if (payment === '否') {
+                                options = ['安全處野放', '到場無法救援', '到場無動物', '棄養'];
+                            } else {
+                                options = ['到場無法救援', '到場無動物', '棄養'];
+                            }
+                            if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
+                        } else if (speciesStatus === '受困') {
+                            // 顯示通報人支付費用欄位
+                            if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = '';
+                            const paymentSelect = document.getElementById('dogCatPaymentSelect');
+                            const payment = paymentSelect?.value;
+
+                            if (payment === '是') {
+                                options = ['後送', '到場無法救援', '到場無動物', '棄養'];
+                            } else if (payment === '否') {
+                                options = ['安全處野放', '到場無法救援', '到場無動物', '棄養'];
+                            } else {
+                                options = ['到場無法救援', '到場無動物', '棄養'];
+                            }
+                            if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
+                        } else if (speciesStatus === '健康') {
+                            if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
+                            if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = 'none';
+                            options = ['安全處野放', '到場無法救援', '到場無動物', '棄養'];
+                        } else {
+                            if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
+                            if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = 'none';
+                            options = ['到場無法救援', '到場無動物', '棄養'];
+                        }
+                    } else {
+                        // 尚未選擇有無飼主
+                        if (strayInjuredToolBlock) strayInjuredToolBlock.style.display = 'none';
+                        if (strayTrappedAbilityBlock) strayTrappedAbilityBlock.style.display = 'none';
+                        if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = 'none';
+                        options = ['到場無法救援', '到場無動物', '棄養'];
+                    }
+                    // 綁定事件
+                    if (ownerSelect) ownerSelect.onchange = updateProcessOptions;
+                    if (document.getElementById('strayTrappedAbilitySelect')) document.getElementById('strayTrappedAbilitySelect').onchange = updateProcessOptions;
+                    if (document.getElementById('dogCatPaymentSelect')) document.getElementById('dogCatPaymentSelect').onchange = updateProcessOptions;
+                } else if (species === '野生動物(一般)') {
+                    // 野生動物(一般)的處理邏輯
+                    if (status === '受困') {
+                        // 受困的野生動物，需要檢查受困類型
+                        const subSelect = document.getElementById('speciesStatusSubSelect');
+                        const subStatus = subSelect?.value;
+
+                        if (subStatus === '受傷') {
+                            // 受困且受傷 = 後送
+                            options = ['後送'];
+                        } else if (subStatus && subStatus !== '') {
+                            // 受困但健康（獸鋏、網拒、其他） = 只能安全處野放
+                            options = ['安全處野放'];
+                        } else {
+                            // 尚未選擇受困類型，顯示可能選項
+                            options = ['安全處野放', '後送'];
+                        }
+                    } else if (status === '受傷') {
+                        // 受傷 = 後送(動物之家)
+                        options = ['後送'];
+                    } else if (status === '健康') {
+                        // 健康的野生動物
+                        options = ['安全處野放', '攜回(外來種)'];
+                    } else {
+                        // 其他狀況，包含所有選項
+                        options = ['已逃跑', '安全處野放', '後送', '攜回(外來種)'];
+                    }
+                } else if (species === '野生動物(保育)') {
+                    // 野生動物(保育)的處理邏輯
+                    if (status === '受傷') {
+                        options = ['後送'];
+                    } else if (status === '健康') {
+                        options = ['安全處野放'];
+                    } else {
+                        // 其他狀況，包含所有選項
+                        options = ['已逃跑', '安全處野放', '後送'];
+                    }
                 } else {
                     options = ['已逃跑', '現場放走', '野放', '後送'];
                 }
+
+                // 隱藏犬貓、經濟動物和其他寵物專用欄位（如果不是這些案件類型）
+                if (!(caseType === '動物救援' && (species === '犬' || species === '貓' || species === '經濟動物' || species === '其他寵物'))) {
+                    const dogCatOwnerBlock = document.getElementById('dogCatOwnerBlock');
+                    const dogCatPaymentBlock = document.getElementById('dogCatPaymentBlock');
+                    if (dogCatOwnerBlock) dogCatOwnerBlock.style.display = 'none';
+                    if (dogCatPaymentBlock) dogCatPaymentBlock.style.display = 'none';
+                }
+
                 processSelect.innerHTML = options.map((o, i) => `<option${i === 0 ? ' selected' : ''}>${o}</option>`).join('');
                 if (processStar_main) processStar_main.style.display = required ? '' : 'none';
                 // 三個區塊都要顯示
                 if (workPhotoBlock3) workPhotoBlock3.style.display = '';
 
-                // 顯示/隱藏後送文字欄位
+                // 顯示/隱藏後送文字欄位並自動填入內容
                 const transferInput = document.getElementById('transferHospitalInput');
                 if (transferInput && processSelect.value === '後送') {
                     transferInput.style.display = '';
+                    // 根據案件類型和物種自動填入文字
+                    if (caseType === '捉蛇') {
+                        if (species === '蛇類(保育)') {
+                            transferInput.value = '屏科大';
+                        } else if (species === '蛇類(一般)') {
+                            transferInput.value = '動物醫院';
+                        } else {
+                            transferInput.value = '移送指定動物醫院/單位';
+                        }
+                    } else if (caseType === '動物救援' && (species === '犬' || species === '貓' || species === '經濟動物' || species === '其他寵物')) {
+                        // 犬貓、經濟動物和其他寵物案件後送到動物之家
+                        transferInput.value = '動物之家';
+                    } else if (caseType === '動物救援' && species === '野生動物(保育)') {
+                        // 保育類野生動物後送到屏科大
+                        transferInput.value = '屏科大';
+                    } else if (caseType === '動物救援' && species === '野生動物(一般)') {
+                        // 一般野生動物根據狀況決定後送地點
+                        const speciesStatus = document.getElementById('speciesStatusSelect')?.value;
+                        if (speciesStatus === '受傷') {
+                            transferInput.value = '動物之家';
+                        } else {
+                            transferInput.value = '動物醫院';
+                        }
+                    } else {
+                        transferInput.value = '移送指定動物醫院/單位';
+                    }
                 } else if (transferInput) {
                     transferInput.style.display = 'none';
                 }
             }
             // 綁定事件時直接取得元素，避免重複宣告
+            if (document.getElementById('caseTypeSelect')) document.getElementById('caseTypeSelect').addEventListener('change', updateProcessOptions);
             if (document.getElementById('speciesSelect')) document.getElementById('speciesSelect').addEventListener('change', updateProcessOptions);
             if (document.getElementById('speciesStatusSelect')) document.getElementById('speciesStatusSelect').addEventListener('change', updateProcessOptions);
-            const ownerRadiosInit = document.getElementsByName('hasOwner');
-            if (ownerRadiosInit && ownerRadiosInit.length) {
-                Array.from(ownerRadiosInit).forEach(r => r.addEventListener('change', updateProcessOptions));
-            }
+            if (document.getElementById('speciesStatusSubSelect')) document.getElementById('speciesStatusSubSelect').addEventListener('change', updateProcessOptions);
+            if (document.getElementById('dogCatOwnerSelect')) document.getElementById('dogCatOwnerSelect').addEventListener('change', updateProcessOptions);
+            if (document.getElementById('dogCatPaymentSelect')) document.getElementById('dogCatPaymentSelect').addEventListener('change', updateProcessOptions);
             if (document.getElementById('processSelect')) document.getElementById('processSelect').addEventListener('change', function () {
                 const workPhotoBlock3 = document.getElementById('workPhotoBlock3');
                 if (workPhotoBlock3) workPhotoBlock3.style.display = '';
-                // 顯示/隱藏後送文字欄位
+                // 顯示/隱藏後送文字欄位並自動填入內容
                 const transferInput = document.getElementById('transferHospitalInput');
                 if (transferInput && this.value === '後送') {
                     transferInput.style.display = '';
+                    // 根據案件類型和物種自動填入文字
+                    const caseTypeSelect = document.getElementById('caseTypeSelect');
+                    const speciesSelect = document.getElementById('speciesSelect');
+                    const caseType = caseTypeSelect?.value;
+                    const species = speciesSelect?.value;
+
+                    if (caseType === '捉蛇') {
+                        if (species === '蛇類(保育)') {
+                            transferInput.value = '屏科大';
+                        } else if (species === '蛇類(一般)') {
+                            transferInput.value = '動物醫院';
+                        } else {
+                            transferInput.value = '移送指定動物醫院/單位';
+                        }
+                    } else if (caseType === '動物救援' && (species === '犬' || species === '貓' || species === '經濟動物')) {
+                        // 犬貓和經濟動物案件後送到動物之家
+                        transferInput.value = '動物之家';
+                    } else if (caseType === '動物救援' && species === '野生動物(保育)') {
+                        // 保育類野生動物後送到屏科大
+                        transferInput.value = '屏科大';
+                    } else if (caseType === '動物救援' && species === '野生動物(一般)') {
+                        // 一般野生動物根據狀況決定後送地點
+                        const speciesStatus = document.getElementById('speciesStatusSelect')?.value;
+                        if (speciesStatus === '受傷') {
+                            transferInput.value = '動物之家';
+                        } else {
+                            transferInput.value = '動物醫院';
+                        }
+                    } else {
+                        transferInput.value = '移送指定動物醫院/單位';
+                    }
                 } else if (transferInput) {
                     transferInput.style.display = 'none';
                 }
@@ -934,19 +1419,15 @@
             const subSelect = document.getElementById('speciesStatusSubSelect');
             const otherInput = document.getElementById('speciesStatusOtherInput');
             const star = document.getElementById('speciesStatusStar');
-            const ownerLabel = document.getElementById('ownerLabel');
-            const ownerStar = ownerLabel ? ownerLabel.querySelector('.text-danger') : null;
             const processLabel_cascade = document.getElementById('processLabel');
             const processStar_cascade = processLabel_cascade ? processLabel_cascade.querySelector('.text-danger') : null;
             const photoStars = document.querySelectorAll('.work-photo-title .text-danger');
             function updateRequiredFields(status) {
                 if (status === '到場前已自行逃脫') {
-                    if (ownerStar) ownerStar.style.display = 'none';
                     if (processStar_cascade) processStar_cascade.style.display = 'none';
                     if (star) star.style.display = 'none';
                     photoStars.forEach(function (s) { s.style.display = 'none'; });
                 } else {
-                    if (ownerStar) ownerStar.style.display = '';
                     if (processStar_cascade) processStar_cascade.style.display = '';
                     if (star) star.style.display = '';
                     photoStars.forEach(function (s) { s.style.display = ''; });
@@ -975,7 +1456,7 @@
                 });
             }
 
-            // 照片上傳和預覽功能
+            // 照片上傳和預覽功能（支援多選）
             function setupPhotoUpload(blockId, inputId, previewId) {
                 let modal = document.getElementById('photoModal');
                 if (!modal) {
@@ -996,122 +1477,351 @@
                         <button id='photoModalCloseBtn' style='position:absolute;top:32px;right:32px;background:#fff;border:none;border-radius:50%;width:40px;height:40px;box-shadow:0 2px 8px #0004;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.5rem;'>×</button>
                         <button id='photoModalPrevBtn' style='position:absolute;left:16px;top:50%;transform:translateY(-50%);background:#fff;border:none;border-radius:50%;width:40px;height:40px;box-shadow:0 2px 8px #0004;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:2rem;'>&lt;</button>
                         <button id='photoModalNextBtn' style='position:absolute;right:16px;top:50%;transform:translateY(-50%);background:#fff;border:none;border-radius:50%;width:40px;height:40px;box-shadow:0 2px 8px #0004;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:2rem;'>&gt;</button>
-                        <img id="photoModalImg" style="max-width:90vw;max-height:90vh;border-radius:12px;box-shadow:0 2px 16px #0008;" />
+                        <img id="photoModalImg" style="max-width:90vw;max-height:90vh;border-radius:12px;box-shadow:0 2px 16px #0008;display:none;" />
+                        <video id="photoModalVideo" controls style="max-width:90vw;max-height:90vh;border-radius:12px;box-shadow:0 2px 16px #0008;display:none;" preload="metadata"></video>
                     `;
                     document.body.appendChild(modal);
+
+                    // 添加延遲以防止立即關閉
+                    let modalJustOpened = false;
+
                     modal.addEventListener('click', function (e) {
+                        // 如果模態框剛開啟，忽略點擊事件
+                        if (modalJustOpened) {
+                            return;
+                        }
+
+                        // 只有點擊背景時才關閉（不是按鈕或媒體元素）
                         if (e.target === modal) {
+                            console.log('Closing modal via background click');
                             modal.style.display = 'none';
                         }
                     });
+
                     document.getElementById('photoModalCloseBtn').onclick = function (e) {
+                        console.log('Closing modal via close button');
                         modal.style.display = 'none';
                         e.stopPropagation();
                     };
                 }
+
                 const uploadBtn = document.getElementById(inputId);
                 const previewBox = document.getElementById(previewId);
+                const blockIdx = blockId === 'workPhotoBlock1' ? 0 : blockId === 'workPhotoBlock2' ? 1 : 2;
+                const countSpan = document.getElementById(`photoCount${blockIdx + 1}`);
+
                 if (!uploadBtn || !previewBox) return;
-                if (!window.workPhotoData) {
-                    window.workPhotoData = [null, null, null];
+
+                // 初始化多照片存儲
+                if (!window.workPhotoDataMulti) {
+                    window.workPhotoDataMulti = [[], [], []]; // 每個階段最多4張照片
                     window.workPhotoTitles = ["處理前紀錄", "處理中紀錄", "處理完成紀錄"];
                 }
-                const blockIdx = blockId === 'workPhotoBlock1' ? 0 : blockId === 'workPhotoBlock2' ? 1 : 2;
-                uploadBtn.addEventListener('change', function (e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const isImage = file.type.startsWith('image/');
-                        const isVideo = file.type.startsWith('video/');
-                        if (!isImage && !isVideo) {
-                            previewBox.innerHTML = `<div style='color:#DC3545;font-weight:bold;text-align:center;'>無法上傳</div>`;
-                            window.workPhotoData[blockIdx] = null;
-                            return;
-                        }
-                        const reader = new FileReader();
-                        reader.onload = function (evt) {
-                            let title = '';
-                            const block = document.getElementById(blockId);
-                            if (block) {
-                                const titleEl = block.querySelector('.work-photo-title span');
-                                if (titleEl) title = titleEl.textContent.trim();
-                            }
-                            window.workPhotoData[blockIdx] = evt.target.result;
-                            window.workPhotoTitles[blockIdx] = title;
-                            if (isImage) {
-                                previewBox.innerHTML = `<img src='${evt.target.result}' alt='preview' style='width:100%;height:100%;object-fit:cover;border-radius:8px;cursor:pointer;' />`;
-                                const img = previewBox.querySelector('img');
-                                if (img) {
-                                    img.onclick = function () {
-                                        showPhotoModal(blockIdx);
+
+                // 更新照片計數和上傳按鈕顯示狀態
+                function updateDisplay() {
+                    const photos = window.workPhotoDataMulti[blockIdx];
+                    const photoCount = photos.length;
+
+                    // 更新計數
+                    if (countSpan) {
+                        countSpan.textContent = photoCount;
+                    }
+
+                    // 獲取固定的照片位置槽和上傳按鈕
+                    const photoSlots = previewBox.querySelectorAll('.photo-slot');
+                    const uploadSlot = previewBox.querySelector('.upload-slot');
+
+                    // 更新每個照片位置（現在有4個位置）
+                    photoSlots.forEach((slot, index) => {
+                        const img = slot.querySelector('img');
+                        const deleteBtn = slot.querySelector('button');
+                        let video = slot.querySelector('video');
+
+                        if (index < photoCount && photos[index]) {
+                            slot.style.display = 'block';
+
+                            // 檢查檔案類型
+                            if (window.isVideoFile && window.isVideoFile(photos[index])) {
+                                // 處理影片檔案
+                                if (img) img.style.display = 'none';
+
+                                if (!video) {
+                                    video = document.createElement('video');
+                                    video.className = 'w-full h-full object-cover rounded';
+                                    video.controls = true;
+                                    video.preload = 'metadata';
+                                    video.style.position = 'relative';
+                                    slot.insertBefore(video, deleteBtn);
+
+                                    // 創建放大按鈕
+                                    const expandBtn = document.createElement('button');
+                                    expandBtn.innerHTML = '⛶';
+                                    expandBtn.className = 'video-expand-btn';
+                                    expandBtn.style.position = 'absolute';
+                                    expandBtn.style.top = '8px';
+                                    expandBtn.style.left = '8px';
+                                    expandBtn.style.width = '24px';
+                                    expandBtn.style.height = '24px';
+                                    expandBtn.style.backgroundColor = 'rgba(0,0,0,0.7)';
+                                    expandBtn.style.color = 'white';
+                                    expandBtn.style.border = 'none';
+                                    expandBtn.style.borderRadius = '4px';
+                                    expandBtn.style.cursor = 'pointer';
+                                    expandBtn.style.fontSize = '12px';
+                                    expandBtn.style.zIndex = '15';
+                                    expandBtn.style.display = 'flex';
+                                    expandBtn.style.alignItems = 'center';
+                                    expandBtn.style.justifyContent = 'center';
+                                    expandBtn.title = '全螢幕查看';
+                                    slot.appendChild(expandBtn);
+                                }
+
+                                video.style.display = 'block';
+                                video.src = photos[index];
+
+                                // 確保影片可以正確載入和播放
+                                video.load(); // 重新載入影片
+
+                                // 添加影片載入事件監聽器
+                                video.onloadeddata = function () {
+                                    console.log('Preview video loaded successfully');
+                                };
+
+                                video.onerror = function (e) {
+                                    console.error('Preview video loading error:', e);
+                                };
+
+                                // 為放大按鈕添加點擊事件
+                                const expandBtn = slot.querySelector('.video-expand-btn');
+                                if (expandBtn) {
+                                    expandBtn.onclick = (e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        e.stopImmediatePropagation();
+
+                                        console.log('Expand button clicked');
+
+                                        if (window.showPhotoModal) {
+                                            // 延遲一點時間再打開模態框
+                                            setTimeout(() => {
+                                                window.showPhotoModal(blockIdx, index);
+                                            }, 100);
+                                        }
                                     };
                                 }
-                            } else if (isVideo) {
-                                previewBox.innerHTML = `<video src='${evt.target.result}' controls style='width:100%;height:100%;border-radius:8px;object-fit:cover;'></video>`;
+                            } else {
+                                // 處理圖片檔案
+                                if (video) video.style.display = 'none';
+
+                                // 移除影片放大按鈕
+                                const expandBtn = slot.querySelector('.video-expand-btn');
+                                if (expandBtn) expandBtn.remove();
+
+                                img.style.display = 'block';
+                                img.src = photos[index];
+                                img.onclick = (e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+
+                                    if (window.showPhotoModal) {
+                                        setTimeout(() => {
+                                            window.showPhotoModal(blockIdx, index);
+                                        }, 100);
+                                    }
+                                };
+                            }
+
+                            deleteBtn.onclick = (e) => {
+                                e.stopPropagation();
+                                removePhoto(blockIdx, index);
+                            };
+                        } else {
+                            // 隱藏空位置
+                            slot.style.display = 'none';
+                        }
+                    });
+
+                    // 控制上傳按鈕的顯示
+                    const isVideoMode = uploadBtn.getAttribute('accept') === 'video/*';
+                    const maxFiles = isVideoMode ? 1 : 4;
+
+                    if (photoCount < maxFiles) {
+                        uploadSlot.style.display = 'flex';
+                    } else {
+                        uploadSlot.style.display = 'none';
+                    }
+                }
+
+                // 移除照片函數
+                function removePhoto(blockIdx, photoIdx) {
+                    window.workPhotoDataMulti[blockIdx].splice(photoIdx, 1);
+                    updateDisplay();
+                }
+
+                uploadBtn.addEventListener('change', function (e) {
+                    const files = Array.from(e.target.files);
+                    const currentPhotos = window.workPhotoDataMulti[blockIdx];
+
+                    // 檢查當前是否為影片模式
+                    const isVideoMode = uploadBtn.getAttribute('accept') === 'video/*';
+                    const maxFiles = isVideoMode ? 1 : 4;
+                    const fileType = isVideoMode ? '影片' : '照片';
+
+                    // 檢查是否超過限制
+                    if (currentPhotos.length + files.length > maxFiles) {
+                        alert(`每個階段最多只能上傳${maxFiles}個${fileType}，目前已有${currentPhotos.length}個，最多還能上傳${maxFiles - currentPhotos.length}個。`);
+                        e.target.value = ''; // 清空選擇
+                        return;
+                    }
+
+                    // 處理每個檔案
+                    let processedCount = 0;
+                    files.forEach(file => {
+                        const isImage = file.type.startsWith('image/');
+                        const isVideo = file.type.startsWith('video/');
+
+                        if (!isImage && !isVideo) {
+                            alert(`檔案 ${file.name} 格式不支援，請選擇圖片或影片檔案。`);
+                            return;
+                        }
+
+                        // 暫時移除檔案大小限制
+                        // const maxSize = isVideo ? 10 * 1024 * 1024 : 2 * 1024 * 1024; // 影片10MB，照片2MB
+                        // const sizeText = isVideo ? '10MB' : '2MB';
+
+                        // if (file.size > maxSize) {
+                        //     alert(`檔案 ${file.name} 超過${sizeText}大小限制。`);
+                        //     return;
+                        // }
+
+                        const reader = new FileReader();
+                        reader.onload = function (evt) {
+                            window.workPhotoDataMulti[blockIdx].push(evt.target.result);
+                            processedCount++;
+
+                            // 當所有檔案都處理完成時更新顯示
+                            if (processedCount === files.length) {
+                                updateDisplay();
                             }
                         };
                         reader.readAsDataURL(file);
-                    } else {
-                        previewBox.innerHTML = '';
-                        window.workPhotoData[blockIdx] = null;
-                    }
+                    });
+
+                    // 清空input以允許重複選擇相同檔案
+                    e.target.value = '';
                 });
-                previewBox.onclick = function () {
-                    if (window.workPhotoData[blockIdx]) {
-                        showPhotoModal(blockIdx);
-                    }
-                };
+
+                // 初始化模態視窗功能
                 if (!window.photoModalSliderInit) {
                     window.photoModalSliderInit = true;
+                    window.currentPhotoBlockIdx = 0;
                     window.currentPhotoIdx = 0;
-                    window.showPhotoModal = function (idx) {
-                        window.currentPhotoIdx = idx;
-                        updatePhotoModal();
-                        document.getElementById("photoModal").style.display = "flex";
-                    };
-                    function updatePhotoModal() {
-                        const img = document.getElementById("photoModalImg");
-                        const title = document.getElementById("photoModalTitle");
-                        if (!img || !title) return;
-                        const dataArr = window.workPhotoData;
-                        const titlesArr = window.workPhotoTitles;
-                        let idx = window.currentPhotoIdx;
-                        if (!dataArr[idx]) {
-                            idx = dataArr.findIndex(d => d);
-                            if (idx === -1) {
-                                img.src = '';
-                                title.textContent = '';
+
+                    window.showPhotoModal = function (blockIdx, photoIdx = 0) {
+                        try {
+                            console.log('Opening photo modal:', { blockIdx, photoIdx });
+
+                            // 確保模態框存在
+                            const modal = document.getElementById("photoModal");
+                            if (!modal) {
+                                console.error('Photo modal not found');
                                 return;
                             }
-                            window.currentPhotoIdx = idx;
-                        }
-                        img.src = dataArr[idx];
-                        title.textContent = titlesArr[idx];
-                    }
-                    document.getElementById('photoModalPrevBtn').onclick = function (e) {
-                        e.stopPropagation();
-                        let idx = window.currentPhotoIdx;
-                        for (let i = 1; i <= 3; i++) {
-                            let nextIdx = (idx - i + 3) % 3;
-                            if (window.workPhotoData[nextIdx]) {
-                                window.currentPhotoIdx = nextIdx;
-                                updatePhotoModal();
-                                break;
-                            }
+
+                            window.currentPhotoBlockIdx = blockIdx;
+                            window.currentPhotoIdx = photoIdx;
+                            updatePhotoModal();
+
+                            // 設置防止立即關閉的標誌
+                            modalJustOpened = true;
+                            modal.style.display = "flex";
+
+                            // 500ms 後允許背景點擊關閉
+                            setTimeout(() => {
+                                modalJustOpened = false;
+                            }, 500);
+
+                        } catch (error) {
+                            console.error('Error in showPhotoModal:', error);
                         }
                     };
+
+                    function updatePhotoModal() {
+                        try {
+                            const img = document.getElementById("photoModalImg");
+                            const video = document.getElementById("photoModalVideo");
+                            const title = document.getElementById("photoModalTitle");
+                            if (!img || !video || !title) {
+                                console.error('Modal elements not found:', { img: !!img, video: !!video, title: !!title });
+                                return;
+                            }
+
+                            const photos = window.workPhotoDataMulti[window.currentPhotoBlockIdx];
+                            const titlesArr = window.workPhotoTitles;
+
+                            if (photos && photos.length > 0 && photos[window.currentPhotoIdx]) {
+                                const currentFile = photos[window.currentPhotoIdx];
+                                title.textContent = `${titlesArr[window.currentPhotoBlockIdx]} (${window.currentPhotoIdx + 1}/${photos.length})`;
+
+                                if (window.isVideoFile && window.isVideoFile(currentFile)) {
+                                    // 顯示影片，隱藏圖片
+                                    console.log('Displaying video in modal:', currentFile.substring(0, 50) + '...');
+                                    img.style.display = 'none';
+                                    video.style.display = 'block';
+                                    video.src = currentFile;
+
+                                    // 確保影片可以播放
+                                    video.load(); // 重新載入影片
+                                    video.setAttribute('controlsList', 'nodownload'); // 移除下載按鈕（可選）
+
+                                    // 添加影片載入事件監聽器
+                                    video.onloadeddata = function () {
+                                        console.log('Video loaded successfully');
+                                    };
+
+                                    video.onerror = function (e) {
+                                        console.error('Video loading error:', e);
+                                    };
+                                } else {
+                                    // 顯示圖片，隱藏影片
+                                    video.style.display = 'none';
+                                    img.style.display = 'block';
+                                    img.src = currentFile;
+                                }
+                            } else {
+                                img.style.display = 'none';
+                                video.style.display = 'none';
+                                img.src = '';
+                                video.src = '';
+                                title.textContent = '';
+                            }
+                        } catch (error) {
+                            console.error('Error in updatePhotoModal:', error);
+                        }
+                    }
+
+                    document.getElementById('photoModalPrevBtn').onclick = function (e) {
+                        e.stopPropagation();
+                        const photos = window.workPhotoDataMulti[window.currentPhotoBlockIdx];
+                        if (photos && photos.length > 0) {
+                            window.currentPhotoIdx = (window.currentPhotoIdx - 1 + photos.length) % photos.length;
+                            updatePhotoModal();
+                        }
+                    };
+
                     document.getElementById('photoModalNextBtn').onclick = function (e) {
                         e.stopPropagation();
-                        let idx = window.currentPhotoIdx;
-                        for (let i = 1; i <= 3; i++) {
-                            let nextIdx = (idx + i) % 3;
-                            if (window.workPhotoData[nextIdx]) {
-                                window.currentPhotoIdx = nextIdx;
-                                updatePhotoModal();
-                                break;
-                            }
+                        const photos = window.workPhotoDataMulti[window.currentPhotoBlockIdx];
+                        if (photos && photos.length > 0) {
+                            window.currentPhotoIdx = (window.currentPhotoIdx + 1) % photos.length;
+                            updatePhotoModal();
                         }
                     };
                 }
+
+                // 初始化顯示
+                updateDisplay();
             }
             setupPhotoUpload('workPhotoBlock1', 'workPhotoInput1', 'workPhotoPreview1');
             setupPhotoUpload('workPhotoBlock2', 'workPhotoInput2', 'workPhotoPreview2');
@@ -1125,23 +1835,37 @@
                 const input1 = document.getElementById('workPhotoInput1');
                 const input2 = document.getElementById('workPhotoInput2');
                 const input3 = document.getElementById('workPhotoInput3');
+
+                // 取得上傳按鈕中的文字元素
+                const uploadText1 = document.querySelector('label[for="workPhotoInput1"] .text-xs');
+                const uploadText2 = document.querySelector('label[for="workPhotoInput2"] .text-xs');
+                const uploadText3 = document.querySelector('label[for="workPhotoInput3"] .text-xs');
+
                 // 判斷案件類型與物種
                 const type = caseTypeSelect?.value;
                 const species = speciesSelect?.value;
                 if (type === '補蜂' && (species === '游離蜂' || species === '泥壺蜂')) {
-                    if (tip1) tip1.textContent = '只能上傳影片';
-                    if (tip2) tip2.textContent = '只能上傳影片';
-                    if (tip3) tip3.textContent = '只能上傳影片';
+                    // 設定為影片上傳
+                    if (tip1) tip1.textContent = '可上傳的檔案格式：mp4、mov、avi，最多1個。';
+                    if (tip2) tip2.textContent = '可上傳的檔案格式：mp4、mov、avi，最多1個。';
+                    if (tip3) tip3.textContent = '可上傳的檔案格式：mp4、mov、avi，最多1個。';
                     if (input1) input1.setAttribute('accept', 'video/*');
                     if (input2) input2.setAttribute('accept', 'video/*');
                     if (input3) input3.setAttribute('accept', 'video/*');
+                    if (uploadText1) uploadText1.textContent = '新增影片';
+                    if (uploadText2) uploadText2.textContent = '新增影片';
+                    if (uploadText3) uploadText3.textContent = '新增影片';
                 } else {
-                    if (tip1) tip1.textContent = '可上傳的檔案格式：jpg、jpeg、png，一張照片最大 2MB。';
-                    if (tip2) tip2.textContent = '可上傳的檔案格式：jpg、jpeg、png，一張照片最大 2MB。';
-                    if (tip3) tip3.textContent = '可上傳的檔案格式：jpg、jpeg、png，一張照片最大 2MB。';
+                    // 設定為照片上傳
+                    if (tip1) tip1.textContent = '可上傳的檔案格式：jpg、jpeg、png，最多4張。';
+                    if (tip2) tip2.textContent = '可上傳的檔案格式：jpg、jpeg、png，最多4張。';
+                    if (tip3) tip3.textContent = '可上傳的檔案格式：jpg、jpeg、png，最多4張。';
                     if (input1) input1.setAttribute('accept', 'image/*');
                     if (input2) input2.setAttribute('accept', 'image/*');
                     if (input3) input3.setAttribute('accept', 'image/*');
+                    if (uploadText1) uploadText1.textContent = '新增照片';
+                    if (uploadText2) uploadText2.textContent = '新增照片';
+                    if (uploadText3) uploadText3.textContent = '新增照片';
                 }
             }
             if (caseTypeSelect) caseTypeSelect.addEventListener('change', updateWorkPhotoTips);
@@ -1208,7 +1932,9 @@
                     }
                 });
             }
+
             const toggleDutyBtn = document.getElementById('toggleDutyRecordBtn');
+
             const dutyBlock = document.getElementById('dutyRecordBlock');
             const toggleDutyText = document.getElementById('toggleDutyRecordText');
             const toggleDutyIcon = document.getElementById('toggleDutyRecordIcon');
@@ -1307,6 +2033,21 @@
                 }, { passive: false });
                 canvas.addEventListener('touchend', function () { drawing = false; });
                 canvas.addEventListener('touchcancel', function () { drawing = false; });
+
+                // 檢查畫布是否為空的函數
+                function isCanvasEmpty(canvas) {
+                    const ctx = canvas.getContext('2d');
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imageData.data;
+
+                    for (let i = 0; i < data.length; i += 4) {
+                        if (data[i + 3] !== 0) { // alpha 值不為 0 表示有內容
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
                 document.getElementById('clearSignatureBtn').onclick = function () {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                 };

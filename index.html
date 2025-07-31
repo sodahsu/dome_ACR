@@ -140,6 +140,412 @@
                 </div>
             </div>
         </div>
+
+        <!-- 案件列表與地圖資訊：並排一列，高度一致 -->
+        <div class="flex flex-col md:flex-row gap-6 items-start">
+            <!-- 案件列表 -->
+            <div class="flex-1 min-w-0 flex flex-col">
+                <div class="bg-white shadow-lg rounded-lg mb-4 overflow-hidden flex flex-col h-fit">
+                    <!-- 區塊標題 -->
+                    <div class="bg-white border-b border-gray-200 p-3 flex items-center gap-2">
+                        <i class="fas fa-dot-circle w-4 h-4"></i>
+                        <span class="font-bold text-xl text-secondary">案件列表</span>
+                    </div>
+
+                    <!-- 搜尋區域 -->
+                    <div class="px-4 py-3 bg-white">
+                        <div class="flex flex-wrap gap-2 items-center">
+                            <input type="text" placeholder="搜尋地區、案件編號"
+                                class="flex-1 min-w-[180px] border border-gray-300 rounded px-3 py-2 text-sm">
+                            <select class="min-w-[100px] border border-gray-300 rounded px-3 py-2 text-sm">
+                                <option>全部</option>
+                            </select>
+                            <button
+                                class="ml-auto bg-primary text-white px-4 py-2 rounded text-sm flex items-center gap-1">
+                                <i class="fas fa-search w-4 h-4"></i>
+                                查詢
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tab 區域 -->
+                    <div class="px-4 bg-white">
+                        <div class="flex border-b" id="caseTabs">
+                            <button class="px-4 py-2 border-b-4 border-transparent text-gray-medium" data-tab="all">全部
+                            </button>
+                            <button class="px-4 py-2 border-b-4 border-secondary text-secondary font-bold"
+                                data-tab="processing">處理中</button>
+                            <button class="px-4 py-2 border-b-4 border-transparent text-gray-medium" data-tab="done">已完成
+                            </button>
+                            <button class="px-4 py-2 border-b-4 border-transparent text-gray-medium"
+                                data-tab="abnormal">
+                                異常</button>
+                        </div>
+                    </div>
+
+                    <!-- 案件列表 -->
+                    <div class="p-4 space-y-4" id="caseList">
+                        <!-- 全部（預設顯示） -->
+                        <div class="case-card" data-status="processing">
+                            <div class="border border-green-light rounded-lg p-3">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex gap-2 items-center">
+                                        <span
+                                            class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">立案編號</span>
+                                        <span class="text-sm text-gray-dark ml-2">20220722115010004</span>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1 hidden lg:flex">
+                                        <i class="fas fa-file-export w-3 h-3"></i>
+                                        匯出
+                                    </button>
+                                </div>
+
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-clock w-4 h-4"></i>
+                                            <span>通報</span>
+                                            <span>12:07:40</span>
+                                            <span>·</span>
+                                            <i class="fas fa-check-circle w-4 h-4"></i>
+                                            <span>完成</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-map-marker-alt w-4 h-4"></i>
+                                            <span>地址</span>
+                                            <span>屏東縣屏東市自由路600號</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-user-circle w-4 h-4"></i>
+                                            <span>通報人</span>
+                                            <span>李小姐 0900-000000</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-end justify-start lg:justify-end">
+                                        <div class="text-left lg:text-right space-y-2">
+                                            <div class="flex items-center gap-2 bg-green-light px-3 py-1 rounded">
+                                                <i class="fas fa-history w-4 h-4"></i>
+                                                <span class="text-sm font-medium text-secondary">處理中</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="bg-green-light px-2 py-1 rounded text-xs text-secondary">案件
+                                                </div>
+                                                <i class="fas fa-address-card w-4 h-4"></i>
+                                                <span class="text-sm text-gray-dark">外勤人員 : 尚未指派</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 案件卡片 2 -->
+                        <div class="case-card" data-status="processing">
+                            <div class="border border-green-light rounded-lg p-3">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex gap-2 items-center">
+                                        <span
+                                            class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">立案編號</span>
+                                        <span class="text-sm text-gray-dark ml-2">20220722115010001</span>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1 hidden lg:flex">
+                                        <i class="fas fa-file-export w-3 h-3"></i>
+                                        匯出
+                                    </button>
+                                </div>
+
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-clock w-4 h-4"></i>
+                                            <span>通報</span>
+                                            <span>12:07:40</span>
+                                            <span>·</span>
+                                            <i class="fas fa-check-circle w-4 h-4"></i>
+                                            <span>完成</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-map-marker-alt w-4 h-4"></i>
+                                            <span>地址</span>
+                                            <span>屏東縣屏東市自由路450號</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-user-circle w-4 h-4"></i>
+                                            <span>通報人</span>
+                                            <span>王小姐 0900-000000</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-end justify-start lg:justify-end">
+                                        <div class="text-left lg:text-right space-y-2">
+                                            <div class="flex items-center gap-2 bg-green-light px-3 py-1 rounded">
+                                                <i class="fas fa-history w-4 h-4"></i>
+                                                <span class="text-sm font-medium text-secondary">處理中</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="bg-green-light px-2 py-1 rounded text-xs text-secondary">案件
+                                                </div>
+                                                <i class="fas fa-address-card w-4 h-4"></i>
+                                                <span class="text-sm text-gray-dark">外勤人員 : 尚未指派</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 案件卡片 3 -->
+                        <div class="case-card" data-status="processing">
+                            <div class="border border-green-light rounded-lg p-3">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex gap-2 items-center">
+                                        <span
+                                            class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">立案編號</span>
+                                        <span class="text-sm text-gray-dark ml-2">20220722115010018</span>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1 hidden lg:flex">
+                                        <i class="fas fa-file-export w-3 h-3"></i>
+                                        匯出
+                                    </button>
+                                </div>
+
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-clock w-4 h-4"></i>
+                                            <span>通報</span>
+                                            <span>12:07:40</span>
+                                            <span>·</span>
+                                            <i class="fas fa-check-circle w-4 h-4"></i>
+                                            <span>完成</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-map-marker-alt w-4 h-4"></i>
+                                            <span>地址</span>
+                                            <span>屏東縣屏東市自由路527號</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-user-circle w-4 h-4"></i>
+                                            <span>通報人</span>
+                                            <span>陳小姐 0900-000000</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-end justify-start lg:justify-end">
+                                        <div class="text-left lg:text-right space-y-2">
+                                            <div class="flex items-center gap-2 bg-green-light px-3 py-1 rounded">
+                                                <i class="fas fa-history w-4 h-4"></i>
+                                                <span class="text-sm font-medium text-secondary">處理中</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="bg-green-light px-2 py-1 rounded text-xs text-secondary">案件
+                                                </div>
+                                                <i class="fas fa-address-card w-4 h-4"></i>
+                                                <span class="text-sm text-gray-dark">外勤人員 : 尚未指派</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 已完成 -->
+                        <div class="case-card hidden" data-status="done">
+                            <div class="border border-green-light rounded-lg p-3">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex gap-2 items-center">
+                                        <span
+                                            class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">立案編號</span>
+                                        <span class="text-sm text-gray-dark ml-2">20220722115010099</span>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1 hidden lg:flex">
+                                        <i class="fas fa-file-export w-3 h-3"></i>
+                                        匯出
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-clock w-4 h-4"></i>
+                                            <span>通報</span>
+                                            <span>09:30:00</span>
+                                            <span>·</span>
+                                            <i class="fas fa-check-circle w-4 h-4"></i>
+                                            <span>已完成</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-map-marker-alt w-4 h-4"></i>
+                                            <span>地址</span>
+                                            <span>屏東縣屏東市成功路100號</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-user-circle w-4 h-4"></i>
+                                            <span>通報人</span>
+                                            <span>林先生 0900-000000</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-end justify-start lg:justify-end">
+                                        <div class="text-left lg:text-right space-y-2">
+                                            <div class="flex items-center gap-2 bg-gray-200 px-3 py-1 rounded">
+                                                <i class="fas fa-check-circle w-4 h-4"></i>
+                                                <span class="text-sm font-medium text-secondary">已完成</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="bg-gray-200 px-2 py-1 rounded text-xs text-secondary">案件
+                                                </div>
+                                                <i class="fas fa-address-card w-4 h-4"></i>
+                                                <span class="text-sm text-gray-dark">外勤人員 : 已指派</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 異常（範例） -->
+                        <div class="case-card hidden" data-status="abnormal">
+                            <div class="border border-danger rounded-lg p-3">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex gap-2 items-center">
+                                        <span
+                                            class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">立案編號</span>
+                                        <span class="text-sm text-gray-dark ml-2">20220722115010100</span>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1 hidden lg:flex">
+                                        <i class="fas fa-file-export w-3 h-3"></i>
+                                        匯出
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-sm text-danger">
+                                            <i class="fas fa-clock w-4 h-4"></i>
+                                            <span>通報</span>
+                                            <span>10:00:00</span>
+                                            <span>·</span>
+                                            <i class="fas fa-times w-4 h-4"></i>
+                                            <span>異常</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-map-marker-alt w-4 h-4"></i>
+                                            <span>地址</span>
+                                            <span>屏東縣屏東市中正路200號</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
+                                            <i class="fas fa-user-circle w-4 h-4"></i>
+                                            <span>通報人</span>
+                                            <span>張先生 0900-000000</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-end justify-start lg:justify-end">
+                                        <div class="text-left lg:text-right space-y-2">
+                                            <div class="flex items-center gap-2 bg-danger px-3 py-1 rounded">
+                                                <i class="fas fa-times w-4 h-4"></i>
+                                                <span class="text-sm font-medium text-white">異常</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="bg-danger px-2 py-1 rounded text-xs text-white">案件</div>
+                                                <i class="fas fa-address-card w-4 h-4"></i>
+                                                <span class="text-sm text-gray-dark">外勤人員 : 尚未指派</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 地圖資訊 -->
+            <div class="flex-1 min-w-0 flex flex-col">
+                <div class="bg-white shadow-lg rounded-lg mb-4 overflow-hidden flex flex-col h-[580px]">
+                    <!-- 區塊標題 -->
+                    <div class="bg-white border-b border-gray-200 p-3 flex items-center gap-2 flex-shrink-0">
+                        <i class="fas fa-dot-circle w-4 h-4"></i>
+                        <span class="font-bold text-xl text-secondary">地圖資訊</span>
+                    </div>
+                    <!-- 控制區域 -->
+                    <div class="p-4 flex flex-col gap-2 flex-shrink-0">
+                        <div class="flex flex-wrap gap-4 items-center mb-2">
+                            <div class="flex gap-2 items-center">
+                                <label class="text-sm text-gray-dark">年度</label>
+                                <select class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                    <option>114 年度</option>
+                                </select>
+                            </div>
+                            <div class="flex gap-2 items-center">
+                                <label class="text-sm text-gray-dark">月份</label>
+                                <select class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                    <option>7 月</option>
+                                </select>
+                            </div>
+                            <button
+                                class="ml-auto bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1">
+                                <i class="fas fa-file-export w-4 h-4"></i>匯出地圖
+                            </button>
+                        </div>
+                        <div class="flex gap-2 items-center mb-2">
+                            <button class="bg-primary text-white px-3 py-1 rounded text-sm">捕蜂</button>
+                            <button class="bg-gray-200 text-secondary px-3 py-1 rounded text-sm">捉蛇</button>
+                            <button class="bg-gray-200 text-secondary px-3 py-1 rounded text-sm">動物救援</button>
+                            <button class="bg-gray-200 text-secondary px-3 py-1 rounded text-sm">綠鬣蜥</button>
+                        </div>
+                    </div>
+                    <!-- 地圖區域 -->
+                    <div class="px-4 pb-2 flex flex-col items-center flex-1 overflow-hidden">
+                        <div class="relative flex-1 w-full flex items-center justify-center overflow-hidden">
+                            <img id="mapImage" src="img/map.png" alt="map" class="max-w-full max-h-full object-contain cursor-pointer transition-transform duration-300 hover:scale-105">
+                            <div class="absolute top-2 right-2 flex flex-col gap-1">
+                                <button id="zoomIn" class="bg-white shadow-md rounded p-1 hover:bg-gray-100 transition-colors">
+                                    <i class="fas fa-plus text-gray-600 text-sm"></i>
+                                </button>
+                                <button id="zoomOut" class="bg-white shadow-md rounded p-1 hover:bg-gray-100 transition-colors">
+                                    <i class="fas fa-minus text-gray-600 text-sm"></i>
+                                </button>
+                                <button id="resetZoom" class="bg-white shadow-md rounded p-1 hover:bg-gray-100 transition-colors">
+                                    <i class="fas fa-home text-gray-600 text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 mt-2 flex-wrap justify-center flex-shrink-0">
+                            <div class="flex items-center gap-1">
+                                <span class="w-4 h-4 rounded bg-green-200 border border-gray-300"></span>
+                                <span class="text-xs text-gray-dark">500 件以下</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="w-4 h-4 rounded bg-green-light border border-gray-300"></span>
+                                <span class="text-xs text-gray-dark">500 件以上</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="w-4 h-4 rounded bg-yellow-200 border border-gray-300"></span>
+                                <span class="text-xs text-gray-dark">500-1000 件</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="w-4 h-4 rounded bg-orange-200 border border-gray-300"></span>
+                                <span class="text-xs text-gray-dark">1000-2000 件</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="w-4 h-4 rounded bg-red-200 border border-gray-300"></span>
+                                <span class="text-xs text-gray-dark">2000 件以上</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 指標：滿版一列 -->
         <div>
             <div class="bg-white shadow-lg rounded-lg mb-4 overflow-hidden w-full">
@@ -149,66 +555,68 @@
                     <span class="font-bold text-xl text-secondary">指標</span>
                 </div>
                 <!-- 指標內容：橫向排列 -->
-                <div class="p-4 flex flex-col md:flex-row md:items-center gap-4">
+                <div class="p-4 flex flex-col gap-4 md:flex-row md:items-center">
                     <!-- 控制區域（左側） -->
                     <div class="flex flex-col gap-2 flex-none">
-                        <div class="flex gap-4">
-                            <div class="text-center flex-1">
-                                <label for="yearSelect" class="text-sm text-gray-medium block">年度</label>
-                                <select id="yearSelect"
-                                    class="w-full h-10 text-base font-bold text-secondary bg-white border border-gray-300 rounded px-3 py-2">
-                                    <option value="113">113</option>
-                                    <option value="112">112</option>
-                                    <option value="111">111</option>
-                                </select>
+                        <div class="flex flex-col gap-2 md:flex-row md:gap-4">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="text-center">
+                                    <label for="yearSelect" class="text-sm text-gray-medium block">年度</label>
+                                    <select id="yearSelect"
+                                        class="w-full h-10 text-base font-bold text-secondary bg-white border border-gray-300 rounded px-3 py-2">
+                                        <option value="113">113</option>
+                                        <option value="112">112</option>
+                                        <option value="111">111</option>
+                                    </select>
+                                </div>
+                                <div class="text-center">
+                                    <label for="compareYear" class="text-sm text-gray-medium block">比較年度</label>
+                                    <select id="compareYear"
+                                        class="w-full h-10 text-base font-bold text-secondary bg-white border border-gray-300 rounded px-3 py-2">
+                                        <option value="112">112</option>
+                                        <option value="111">111</option>
+                                    </select>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <label for="monthStart" class="text-sm text-gray-medium block">起始月份</label>
+                                    <select id="monthStart"
+                                        class="w-full h-10 text-base font-bold text-secondary bg-white border border-gray-300 rounded px-3 py-2">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <label for="monthEnd" class="text-sm text-gray-medium block">結束月份</label>
+                                    <select id="monthEnd"
+                                        class="w-full h-10 text-base font-bold text-secondary bg-white border border-gray-300 rounded px-3 py-2">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6" selected>6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="text-center flex-1 min-w-[120px]">
-                                <label for="monthStart" class="text-sm text-gray-medium block">起始月份</label>
-                                <select id="monthStart"
-                                    class="w-full h-10 text-base font-bold text-secondary bg-white border border-gray-300 rounded px-3 py-2">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                            </div>
-                            <div class="text-center flex-1 min-w-[120px]">
-                                <label for="monthEnd" class="text-sm text-gray-medium block">結束月份</label>
-                                <select id="monthEnd"
-                                    class="w-full h-10 text-base font-bold text-secondary bg-white border border-gray-300 rounded px-3 py-2">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                            </div>
-                            <div class="text-center flex-1">
-                                <label for="compareYear" class="text-sm text-gray-medium block">比較年度</label>
-                                <select id="compareYear"
-                                    class="w-full h-10 text-base font-bold text-secondary bg-white border border-gray-300 rounded px-3 py-2">
-                                    <option value="112">112</option>
-                                    <option value="111">111</option>
-                                </select>
-                            </div>
-                            <div class="flex items-end">
+                            <div class="flex items-end mt-2 md:mt-0">
                                 <button id="compareBtn"
-                                    class="bg-accent text-white px-4 py-2 rounded text-sm font-bold flex items-center gap-1 mt-6">
+                                    class="bg-accent text-white px-4 py-2 rounded text-sm font-bold flex items-center gap-1">
                                     <i class="fas fa-exchange-alt w-4 h-4"></i>比較
                                 </button>
                             </div>
@@ -275,7 +683,7 @@
                                 <span>相比減少 8.34%</span>
                                 <i class="fas fa-arrow-down w-3 h-3"></i>
                             </div>
-                            <div class="text-sm text-gray-medium">去年捕蜂案件 1534 件</div>
+                            <div class="text-sm text-gray-medium">112年案件 1534 件</div>
                         </div>
                         <!-- 捉蛇案件數量 -->
                         <div class="border border-primary rounded-lg p-3 flex-1 min-w-[180px]">
@@ -286,7 +694,7 @@
                                 <span>相比減少 5.93%</span>
                                 <i class="fas fa-arrow-down w-3 h-3"></i>
                             </div>
-                            <div class="text-sm text-gray-medium">去年捉蛇案件 1179 件</div>
+                            <div class="text-sm text-gray-medium">112年案件 1179 件</div>
                         </div>
                         <!-- 動物救援案件數量 -->
                         <div class="border border-accent rounded-lg p-3 flex-1 min-w-[180px]">
@@ -297,7 +705,7 @@
                                 <span>相比減少 5.26%</span>
                                 <i class="fas fa-arrow-down w-3 h-3"></i>
                             </div>
-                            <div class="text-sm text-gray-medium">去年動物救援案件 9500 件</div>
+                            <div class="text-sm text-gray-medium">112年案件 9500 件</div>
                         </div>
                         <!-- 綠鬣蜥案件數量 -->
                         <div class="border border-green-light rounded-lg p-3 flex-1 min-w-[180px]">
@@ -308,466 +716,9 @@
                                 <span>相比增加 12.5%</span>
                                 <i class="fas fa-arrow-up w-3 h-3"></i>
                             </div>
-                            <div class="text-sm text-gray-medium">去年綠鬣蜥案件 285 件</div>
+                            <div class="text-sm text-gray-medium">112年案件 285 件</div>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 案件列表與地圖資訊：並排一列，高度一致 -->
-        <div class="flex flex-col md:flex-row gap-6 items-stretch min-h-[600px]">
-            <!-- 案件列表 -->
-            <div class="flex-1 min-w-0 flex flex-col">
-                <div class="bg-white shadow-lg rounded-lg mb-4 overflow-hidden flex-1 flex flex-col">
-                    <!-- 區塊標題 -->
-                    <div class="bg-white border-b border-gray-200 p-3 flex items-center gap-2">
-                        <i class="fas fa-dot-circle w-4 h-4"></i>
-                        <span class="font-bold text-xl text-secondary">案件列表</span>
-                    </div>
-
-                    <!-- 搜尋區域 -->
-                    <div class="px-4 py-3 bg-white">
-                        <div class="flex flex-wrap gap-2 items-center">
-                            <div class="flex gap-2 flex-1 min-w-[220px]">
-                                <input type="text" placeholder="請選擇"
-                                    class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
-                                <span class="px-2 py-2 text-sm">～</span>
-                                <input type="text" placeholder="請選擇"
-                                    class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
-                            </div>
-                            <input type="text" placeholder="搜尋地區、案件編號"
-                                class="flex-1 min-w-[180px] border border-gray-300 rounded px-3 py-2 text-sm">
-                            <select class="min-w-[100px] border border-gray-300 rounded px-3 py-2 text-sm">
-                                <option>全部</option>
-                            </select>
-                            <button
-                                class="ml-auto bg-primary text-white px-4 py-2 rounded text-sm flex items-center gap-1">
-                                <i class="fas fa-search w-4 h-4"></i>
-                                查詢
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Tab 區域 -->
-                    <div class="px-4 bg-white">
-                        <div class="flex border-b" id="caseTabs">
-                            <button class="px-4 py-2 border-b-4 border-secondary text-secondary font-bold"
-                                data-tab="all">全部
-                            </button>
-                            <button class="px-4 py-2 border-b-4 border-transparent text-gray-medium"
-                                data-tab="processing">處理中</button>
-                            <button class="px-4 py-2 border-b-4 border-transparent text-gray-medium" data-tab="done">已完成
-                            </button>
-                            <button class="px-4 py-2 border-b-4 border-transparent text-gray-medium"
-                                data-tab="abnormal">
-                                異常</button>
-                        </div>
-                    </div>
-
-                    <!-- 案件列表 -->
-                    <div class="p-4 space-y-4 flex-1" id="caseList">
-                        <!-- 全部（預設顯示） -->
-                        <div class="case-card" data-status="processing">
-                            <div class="border border-green-light rounded-lg p-3">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex gap-4">
-                                        <div class="text-center">
-                                            <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">
-                                                勤務單號
-                                            </div>
-                                            <div class="text-sm text-gray-dark mt-1">N1110743382</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">
-                                                立案編號
-                                            </div>
-                                            <div class="text-sm text-gray-dark mt-1">20220722115010004</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">
-                                                點交編號
-                                            </div>
-                                            <div class="text-sm text-gray-dark mt-1">S999103</div>
-                                        </div>
-                                    </div>
-                                    <button
-                                        class="bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1">
-                                        <i class="fas fa-file-export w-3 h-3"></i>
-                                        匯出
-                                    </button>
-                                </div>
-
-                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                    <div class="space-y-2">
-                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                            <i class="fas fa-clock w-4 h-4"></i>
-                                            <span>通報</span>
-                                            <span>12:07:40</span>
-                                            <span>·</span>
-                                            <i class="fas fa-check-circle w-4 h-4"></i>
-                                            <span>完成</span>
-                                            <span>-</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                            <i class="fas fa-map-marker-alt w-4 h-4"></i>
-                                            <span>地址</span>
-                                            <span>屏東縣屏東市自由路600號</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                            <i class="fas fa-user-circle w-4 h-4"></i>
-                                            <span>通報人</span>
-                                            <span>李小姐 0900-000000</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex items-end justify-end">
-                                        <div class="text-right space-y-2">
-                                            <div class="flex items-center gap-2 bg-green-light px-3 py-1 rounded">
-                                                <i class="fas fa-history w-4 h-4"></i>
-                                                <span class="text-sm font-medium text-secondary">處理中</span>
-                                            </div>
-                                            <div class="flex items-center gap-2">
-                                                <div class="bg-green-light px-2 py-1 rounded text-xs text-secondary">案件
-                                                </div>
-                                                <i class="fas fa-address-card w-4 h-4"></i>
-                                                <span class="text-sm text-gray-dark">外勤人員 : 尚未指派</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 案件卡片 2 -->
-                        <div class="border border-green-light rounded-lg p-3">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="flex gap-4">
-                                    <div class="text-center">
-                                        <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">勤務單號
-                                        </div>
-                                        <div class="text-sm text-gray-dark mt-1">N1110743381</div>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">立案編號
-                                        </div>
-                                        <div class="text-sm text-gray-dark mt-1">20220722115010001</div>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">點交編號
-                                        </div>
-                                        <div class="text-sm text-gray-dark mt-1">S999100</div>
-                                    </div>
-                                </div>
-                                <button class="bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1">
-                                    <i class="fas fa-file-export w-3 h-3"></i>
-                                    匯出
-                                </button>
-                            </div>
-
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                <div class="space-y-2">
-                                    <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                        <i class="fas fa-clock w-4 h-4"></i>
-                                        <span>通報</span>
-                                        <span>12:07:40</span>
-                                        <span>·</span>
-                                        <i class="fas fa-check-circle w-4 h-4"></i>
-                                        <span>完成</span>
-                                        <span>-</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                        <i class="fas fa-map-marker-alt w-4 h-4"></i>
-                                        <span>地址</span>
-                                        <span>屏東縣屏東市自由路450號</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                        <i class="fas fa-user-circle w-4 h-4"></i>
-                                        <span>通報人</span>
-                                        <span>王小姐 0900-000000</span>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-end justify-end">
-                                    <div class="text-right space-y-2">
-                                        <div class="flex items-center gap-2 bg-green-light px-3 py-1 rounded">
-                                            <i class="fas fa-history w-4 h-4"></i>
-                                            <span class="text-sm font-medium text-secondary">處理中</span>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <div class="bg-green-light px-2 py-1 rounded text-xs text-secondary">案件
-                                            </div>
-                                            <i class="fas fa-address-card w-4 h-4"></i>
-                                            <span class="text-sm text-gray-dark">外勤人員 : 尚未指派</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 案件卡片 3 -->
-                        <div class="border border-green-light rounded-lg p-3">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="flex gap-4">
-                                    <div class="text-center">
-                                        <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">勤務單號
-                                        </div>
-                                        <div class="text-sm text-gray-dark mt-1">N1110743380</div>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">立案編號
-                                        </div>
-                                        <div class="text-sm text-gray-dark mt-1">20220722115010018</div>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">點交編號
-                                        </div>
-                                        <div class="text-sm text-gray-dark mt-1">S999121</div>
-                                    </div>
-                                </div>
-                                <button class="bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1">
-                                    <i class="fas fa-file-export w-3 h-3"></i>
-                                    匯出
-                                </button>
-                            </div>
-
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                <div class="space-y-2">
-                                    <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                        <i class="fas fa-clock w-4 h-4"></i>
-                                        <span>通報</span>
-                                        <span>12:07:40</span>
-                                        <span>·</span>
-                                        <i class="fas fa-check-circle w-4 h-4"></i>
-                                        <span>完成</span>
-                                        <span>-</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                        <i class="fas fa-map-marker-alt w-4 h-4"></i>
-                                        <span>地址</span>
-                                        <span>屏東縣屏東市自由路527號</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                        <i class="fas fa-user-circle w-4 h-4"></i>
-                                        <span>通報人</span>
-                                        <span>陳小姐 0900-000000</span>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-end justify-end">
-                                    <div class="text-right space-y-2">
-                                        <div class="flex items-center gap-2 bg-green-light px-3 py-1 rounded">
-                                            <i class="fas fa-history w-4 h-4"></i>
-                                            <span class="text-sm font-medium text-secondary">處理中</span>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <div class="bg-green-light px-2 py-1 rounded text-xs text-secondary">案件
-                                            </div>
-                                            <i class="fas fa-address-card w-4 h-4"></i>
-                                            <span class="text-sm text-gray-dark">外勤人員 : 尚未指派</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 已完成 -->
-                        <div class="case-card hidden" data-status="done">
-                            <div class="border border-green-light rounded-lg p-3">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex gap-4">
-                                        <div class="text-center">
-                                            <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">
-                                                勤務單號</div>
-                                            <div class="text-sm text-gray-dark mt-1">N1110743399</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">
-                                                立案編號</div>
-                                            <div class="text-sm text-gray-dark mt-1">20220722115010099</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">
-                                                點交編號</div>
-                                            <div class="text-sm text-gray-dark mt-1">S999199</div>
-                                        </div>
-                                    </div>
-                                    <button
-                                        class="bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1">
-                                        <i class="fas fa-file-export w-3 h-3"></i>
-                                        匯出
-                                    </button>
-                                </div>
-                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                    <div class="space-y-2">
-                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                            <i class="fas fa-clock w-4 h-4"></i>
-                                            <span>通報</span>
-                                            <span>09:30:00</span>
-                                            <span>·</span>
-                                            <i class="fas fa-check-circle w-4 h-4"></i>
-                                            <span>已完成</span>
-                                            <span>-</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                            <i class="fas fa-map-marker-alt w-4 h-4"></i>
-                                            <span>地址</span>
-                                            <span>屏東縣屏東市成功路100號</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                            <i class="fas fa-user-circle w-4 h-4"></i>
-                                            <span>通報人</span>
-                                            <span>林先生 0900-000000</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-end justify-end">
-                                        <div class="text-right space-y-2">
-                                            <div class="flex items-center gap-2 bg-gray-200 px-3 py-1 rounded">
-                                                <i class="fas fa-check-circle w-4 h-4"></i>
-                                                <span class="text-sm font-medium text-secondary">已完成</span>
-                                            </div>
-                                            <div class="flex items-center gap-2">
-                                                <div class="bg-gray-200 px-2 py-1 rounded text-xs text-secondary">案件
-                                                </div>
-                                                <i class="fas fa-address-card w-4 h-4"></i>
-                                                <span class="text-sm text-gray-dark">外勤人員 : 已指派</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 異常（範例） -->
-                        <div class="case-card hidden" data-status="abnormal">
-                            <div class="border border-danger rounded-lg p-3">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex gap-4">
-                                        <div class="text-center">
-                                            <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">
-                                                勤務單號</div>
-                                            <div class="text-sm text-gray-dark mt-1">N1110743400</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">
-                                                立案編號</div>
-                                            <div class="text-sm text-gray-dark mt-1">20220722115010100</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-sm font-bold text-secondary bg-white px-2 py-1 rounded">
-                                                點交編號</div>
-                                            <div class="text-sm text-gray-dark mt-1">S999200</div>
-                                        </div>
-                                    </div>
-                                    <button
-                                        class="bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1">
-                                        <i class="fas fa-file-export w-3 h-3"></i>
-                                        匯出
-                                    </button>
-                                </div>
-                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                    <div class="space-y-2">
-                                        <div class="flex items-center gap-2 text-sm text-danger">
-                                            <i class="fas fa-clock w-4 h-4"></i>
-                                            <span>通報</span>
-                                            <span>10:00:00</span>
-                                            <span>·</span>
-                                            <i class="fas fa-times w-4 h-4"></i>
-                                            <span>異常</span>
-                                            <span>-</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                            <i class="fas fa-map-marker-alt w-4 h-4"></i>
-                                            <span>地址</span>
-                                            <span>屏東縣屏東市中正路200號</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 text-sm text-gray-dark">
-                                            <i class="fas fa-user-circle w-4 h-4"></i>
-                                            <span>通報人</span>
-                                            <span>張先生 0900-000000</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-end justify-end">
-                                        <div class="text-right space-y-2">
-                                            <div class="flex items-center gap-2 bg-danger px-3 py-1 rounded">
-                                                <i class="fas fa-times w-4 h-4"></i>
-                                                <span class="text-sm font-medium text-white">異常</span>
-                                            </div>
-                                            <div class="flex items-center gap-2">
-                                                <div class="bg-danger px-2 py-1 rounded text-xs text-white">案件</div>
-                                                <i class="fas fa-address-card w-4 h-4"></i>
-                                                <span class="text-sm text-gray-dark">外勤人員 : 尚未指派</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 地圖資訊 -->
-            <div class="flex-1 min-w-0 flex flex-col">
-                <div class="bg-white shadow-lg rounded-lg mb-4 overflow-hidden flex-1 flex flex-col">
-                    <!-- 區塊標題 -->
-                    <div class="bg-white border-b border-gray-200 p-3 flex items-center gap-2">
-                        <i class="fas fa-dot-circle w-4 h-4"></i>
-                        <span class="font-bold text-xl text-secondary">地圖資訊</span>
-                    </div>
-                    <!-- 控制區域 -->
-                    <div class="p-4 flex flex-col gap-2">
-                        <div class="flex flex-wrap gap-4 items-center mb-2">
-                            <div class="flex gap-2 items-center">
-                                <label class="text-sm text-gray-dark">年度</label>
-                                <select class="border border-gray-300 rounded px-2 py-1 text-sm">
-                                    <option>114 年度</option>
-                                </select>
-                            </div>
-                            <div class="flex gap-2 items-center">
-                                <label class="text-sm text-gray-dark">月份</label>
-                                <select class="border border-gray-300 rounded px-2 py-1 text-sm">
-                                    <option>7 月</option>
-                                </select>
-                            </div>
-                            <button
-                                class="ml-auto bg-primary text-white px-3 py-1 rounded text-sm flex items-center gap-1">
-                                <i class="fas fa-file-export w-4 h-4"></i>匯出地圖
-                            </button>
-                        </div>
-                        <div class="flex gap-2 items-center mb-2">
-                            <button class="bg-primary text-white px-3 py-1 rounded text-sm">捕蜂</button>
-                            <button class="bg-gray-200 text-secondary px-3 py-1 rounded text-sm">捉蛇</button>
-                            <button class="bg-gray-200 text-secondary px-3 py-1 rounded text-sm">動物救援</button>
-                            <button class="bg-gray-200 text-secondary px-3 py-1 rounded text-sm">綠鬣蜥</button>
-                        </div>
-                    </div>
-                    <!-- 地圖區域 -->
-                    <div class="px-4 pb-2 flex flex-col items-center">
-                        <img src="img/map.png" alt="map" class="w-full max-w-[320px] h-auto mb-2">
-                        <div class="flex gap-4 mt-2">
-                            <div class="flex items-center gap-1">
-                                <span class="w-4 h-4 rounded bg-green-200 border border-gray-300"></span>
-                                <span class="text-xs text-gray-dark">500 件以下</span>
-                            </div>
-                            <div class="flex items-center gap-1">
-                                <span class="w-4 h-4 rounded bg-green-light border border-gray-300"></span>
-                                <span class="text-xs text-gray-dark">500 件以上</span>
-                            </div>
-                            <div class="flex items-center gap-1">
-                                <span class="w-4 h-4 rounded bg-yellow-200 border border-gray-300"></span>
-                                <span class="text-xs text-gray-dark">500-1000 件</span>
-                            </div>
-                            <div class="flex items-center gap-1">
-                                <span class="w-4 h-4 rounded bg-orange-200 border border-gray-300"></span>
-                                <span class="text-xs text-gray-dark">1000-2000 件</span>
-                            </div>
-                            <div class="flex items-center gap-1">
-                                <span class="w-4 h-4 rounded bg-red-200 border border-gray-300"></span>
-                                <span class="text-xs text-gray-dark">2000 件以上</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -778,19 +729,91 @@
         // 案件列表 Tab 切換
         const tabs = document.querySelectorAll('#caseTabs button');
         const cards = document.querySelectorAll('#caseList .case-card');
+        function showTab(status) {
+            tabs.forEach(t => {
+                t.classList.remove('border-secondary', 'text-secondary', 'font-bold');
+                t.classList.add('border-transparent', 'text-gray-medium');
+                if (t.getAttribute('data-tab') === status) {
+                    t.classList.remove('border-transparent', 'text-gray-medium');
+                    t.classList.add('border-secondary', 'text-secondary', 'font-bold');
+                }
+            });
+
+            // 先隱藏所有案件
+            cards.forEach(card => {
+                card.classList.add('hidden');
+            });
+
+            // 找到符合條件的案件並限制顯示數量為3筆
+            let visibleCount = 0;
+            const maxVisible = 3;
+
+            cards.forEach(card => {
+                if (visibleCount >= maxVisible) return;
+
+                if (status === 'all') {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else if (status === 'abnormal' && card.getAttribute('data-status') === 'abnormal') {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else if (status !== 'abnormal' && card.getAttribute('data-status') === status) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                }
+            });
+        }
         tabs.forEach(tab => {
             tab.addEventListener('click', function () {
-                tabs.forEach(t => t.classList.remove('border-secondary', 'text-secondary', 'font-bold'));
-                this.classList.add('border-secondary', 'text-secondary', 'font-bold');
-                const status = this.getAttribute('data-tab');
-                cards.forEach(card => {
-                    if (status === 'all') {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.toggle('hidden', card.getAttribute('data-status') !== status);
-                    }
-                });
+                showTab(this.getAttribute('data-tab'));
             });
+        });
+        // 預設顯示處理中
+        showTab('processing');
+        
+        // 地圖縮放功能
+        let currentZoom = 1;
+        const mapImage = document.getElementById('mapImage');
+        const zoomInBtn = document.getElementById('zoomIn');
+        const zoomOutBtn = document.getElementById('zoomOut');
+        const resetZoomBtn = document.getElementById('resetZoom');
+        const minZoom = 0.5;
+        const maxZoom = 3;
+        const zoomStep = 0.2;
+
+        function updateMapZoom() {
+            mapImage.style.transform = `scale(${currentZoom})`;
+        }
+
+        zoomInBtn.addEventListener('click', function() {
+            if (currentZoom < maxZoom) {
+                currentZoom += zoomStep;
+                updateMapZoom();
+            }
+        });
+
+        zoomOutBtn.addEventListener('click', function() {
+            if (currentZoom > minZoom) {
+                currentZoom -= zoomStep;
+                updateMapZoom();
+            }
+        });
+
+        resetZoomBtn.addEventListener('click', function() {
+            currentZoom = 1;
+            updateMapZoom();
+        });
+
+        // 滑鼠滾輪縮放
+        mapImage.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -zoomStep : zoomStep;
+            const newZoom = currentZoom + delta;
+            
+            if (newZoom >= minZoom && newZoom <= maxZoom) {
+                currentZoom = newZoom;
+                updateMapZoom();
+            }
         });
 
         // 年度下拉選單互動

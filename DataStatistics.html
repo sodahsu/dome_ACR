@@ -129,12 +129,26 @@
                 <div class="min-w-[160px] flex-shrink-0">
                     <label class="block text-gray-dark font-medium mb-2">案件類型</label>
                     <div class="relative">
-                        <select class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
-                            <option>請選擇</option>
-                            <option>補蜂</option>
-                            <option>捉蛇</option>
-                            <option>動物救援</option>
-                            <option>綠鬣蜥</option>
+                        <select id="caseTypeSelect"
+                            class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
+                            <option value="">請選擇</option>
+                            <option value="bee">補蜂</option>
+                            <option value="snake">捉蛇</option>
+                            <option value="rescue">動物救援</option>
+                            <option value="lizard">綠鬣蜥</option>
+                        </select>
+                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
+                            <i class="fa-solid fa-chevron-down w-4 h-4"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="min-w-[160px] flex-shrink-0">
+                    <label class="block text-gray-dark font-medium mb-2">物種類型</label>
+                    <div class="relative">
+                        <select id="speciesSelect"
+                            class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10"
+                            disabled>
+                            <option value="">請先選擇案件類型</option>
                         </select>
                         <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
                             <i class="fa-solid fa-chevron-down w-4 h-4"></i>
@@ -158,9 +172,11 @@
                 <div class="min-w-[160px] flex-shrink-0">
                     <label class="block text-gray-dark font-medium mb-2">圖表類型</label>
                     <div class="relative">
-                        <select class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
-                            <option selected>折線圖</option>
-                            <option>直條圖</option>
+                        <select id="chartTypeSelect"
+                            class="w-full border border-border rounded px-3 py-2 bg-white appearance-none pr-10">
+                            <option value="line" selected>折線圖</option>
+                            <option value="bar">直條圖</option>
+                            <option value="pie">圓餅圖</option>
                         </select>
                         <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-dark">
                             <i class="fa-solid fa-chevron-down w-4 h-4"></i>
@@ -270,11 +286,11 @@
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">鄉鎮</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:119</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1999</th>
-                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:1959</th>
-                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">來源:其他</th>
+                                <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:1959</th>
+                                <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:其他</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">通報數</th>
                                 <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">結案數</th>
-                                <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">完成率</th>
+                                <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">完成率</th>
                             </tr>
                         </thead>
                         <tbody class="text-sm" id="data-table-body">
@@ -324,6 +340,7 @@
             source: { min: 10000, max: 13000 },
             species: { min: 5000, max: 9000 }
         };
+
         function getDatasets(tab) {
             const { min, max } = tabConfig[tab];
             let xLabels = labels;
@@ -359,12 +376,72 @@
                 datasets: datasets
             };
         }
+
+        // 取得圖表資料，根據圖表類型調整資料格式
+        function getChartData(tab, chartType) {
+            const { min, max } = tabConfig[tab];
+            let xLabels = labels;
+            let datasets;
+            if (chartType === 'pie') {
+                // 圓餅圖只顯示第一個資料集的總和
+                if (tab === 'species') {
+                    // 以案件類型為圓餅圖分類
+                    const sums = [0, 0, 0, 0];
+                    for (let i = 0; i < labels.length; i++) {
+                        sums[0] += randomData(1, min, max)[0];
+                        sums[1] += randomData(1, min, max)[0];
+                        sums[2] += randomData(1, min, max)[0];
+                        sums[3] += randomData(1, min, max)[0];
+                    }
+                    datasets = [{
+                        label: '案件類型',
+                        data: sums,
+                        backgroundColor: [
+                            'rgba(137, 121, 255, 0.7)',
+                            'rgba(255, 146, 138, 0.7)',
+                            'rgba(60, 195, 223, 0.7)',
+                            'rgba(255, 174, 76, 0.7)'
+                        ]
+                    }];
+                    xLabels = ['補蜂', '捉蛇', '動物救援', '綠鬣蜥'];
+                } else {
+                    // 以來源為圓餅圖分類
+                    const sums = [0, 0, 0, 0];
+                    for (let i = 0; i < labels.length; i++) {
+                        sums[0] += randomData(1, min, max)[0];
+                        sums[1] += randomData(1, min, max)[0];
+                        sums[2] += randomData(1, min, max)[0];
+                        sums[3] += randomData(1, min, max)[0];
+                    }
+                    datasets = [{
+                        label: '來源',
+                        data: sums,
+                        backgroundColor: [
+                            'rgba(137, 121, 255, 0.7)',
+                            'rgba(255, 146, 138, 0.7)',
+                            'rgba(60, 195, 223, 0.7)',
+                            'rgba(255, 174, 76, 0.7)'
+                        ]
+                    }];
+                    xLabels = ['119', '1999', '1959', '其他'];
+                }
+            } else {
+                // 折線圖/直條圖
+                return getDatasets(tab);
+            }
+            return {
+                labels: xLabels,
+                datasets: datasets
+            };
+        }
+
         // 初始化圖表
         let currentTab = 'source';
+        let currentChartType = 'line';
         const ctx = document.getElementById('lineChart').getContext('2d');
-        let chartData = getDatasets(currentTab);
+        let chartData = getChartData(currentTab, currentChartType);
         let chart = new Chart(ctx, {
-            type: 'line',
+            type: currentChartType,
             data: {
                 labels: chartData.labels,
                 datasets: chartData.datasets
@@ -385,14 +462,19 @@
                         mode: 'index',
                         intersect: false,
                         callbacks: {
-                            // 顯示所有年度資料
                             label: function (context) {
                                 let label = context.dataset.label || '';
                                 if (label) {
                                     label += ': ';
                                 }
-                                if (context.parsed.y !== null) {
-                                    label += context.parsed.y.toLocaleString();
+                                if (context.parsed !== null) {
+                                    if (typeof context.parsed === 'number') {
+                                        label += context.parsed.toLocaleString();
+                                    } else if (typeof context.parsed === 'object' && context.parsed.y !== undefined) {
+                                        label += context.parsed.y.toLocaleString();
+                                    } else if (Array.isArray(context.parsed)) {
+                                        label += context.parsed[0].toLocaleString();
+                                    }
                                 }
                                 return label;
                             }
@@ -403,7 +485,7 @@
                     mode: 'index',
                     intersect: false
                 },
-                scales: {
+                scales: (currentChartType === 'pie') ? {} : {
                     y: {
                         beginAtZero: true,
                         max: 15000,
@@ -431,6 +513,90 @@
                 }
             }
         });
+
+        // 圖表類型切換
+        document.getElementById('chartTypeSelect').addEventListener('change', function () {
+            currentChartType = this.value;
+            // 銷毀舊圖表
+            chart.destroy();
+            // 重新取得資料
+            chartData = getChartData(currentTab, currentChartType);
+            // 創建新圖表
+            chart = new Chart(ctx, {
+                type: currentChartType,
+                data: {
+                    labels: chartData.labels,
+                    datasets: chartData.datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        if (typeof context.parsed === 'number') {
+                                            label += context.parsed.toLocaleString();
+                                        } else if (typeof context.parsed === 'object' && context.parsed.y !== undefined) {
+                                            label += context.parsed.y.toLocaleString();
+                                        } else if (Array.isArray(context.parsed)) {
+                                            label += context.parsed[0].toLocaleString();
+                                        }
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    hover: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    scales: (currentChartType === 'pie') ? {} : {
+                        y: {
+                            beginAtZero: true,
+                            max: 15000,
+                            ticks: {
+                                stepSize: 1000,
+                                callback: function (value) {
+                                    return value.toLocaleString();
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: 3,
+                            hoverRadius: 5
+                        }
+                    }
+                }
+            });
+        });
+
         // Tab 切換
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function () {
@@ -445,18 +611,19 @@
                 this.classList.remove('bg-gray-light', 'text-gray-dark', 'border-transparent');
                 this.classList.add('bg-secondary', 'text-white', 'font-bold', 'border-secondary');
                 // 更新圖表
-                chartData = getDatasets(tab);
+                chartData = getChartData(tab, currentChartType);
                 chart.data.labels = chartData.labels;
                 chart.data.datasets = chartData.datasets;
                 chart.update();
-                // 更新表格
+                // 更新資料表格
                 if (tab === 'source') {
                     renderSourceTable();
-                } else {
+                } else if (tab === 'species') {
                     renderSpeciesTable();
                 }
             });
         });
+
         function randomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
@@ -520,7 +687,7 @@
             document.getElementById("table-head").innerHTML = `
         <tr class="bg-green-light">
             <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">序號</th>
-            <th class="px-2 py-3 text-left text-sm font-bold text-gray-dark">鄉鎮</th>
+            <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">鄉鎮</th>
             <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:119</th>
             <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:1999</th>
             <th class="px-2 py-3 text-left textsm font-bold text-gray-dark">來源:1959</th>
@@ -570,6 +737,70 @@
         document.addEventListener("DOMContentLoaded", function () {
             initializeTownStats();
             renderSourceTable();
+        });
+
+        // 案件類型與物種對應關係
+        const caseTypeSpecies = {
+            bee: [
+                { value: 'honeybee', text: '蜜蜂' },
+                { value: 'wasp', text: '胡蜂' },
+                { value: 'hornet', text: '虎頭蜂' },
+                { value: 'bumblebee', text: '熊蜂' },
+                { value: 'carpenter_bee', text: '木蜂' }
+            ],
+            snake: [
+                { value: 'bungarus_multicinctus', text: '雨傘節' },
+                { value: 'protobothrops_mucrosquamatus', text: '龜殼花' },
+                { value: 'trimeresurus_stejnegeri', text: '青竹絲' },
+                { value: 'naja_atra', text: '眼鏡蛇' },
+                { value: 'deinagkistrodon_acutus', text: '百步蛇' },
+                { value: 'trimeresurus_gracilis', text: '赤尾青竹絲' },
+                { value: 'elaphe_species', text: '錦蛇' },
+                { value: 'cyclophiops_major', text: '臭青公' },
+                { value: 'lycodon_ruhstrati', text: '紅斑蛇' }
+            ],
+            rescue: [
+                { value: 'bird', text: '鳥類' },
+                { value: 'mammal', text: '哺乳動物' },
+                { value: 'reptile', text: '爬蟲類' },
+                { value: 'amphibian', text: '兩棲類' },
+                { value: 'fish', text: '魚類' },
+                { value: 'turtle', text: '龜類' }
+            ],
+            lizard: [
+                { value: 'iguana_iguana', text: '綠鬣蜥' },
+                { value: 'varanus_salvator', text: '澤巨蜥' },
+                { value: 'gekko_gecko', text: '大守宮' },
+                { value: 'hemidactylus_frenatus', text: '疣尾蝎虎' }
+            ]
+        };
+
+        // 案件類型變更事件
+        document.getElementById('caseTypeSelect').addEventListener('change', function () {
+            const caseType = this.value;
+            const speciesSelect = document.getElementById('speciesSelect');
+
+            // 清空物種選項
+            speciesSelect.innerHTML = '';
+
+            if (caseType === '') {
+                // 未選擇案件類型
+                speciesSelect.disabled = true;
+                speciesSelect.innerHTML = '<option value="">請先選擇案件類型</option>';
+            } else {
+                // 選擇了案件類型
+                speciesSelect.disabled = false;
+                speciesSelect.innerHTML = '<option value="">不拘</option>';
+
+                // 添加對應的物種選項
+                const species = caseTypeSpecies[caseType] || [];
+                species.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    speciesSelect.appendChild(option);
+                });
+            }
         });
     </script>
 </body>

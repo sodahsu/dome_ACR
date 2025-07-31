@@ -24,15 +24,7 @@
                         'gray-dark': '#495057',
                         'border': '#ADB5BD',
                         'green-light': '#C5E0C7',
-                        'bg-light': '#F3F3F3',
-                        'bg-success': '#D1E7DD',
-                        'text-success': '#0F5132',
-                        'bg-info': '#CFF4FC',
-                        'text-info': '#0C7489',
-                        'bg-warning': '#FFF3CD',
-                        'text-warning': '#664D03',
-                        'bg-danger': '#F8D7DA',
-                        'text-danger': '#842029'
+                        'bg-light': '#F3F3F3'
                     },
                     fontFamily: {
                         'noto': ['Noto Sans TC', 'sans-serif']
@@ -41,66 +33,6 @@
             }
         }
     </script>
-    <style>
-        .chart-container {
-            position: relative;
-            height: 400px;
-            width: 100%;
-        }
-
-        .pie-chart-container {
-            position: relative;
-            height: 386px;
-            width: 100%;
-        }
-
-        .bar-chart-container {
-            position: relative;
-            height: 346px;
-            width: 100%;
-        }
-
-        .map-container {
-            position: relative;
-            height: 542px;
-            width: 100%;
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-        }
-
-        .map-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: #6c757d;
-            font-size: 18px;
-        }
-
-        .nav-active {
-            background: #DC3545;
-            color: white;
-            border-bottom: 2px solid #DC3545;
-        }
-
-        .nav-item {
-            background: #6c757d;
-            color: white;
-        }
-
-        .notification-warning {
-            background: #FFF3CD;
-            border-left: 4px solid #EAD065;
-            color: #664D03;
-        }
-
-        .notification-info {
-            background: #CFF4FC;
-            border-left: 4px solid #0C7489;
-            color: #0C7489;
-        }
-    </style>
 </head>
 
 <body class="bg-bg-light font-noto">
@@ -111,7 +43,6 @@
             .then(response => response.text())
             .then(html => {
                 document.getElementById('header').innerHTML = html;
-                // 手動初始化 header 功能
                 if (window.initializeHeader) {
                     window.initializeHeader();
                 }
@@ -119,7 +50,6 @@
     </script>
     <script src="header-utils.js"></script>
 
-    <!-- 主要內容 -->
     <main class="p-2 md:p-4 max-w-[1440px] mx-auto">
         <!-- 頁面標題 -->
         <div class="bg-white shadow-lg rounded-lg border-l-4 border-primary p-2 mb-4">
@@ -135,490 +65,431 @@
             </div>
         </div>
 
-        <!-- 異常警示提醒 -->
-        <div class="bg-danger text-white p-3 mb-4 rounded-lg flex items-center">
-            <i class="fas fa-exclamation-triangle mr-2"></i>
-            <span class="font-medium">異常警示：獅子鄉通報處理人員時間高於平均值，請注意！</span>
+        <!-- 異常警示 -->
+        <div class="bg-red-50 border border-red-200 rounded-lg p-3 mb-4 flex items-center gap-3">
+            <div class="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center">
+                <i class="fas fa-exclamation text-xs"></i>
+            </div>
+            <span class="text-red-700 font-medium">異常警示：獅子鄉通報處理人員時間高於平均值，請注意！</span>
         </div>
 
-        <!-- 統計數據卡片區 -->
-        <div class="grid grid-cols-2 lg:grid-cols-6 gap-3 mb-6">
-            <!-- 當月通報數 -->
-            <div class="bg-accent text-white p-3 rounded-lg text-center">
-                <div class="text-xs opacity-90 mb-1">當月通報數</div>
-                <div class="text-xl font-bold">3,001 <span class="text-sm font-normal">件</span></div>
+        <!-- 統計卡片區 -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+            <div class="bg-blue-50 rounded-lg p-3 text-center shadow">
+                <div class="text-gray-600 text-xs mb-1">當月通報數</div>
+                <div class="text-2xl font-bold text-blue-600">3,001</div>
+                <div class="text-gray-500 text-xs">件</div>
             </div>
-
-            <!-- 已結案 -->
-            <div class="bg-primary text-white p-3 rounded-lg text-center">
-                <div class="text-xs opacity-90 mb-1">已結案</div>
-                <div class="text-xl font-bold">2,409 <span class="text-sm font-normal">件</span></div>
+            <div class="bg-green-50 rounded-lg p-3 text-center shadow">
+                <div class="text-gray-600 text-xs mb-1">已結案</div>
+                <div class="text-2xl font-bold text-green-600">2,409</div>
+                <div class="text-gray-500 text-xs">件</div>
             </div>
-
-            <!-- 完成率 -->
-            <div class="bg-green-600 text-white p-3 rounded-lg text-center">
-                <div class="text-xs opacity-90 mb-1">完成率</div>
-                <div class="text-xl font-bold">83.3 <span class="text-sm font-normal">%</span></div>
+            <div class="bg-green-50 rounded-lg p-3 text-center shadow">
+                <div class="text-gray-600 text-xs mb-1">完成率</div>
+                <div class="text-2xl font-bold text-green-600">83.3</div>
+                <div class="text-gray-500 text-xs">%</div>
             </div>
-
-            <!-- 來源電話 -->
-            <div class="bg-warning text-gray-dark p-3 rounded-lg text-center">
-                <div class="text-xs opacity-90 mb-1">來源電話</div>
-                <div class="text-xl font-bold">2,567 <span class="text-sm font-normal">通</span></div>
+            <div class="bg-orange-50 rounded-lg p-3 text-center shadow">
+                <div class="text-gray-600 text-xs mb-1">來源電話</div>
+                <div class="text-2xl font-bold text-orange-500">2,567</div>
+                <div class="text-gray-500 text-xs">通</div>
             </div>
-
-            <!-- 來源其他 -->
-            <div class="bg-gray-medium text-white p-3 rounded-lg text-center">
-                <div class="text-xs opacity-90 mb-1">來源其他</div>
-                <div class="text-xl font-bold">404 <span class="text-sm font-normal">件</span></div>
+            <div class="bg-red-50 rounded-lg p-3 text-center shadow">
+                <div class="text-gray-600 text-xs mb-1">來源其他</div>
+                <div class="text-2xl font-bold text-red-500">404</div>
+                <div class="text-gray-500 text-xs">件</div>
             </div>
-
-            <!-- 來源網路 -->
-            <div class="bg-danger text-white p-3 rounded-lg text-center">
-                <div class="text-xs opacity-90 mb-1">來源網路</div>
-                <div class="text-xl font-bold">30 <span class="text-sm font-normal">件</span></div>
+            <div class="bg-yellow-50 rounded-lg p-3 text-center shadow">
+                <div class="text-gray-600 text-xs mb-1">來源網路</div>
+                <div class="text-2xl font-bold text-yellow-600">30</div>
+                <div class="text-gray-500 text-xs">件</div>
             </div>
         </div>
 
+        <!-- 主要內容區 -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <!-- 左側：狀態分佈圓餅圖區域 -->
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <div class="bg-secondary text-white px-4 py-2 flex items-center">
-                    <i class="fas fa-dot-circle mr-2"></i>
-                    <span class="font-medium">狀態分佈圓餅圖</span>
-                </div>
-                <div class="p-4">
-                    <!-- 四個圓餅圖 -->
-                    <div class="grid grid-cols-2 gap-3">
-                        <!-- 蜂類 -->
+            <!-- 左側內容 -->
+            <div class="lg:col-span-2 space-y-4">
+                <!-- 狀態分析圓餅圖 -->
+                <div class="bg-white shadow-lg rounded-lg p-4">
+                    <h3 class="text-lg font-bold text-secondary mb-4 flex items-center gap-2">
+                        <i class="fas fa-circle text-primary text-xs"></i>
+                        狀態分析圓餅圖
+                    </h3>
+                    <div class="grid grid-cols-2 gap-6">
                         <div class="text-center">
-                            <div class="w-20 h-20 mx-auto mb-2">
+                            <div class="relative w-24 h-24 mx-auto mb-2">
                                 <canvas id="beeChart"></canvas>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <i class="fas fa-bug text-lg text-yellow-600"></i>
+                                </div>
                             </div>
-                            <div class="text-xs font-medium text-gray-dark">蜂類</div>
+                            <div class="text-sm font-medium text-gray-700">捕蜂</div>
                         </div>
-
-                        <!-- 蛇類 -->
                         <div class="text-center">
-                            <div class="w-20 h-20 mx-auto mb-2">
+                            <div class="relative w-24 h-24 mx-auto mb-2">
                                 <canvas id="snakeChart"></canvas>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-lg">🐍</span>
+                                </div>
                             </div>
-                            <div class="text-xs font-medium text-gray-dark">蛇類</div>
+                            <div class="text-sm font-medium text-gray-700">捉蛇</div>
                         </div>
-
-                        <!-- 其他救援動物 -->
                         <div class="text-center">
-                            <div class="w-20 h-20 mx-auto mb-2">
-                                <canvas id="otherAnimalChart"></canvas>
+                            <div class="relative w-24 h-24 mx-auto mb-2">
+                                <canvas id="rescueChart"></canvas>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-lg">🐾</span>
+                                </div>
                             </div>
-                            <div class="text-xs font-medium text-gray-dark">其他救援動物</div>
+                            <div class="text-sm font-medium text-gray-700">救援動物</div>
                         </div>
-
-                        <!-- 綠鬣蜥 -->
                         <div class="text-center">
-                            <div class="w-20 h-20 mx-auto mb-2">
+                            <div class="relative w-24 h-24 mx-auto mb-2">
                                 <canvas id="iguanaChart"></canvas>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-lg">🦎</span>
+                                </div>
                             </div>
-                            <div class="text-xs font-medium text-gray-dark">綠鬣蜥</div>
+                            <div class="text-sm font-medium text-gray-700">綠鬣蜥</div>
                         </div>
                     </div>
-
-                    <!-- 圖例 -->
-                    <div class="mt-4 text-xs">
-                        <div class="grid grid-cols-2 gap-2">
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-primary rounded-full mr-1"></div>
-                                <span class="text-gray-600">結案</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-accent rounded-full mr-1"></div>
-                                <span class="text-gray-600">處理中</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-danger rounded-full mr-1"></div>
-                                <span class="text-gray-600">駁回</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-gray-medium rounded-full mr-1"></div>
-                                <span class="text-gray-600">無法處理</span>
-                            </div>
+                    <div class="flex flex-wrap justify-center gap-4 mt-4 text-xs">
+                        <div class="flex items-center gap-1">
+                            <div class="w-3 h-3 bg-green-500 rounded"></div>
+                            <span>內埔鄉</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <div class="w-3 h-3 bg-blue-500 rounded"></div>
+                            <span>東門鎮</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <div class="w-3 h-3 bg-red-500 rounded"></div>
+                            <span>恆春鎮</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <div class="w-3 h-3 bg-yellow-500 rounded"></div>
+                            <span>萬丹鄉其他</span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 中間：同期比比較 -->
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <div class="bg-secondary text-white px-4 py-2 flex items-center">
-                    <i class="fas fa-dot-circle mr-2"></i>
-                    <span class="font-medium">同期比比較</span>
-                </div>
-                <div class="p-4">
-                    <div class="text-xs text-gray-600 mb-3">
-                        調查區間：屏東縣陷阱活動分析，數位分析調查化。
+                <!-- 同時期比較 -->
+                <div class="bg-white shadow-lg rounded-lg p-4">
+                    <h3 class="text-lg font-bold text-secondary mb-2 flex items-center gap-2">
+                        <i class="fas fa-chart-bar text-accent text-sm"></i>
+                        同時期比較
+                    </h3>
+                    <div class="text-sm text-gray-600 mb-4">
+                        相較去年同時期動物救助案件數目；動物分析案件數目<br>
+                        高出以下比例。
                     </div>
-
-                    <div class="h-48">
+                    <div class="h-64">
                         <canvas id="comparisonChart"></canvas>
                     </div>
                 </div>
+
+                <!-- 案件案例追蹤 -->
+                <div class="bg-white shadow-lg rounded-lg">
+                    <div class="p-4 border-b border-gray-200">
+                        <h3 class="text-lg font-bold text-secondary flex items-center gap-2">
+                            <i class="fas fa-list text-primary text-sm"></i>
+                            案件案例追蹤
+                        </h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-green-light">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-sm font-bold text-gray-dark">案件編號</th>
+                                    <th class="px-4 py-3 text-left text-sm font-bold text-gray-dark">通報時間</th>
+                                    <th class="px-4 py-3 text-left text-sm font-bold text-gray-dark">案件類型</th>
+                                    <th class="px-4 py-3 text-left text-sm font-bold text-gray-dark">狀態</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-200 hover:bg-green-50">
+                                    <td class="px-4 py-3">1001</td>
+                                    <td class="px-4 py-3">2025-05-01 08:30</td>
+                                    <td class="px-4 py-3">蜂窩捕捉</td>
+                                    <td class="px-4 py-3">
+                                        <span
+                                            class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs flex items-center gap-1 w-fit">
+                                            <i class="fas fa-clock text-xs"></i>待處理
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-green-50">
+                                    <td class="px-4 py-3">1002</td>
+                                    <td class="px-4 py-3">2025-05-01 09:15</td>
+                                    <td class="px-4 py-3">蛇類抓捕</td>
+                                    <td class="px-4 py-3">
+                                        <span
+                                            class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs flex items-center gap-1 w-fit">
+                                            <i class="fas fa-arrow-right text-xs"></i>進行中
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-green-50">
+                                    <td class="px-4 py-3">1003</td>
+                                    <td class="px-4 py-3">2025-05-01 09:45</td>
+                                    <td class="px-4 py-3">狗隻救援</td>
+                                    <td class="px-4 py-3">
+                                        <span
+                                            class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs flex items-center gap-1 w-fit">
+                                            <i class="fas fa-check text-xs"></i>結案
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-green-50">
+                                    <td class="px-4 py-3">1004</td>
+                                    <td class="px-4 py-3">2025-05-01 10:10</td>
+                                    <td class="px-4 py-3">蛇類捕捉</td>
+                                    <td class="px-4 py-3">
+                                        <span
+                                            class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs flex items-center gap-1 w-fit">
+                                            <i class="fas fa-times text-xs"></i>無法處理
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
-            <!-- 右側：屏果縣進度熱點圖 -->
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <div class="bg-secondary text-white px-4 py-2 flex items-center justify-between">
-                    <span class="font-medium">屏果縣進度熱點圖</span>
-                    <button class="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1 rounded text-xs">切換</button>
-                </div>
-                <div class="p-4">
-                    <div class="text-xs text-gray-600 mb-2">
-                        更新日期：2025.05.05 12:00:12
+            <!-- 右側內容 -->
+            <div class="space-y-4">
+                <!-- 屏東縣通報熱點圖 -->
+                <div class="bg-white shadow-lg rounded-lg">
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-secondary">屏東縣通報熱點圖</h3>
+                        <button
+                            class="bg-gray-200 text-gray-600 px-3 py-1 rounded text-sm hover:bg-gray-300">切換</button>
                     </div>
+                    <div class="p-4">
+                        <div class="text-xs text-gray-500 mb-2">
+                            熱點圖例：滿地數據原示不同地區的案件熱點。數量越高<br>
+                            顯示顏色越深。
+                        </div>
+                        <div class="text-xs text-gray-500 mb-4">
+                            更新日期：2025.05.05 12:00:12
+                        </div>
+                        <!-- 屏東縣地圖 -->
+                        <div class="relative bg-gray-50 rounded">
+                            <svg viewBox="0 0 240 320" class="w-full h-auto">
+                                <!-- 屏東縣各區域 -->
+                                <path d="M40 30 L80 30 L80 70 L40 70 Z" fill="#dc2626" stroke="#fff" stroke-width="1" />
+                                <text x="60" y="55" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">屏東市</text>
 
-                    <!-- 地圖區域 -->
-                    <div class="relative h-40 bg-green-50 rounded border mb-3">
-                        <!-- 模擬屏東縣地圖 -->
-                        <svg viewBox="0 0 200 200" class="w-full h-full">
-                            <!-- 屏東市 - 深綠色 -->
-                            <polygon points="80,60 120,60 120,100 80,100" fill="#166534" stroke="#fff"
-                                stroke-width="1" />
-                            <text x="100" y="85" text-anchor="middle" fill="white" font-size="8">屏東市</text>
+                                <path d="M90 30 L130 30 L130 70 L90 70 Z" fill="#ea580c" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="110" y="55" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">長治鄉</text>
 
-                            <!-- 潮州鎮 - 綠色 -->
-                            <polygon points="120,60 160,60 160,100 120,100" fill="#16a34a" stroke="#fff"
-                                stroke-width="1" />
-                            <text x="140" y="85" text-anchor="middle" fill="white" font-size="8">潮州鎮</text>
+                                <path d="M140 30 L180 30 L180 70 L140 70 Z" fill="#16a34a" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="160" y="55" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">三地門鄉</text>
 
-                            <!-- 東港鎮 - 黃色 -->
-                            <polygon points="80,100 120,100 120,140 80,140" fill="#eab308" stroke="#fff"
-                                stroke-width="1" />
-                            <text x="100" y="125" text-anchor="middle" fill="white" font-size="8">東港鎮</text>
+                                <path d="M40 80 L80 80 L80 120 L40 120 Z" fill="#ea580c" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="60" y="105" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">九如鄉</text>
 
-                            <!-- 恆春鎮 - 橙色 -->
-                            <polygon points="120,100 160,100 160,140 120,140" fill="#f97316" stroke="#fff"
-                                stroke-width="1" />
-                            <text x="140" y="125" text-anchor="middle" fill="white" font-size="8">恆春鎮</text>
+                                <path d="M90 80 L130 80 L130 120 L90 120 Z" fill="#dc2626" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="110" y="105" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">里港鄉</text>
 
-                            <!-- 獅子鄉 - 紅色 (異常區域) -->
-                            <polygon points="40,140 80,140 80,180 40,180" fill="#dc2626" stroke="#fff"
-                                stroke-width="1" />
-                            <text x="60" y="165" text-anchor="middle" fill="white" font-size="7">獅子鄉</text>
-                        </svg>
-                    </div>
+                                <path d="M140 80 L180 80 L180 120 L140 120 Z" fill="#16a34a" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="160" y="105" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">高樹鄉</text>
 
-                    <!-- 圖例 -->
-                    <div class="text-xs">
-                        <div class="grid grid-cols-2 gap-1">
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-green-800 mr-1"></div>
-                                <span class="text-gray-600">500件以上</span>
+                                <path d="M40 130 L80 130 L80 170 L40 170 Z" fill="#ea580c" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="60" y="155" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">萬丹鄉</text>
+
+                                <path d="M90 130 L130 130 L130 170 L90 170 Z" fill="#16a34a" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="110" y="155" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">內埔鄉</text>
+
+                                <path d="M140 130 L180 130 L180 170 L140 170 Z" fill="#eab308" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="160" y="155" text-anchor="middle"
+                                    class="text-xs fill-black font-medium">萬巒鄉</text>
+
+                                <path d="M40 180 L80 180 L80 220 L40 220 Z" fill="#dc2626" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="60" y="205" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">潮州鎮</text>
+
+                                <path d="M90 180 L130 180 L130 220 L90 220 Z" fill="#dc2626" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="110" y="205" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">東港鎮</text>
+
+                                <path d="M140 180 L180 180 L180 220 L140 220 Z" fill="#dc2626" stroke="#fff"
+                                    stroke-width="1" />
+                                <text x="160" y="205" text-anchor="middle"
+                                    class="text-xs fill-white font-medium">恆春鎮</text>
+                            </svg>
+                        </div>
+
+                        <div class="mt-4 grid grid-cols-2 gap-x-2 gap-y-1 text-xs">
+                            <div class="flex items-center gap-1">
+                                <div class="w-3 h-3 bg-green-800 rounded"></div><span>500件以上</span>
                             </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-primary mr-1"></div>
-                                <span class="text-gray-600">300-500件</span>
+                            <div class="flex items-center gap-1">
+                                <div class="w-3 h-3 bg-green-600 rounded"></div><span>300-500件</span>
                             </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-green-light mr-1"></div>
-                                <span class="text-gray-600">200-300件</span>
+                            <div class="flex items-center gap-1">
+                                <div class="w-3 h-3 bg-green-400 rounded"></div><span>200-300件</span>
                             </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-warning mr-1"></div>
-                                <span class="text-gray-600">100-200件</span>
+                            <div class="flex items-center gap-1">
+                                <div class="w-3 h-3 bg-yellow-400 rounded"></div><span>100-200件</span>
                             </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-orange-400 mr-1"></div>
-                                <span class="text-gray-600">50-100件</span>
+                            <div class="flex items-center gap-1">
+                                <div class="w-3 h-3 bg-orange-400 rounded"></div><span>50-100件</span>
                             </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-orange-600 mr-1"></div>
-                                <span class="text-gray-600">10-50件</span>
+                            <div class="flex items-center gap-1">
+                                <div class="w-3 h-3 bg-red-400 rounded"></div><span>25-50件</span>
                             </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-danger mr-1"></div>
-                                <span class="text-gray-600">10件以下</span>
+                            <div class="flex items-center gap-1">
+                                <div class="w-3 h-3 bg-red-500 rounded"></div><span>10-25件</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <div class="w-3 h-3 bg-red-600 rounded"></div><span>10件以下</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 bg-gray-100 p-2 rounded">
+                            <div class="flex items-center gap-2">
+                                <div class="bg-gray-300 w-10 h-6 rounded flex items-center justify-center">
+                                    <svg viewBox="0 0 32 24" class="w-6 h-4">
+                                        <path d="M4 4 L28 4 L28 20 L4 20 Z" fill="#e0e0e0" stroke="#999"
+                                            stroke-width="1" />
+                                        <circle cx="16" cy="12" r="2" fill="#dc2626" />
+                                    </svg>
+                                </div>
+                                <div class="text-xs text-gray-600">屏東縣行政區劃</div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- 小地圖 -->
-                    <div class="mt-3 flex justify-center">
-                        <div class="w-12 h-12 bg-blue-100 rounded border flex items-center justify-center">
-                            <div class="text-xs text-blue-600">小地圖</div>
-                        </div>
+                <!-- 廠商成效監控 -->
+                <div class="bg-white shadow-lg rounded-lg">
+                    <div class="p-4 border-b border-gray-200">
+                        <h3 class="text-lg font-bold text-secondary flex items-center gap-2">
+                            <i class="fas fa-chart-line text-accent text-sm"></i>
+                            廠商成效監控
+                        </h3>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 下方表格區域 -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-            <!-- 實時案例追蹤 -->
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <div class="bg-secondary text-white px-4 py-2 flex items-center">
-                    <i class="fas fa-dot-circle mr-2"></i>
-                    <span class="font-medium">實時案例追蹤</span>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-border">
-                        <thead class="bg-green-light">
-                            <tr>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-secondary uppercase">案件編號</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-secondary uppercase">通報時間</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-secondary uppercase">案件類型</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-secondary uppercase">狀態</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-border">
-                            <tr class="hover:bg-gray-light">
-                                <td class="px-3 py-2 text-sm text-gray-dark">1001</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">2025-05-01 08:30</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">蜂窩摘除</td>
-                                <td class="px-3 py-2 text-sm">
-                                    <span
-                                        class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-warning text-text-warning">
-                                        <i class="fas fa-clock mr-1"></i>
-                                        待處理
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-gray-light">
-                                <td class="px-3 py-2 text-sm text-gray-dark">1002</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">2025-05-01 09:15</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">蛇類捕捉</td>
-                                <td class="px-3 py-2 text-sm">
-                                    <span
-                                        class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-info text-text-info">
-                                        <i class="fas fa-arrow-right mr-1"></i>
-                                        進行中
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-gray-light">
-                                <td class="px-3 py-2 text-sm text-gray-dark">1003</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">2025-05-01 09:45</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">動物救援</td>
-                                <td class="px-3 py-2 text-sm">
-                                    <span
-                                        class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-success text-text-success">
-                                        <i class="fas fa-check mr-1"></i>
-                                        結案
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-gray-light">
-                                <td class="px-3 py-2 text-sm text-gray-dark">1004</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">2025-05-01 10:10</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">蛇類捕捉</td>
-                                <td class="px-3 py-2 text-sm">
-                                    <span
-                                        class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-danger text-text-danger">
-                                        <i class="fas fa-times mr-1"></i>
-                                        無法處理
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 廠商成效統計 -->
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <div class="bg-secondary text-white px-4 py-2 flex items-center">
-                    <i class="fas fa-dot-circle mr-2"></i>
-                    <span class="font-medium">廠商成效統計</span>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-border">
-                        <thead class="bg-green-light">
-                            <tr>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-secondary uppercase">廠商人員</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-secondary uppercase">案件處理數量</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-secondary uppercase">平均處理時間</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-secondary uppercase">廠商名稱</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-secondary uppercase">完成率 (%)
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-border">
-                            <tr class="hover:bg-gray-light">
-                                <td class="px-3 py-2 text-sm text-gray-dark">張三</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">30</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">2.5</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">威力企業行</td>
-                                <td class="px-3 py-2 text-sm text-primary font-semibold">90%</td>
-                            </tr>
-                            <tr class="hover:bg-gray-light">
-                                <td class="px-3 py-2 text-sm text-gray-dark">李四</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">25</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">3.0</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">除害企業行</td>
-                                <td class="px-3 py-2 text-sm text-warning font-semibold">75%</td>
-                            </tr>
-                            <tr class="hover:bg-gray-light">
-                                <td class="px-3 py-2 text-sm text-gray-dark">王五</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">35</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">2.0</td>
-                                <td class="px-3 py-2 text-sm text-gray-dark">三一企業行</td>
-                                <td class="px-3 py-2 text-sm text-primary font-semibold">85%</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs">
+                            <thead class="bg-green-light">
+                                <tr>
+                                    <th class="px-3 py-2 text-left text-sm font-bold text-gray-dark">業務人員</th>
+                                    <th class="px-3 py-2 text-left text-sm font-bold text-gray-dark">案件處理數量</th>
+                                    <th class="px-3 py-2 text-left text-sm font-bold text-gray-dark">超時處理案件數</th>
+                                    <th class="px-3 py-2 text-left text-sm font-bold text-gray-dark">廠商名稱</th>
+                                    <th class="px-3 py-2 text-left text-sm font-bold text-gray-dark">完成率(%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-200 hover:bg-green-50">
+                                    <td class="px-3 py-2">張三</td>
+                                    <td class="px-3 py-2">30</td>
+                                    <td class="px-3 py-2">2.5</td>
+                                    <td class="px-3 py-2">廣力企業行</td>
+                                    <td class="px-3 py-2">90%</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-green-50">
+                                    <td class="px-3 py-2">李四</td>
+                                    <td class="px-3 py-2">25</td>
+                                    <td class="px-3 py-2">3.0</td>
+                                    <td class="px-3 py-2">除害企業行</td>
+                                    <td class="px-3 py-2">75%</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-green-50">
+                                    <td class="px-3 py-2">王五</td>
+                                    <td class="px-3 py-2">35</td>
+                                    <td class="px-3 py-2">2.0</td>
+                                    <td class="px-3 py-2">三一企業行</td>
+                                    <td class="px-3 py-2">85%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // 小圓餅圖配置
-        const pieOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    enabled: false
-                }
-            },
-            elements: {
-                arc: {
-                    borderWidth: 1,
-                    borderColor: '#ffffff'
-                }
-            }
-        };
-
-        // 蜂類圓餅圖
-        const beeCtx = document.getElementById('beeChart').getContext('2d');
-        new Chart(beeCtx, {
-            type: 'pie',
-            data: {
-                datasets: [{
-                    data: [75, 18, 4, 3],
-                    backgroundColor: ['#6C936D', '#417991', '#DC3545', '#6C757D'],
-                    borderWidth: 1,
-                    borderColor: '#ffffff'
-                }]
-            },
-            options: pieOptions
-        });
-
-        // 蛇類圓餅圖
-        const snakeCtx = document.getElementById('snakeChart').getContext('2d');
-        new Chart(snakeCtx, {
-            type: 'pie',
-            data: {
-                datasets: [{
-                    data: [68, 22, 6, 4],
-                    backgroundColor: ['#6C936D', '#417991', '#DC3545', '#6C757D'],
-                    borderWidth: 1,
-                    borderColor: '#ffffff'
-                }]
-            },
-            options: pieOptions
-        });
-
-        // 其他救援動物圓餅圖
-        const otherAnimalCtx = document.getElementById('otherAnimalChart').getContext('2d');
-        new Chart(otherAnimalCtx, {
-            type: 'pie',
-            data: {
-                datasets: [{
-                    data: [60, 25, 10, 5],
-                    backgroundColor: ['#6C936D', '#417991', '#DC3545', '#6C757D'],
-                    borderWidth: 1,
-                    borderColor: '#ffffff'
-                }]
-            },
-            options: pieOptions
-        });
-
-        // 綠鬣蜥圓餅圖
-        const iguanaCtx = document.getElementById('iguanaChart').getContext('2d');
-        new Chart(iguanaCtx, {
-            type: 'pie',
-            data: {
-                datasets: [{
-                    data: [82, 12, 4, 2],
-                    backgroundColor: ['#6C936D', '#417991', '#DC3545', '#6C757D'],
-                    borderWidth: 1,
-                    borderColor: '#ffffff'
-                }]
-            },
-            options: pieOptions
-        });
-
-        // 同期比比較長條圖
-        const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
-        new Chart(comparisonCtx, {
-            type: 'bar',
-            data: {
-                labels: ['110/5', '110/6', '110/7', '110/8', '屏東縣域'],
-                datasets: [{
-                    label: '110/5',
-                    data: [8, 0, 0, 0, 0],
-                    backgroundColor: '#6C936D',
-                    borderRadius: 4
-                }, {
-                    label: '110/6',
-                    data: [6, 11, 0, 0, 0],
-                    backgroundColor: '#EAD065',
-                    borderRadius: 4
-                }, {
-                    label: '110/7',
-                    data: [4, 8, 54, 0, 0],
-                    backgroundColor: '#417991',
-                    borderRadius: 4
-                }, {
-                    label: '110/8',
-                    data: [0, 0, 40, 0, 0],
-                    backgroundColor: '#DC3545',
-                    borderRadius: 4
-                }]
-            },
-            options: {
+        document.addEventListener('DOMContentLoaded', function () {
+            const pieOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
+                cutout: '65%',
                 plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            boxWidth: 12,
-                            padding: 8,
-                            usePointStyle: true,
-                            font: {
-                                size: 10
-                            }
-                        }
-                    }
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                }
+            };
+
+            // 圓餅圖數據 - 依設計稿調整比例
+            const beeData = { datasets: [{ data: [60, 20, 15, 5], backgroundColor: ['#22c55e', '#3b82f6', '#ef4444', '#eab308'], borderWidth: 0 }] };
+            const snakeData = { datasets: [{ data: [70, 15, 10, 5], backgroundColor: ['#22c55e', '#3b82f6', '#ef4444', '#eab308'], borderWidth: 0 }] };
+            const rescueData = { datasets: [{ data: [40, 35, 20, 5], backgroundColor: ['#22c55e', '#3b82f6', '#ef4444', '#eab308'], borderWidth: 0 }] };
+            const iguanaData = { datasets: [{ data: [80, 10, 7, 3], backgroundColor: ['#22c55e', '#3b82f6', '#ef4444', '#eab308'], borderWidth: 0 }] };
+
+            new Chart(document.getElementById('beeChart'), { type: 'doughnut', data: beeData, options: pieOptions });
+            new Chart(document.getElementById('snakeChart'), { type: 'doughnut', data: snakeData, options: pieOptions });
+            new Chart(document.getElementById('rescueChart'), { type: 'doughnut', data: rescueData, options: pieOptions });
+            new Chart(document.getElementById('iguanaChart'), { type: 'doughnut', data: iguanaData, options: pieOptions });
+
+            // 同時期比較圖表 - 依設計稿調整
+            new Chart(document.getElementById('comparisonChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['清潔', '修繕', '食安保衛', '綠植維護', '防疫'],
+                    datasets: [
+                        { label: '110/5', data: [7, 6, 2, 1, 1], backgroundColor: '#fbbf24' },
+                        { label: '111/5', data: [8, 7, 2, 1, 1], backgroundColor: '#a7f3d0' },
+                        { label: '112/5', data: [11, 8, 2, 0, 1], backgroundColor: '#6ee7b7' },
+                        { label: '113/5', data: [54, 39, 18, 2, 15], backgroundColor: '#059669' }
+                    ]
                 },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            font: {
-                                size: 10
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 60,
+                            ticks: {
+                                stepSize: 10
                             }
                         }
                     },
-                    y: {
-                        beginAtZero: true,
-                        max: 60,
-                        grid: {
-                            color: '#E5E7EB'
-                        },
-                        ticks: {
-                            font: {
-                                size: 10
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                fontSize: 10
                             }
                         }
                     }
                 }
-            }
+            });
         });
     </script>
 </body>
