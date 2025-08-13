@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統參數設定</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6C936D',
+                        'secondary': '#3F5146',
+                        'accent': '#417991',
+                        'danger': '#DC3545',
+                        'warning': '#EAD065',
+                        'gray-light': '#F8F9FA',
+                        'gray-medium': '#6C757D',
+                        'gray-dark': '#495057',
+                        'border': '#ADB5BD',
+                        'green-light': '#C5E0C7',
+                        'bg-light': '#F3F3F3'
+                    },
+                    fontFamily: {
+                        'noto': ['Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bg-light font-noto">
+    <!-- 引入 header.html -->
+    <div id="header"></div>
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header').innerHTML = html;
+                if (window.initializeHeader) {
+                    window.initializeHeader();
+                }
+            });
+    </script>
+    <script src="header-utils.js"></script>
+    <main class="p-2 md:p-4 max-w-[1440px] mx-auto">
+        <!-- 頁面標題 -->
+        <div class="bg-white shadow-lg rounded-lg border-l-4 border-primary p-2 mb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center px-2 md:px-4 py-2 gap-2">
+                <h2 class="text-xl md:text-2xl font-bold text-secondary">系統參數設定</h2>
+                <div class="flex items-center gap-1 text-gray-medium text-sm">
+                    <span>首頁</span>
+                    <span>/</span>
+                    <span>系統設定管理</span>
+                    <span>/</span>
+                    <span class="text-primary font-bold">系統參數設定</span>
+                </div>
+            </div>
+        </div>
+        <!-- 分頁選單 -->
+        <div class="flex gap-2">
+            <button class="px-6 py-2 font-bold text-white bg-primary rounded-t border-b-4 border-primary shadow-none" style="box-shadow:none;">密碼與帳號安全</button>
+            <button class="px-6 py-2 font-bold text-gray-700 bg-gray-300 rounded-t border-b-4 border-gray-400 shadow-none">業務流程期限</button>
+            <button class="px-6 py-2 font-bold text-gray-700 bg-gray-300 rounded-t border-b-4 border-gray-400 shadow-none">其他</button>
+        </div>
+        <!-- 表格卡片區塊 -->
+        <div class="bg-white shadow-lg rounded-lg p-2 md:p-4 mb-4">
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-xs md:text-sm min-w-[1000px]">
+                    <thead>
+                        <tr class="bg-green-light">
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">參數敘述</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">最後修改日</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">修改者</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">狀態</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">編輯</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2">變更密碼效期設定</td>
+                            <td class="border-b border-gray-200 p-2">111/03/22 06:03:06</td>
+                            <td class="border-b border-gray-200 p-2">系統管理</td>
+                            <td class="border-b border-gray-200 p-2">啟用</td>
+                            <td class="border-b border-gray-200 p-2 ">
+                                <button onclick="openModal()" class="text-primary hover:text-accent">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2">密碼重複使用限制</td>
+                            <td class="border-b border-gray-200 p-2">112/06/20 08:44:16</td>
+                            <td class="border-b border-gray-200 p-2">系統管理</td>
+                            <td class="border-b border-gray-200 p-2">啟用</td>
+                            <td class="border-b border-gray-200 p-2">
+                                <button onclick="openRepeatModal()" class="text-primary hover:text-accent">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2">停用帳號效期</td>
+                            <td class="border-b border-gray-200 p-2">113/09/03 09:43:16</td>
+                            <td class="border-b border-gray-200 p-2">系統管理</td>
+                            <td class="border-b border-gray-200 p-2">啟用</td>
+                            <td class="border-b border-gray-200 p-2">
+                                <button onclick="openDisableAccountModal()" class="text-primary hover:text-accent">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2">管理者登入 IP 限制</td>
+                            <td class="border-b border-gray-200 p-2">111/09/22 14:12:39</td>
+                            <td class="border-b border-gray-200 p-2">系統管理</td>
+                            <td class="border-b border-gray-200 p-2">啟用</td>
+                            <td class="border-b border-gray-200 p-2">
+                                <button onclick="openIpLimitModal()" class="text-primary hover:text-accent">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-green-50">
+                            <td class="border-b border-gray-200 p-2">自動登出時限限制</td>
+                            <td class="border-b border-gray-200 p-2">112/12/30 22:53:40</td>
+                            <td class="border-b border-gray-200 p-2">系統管理</td>
+                            <td class="border-b border-gray-200 p-2">啟用</td>
+                            <td class="border-b border-gray-200 p-2">
+                                <button onclick="openAutoLogoutModal()" class="text-primary hover:text-accent">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 1. 變更密碼效期設定 -->
+        <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 hidden">
+            <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+                <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-lg font-bold text-green-700 mb-4">變更密碼效期設定</h3>
+                <form>
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-danger mb-1">
+                            * 最短不可低於
+                        </label>
+                        <div class="flex">
+                            <input type="number" class="border border-gray-300 rounded-l px-3 py-2 w-24 focus:outline-none focus:ring-2 focus:ring-primary" value="24">
+                            <span class="inline-flex items-center px-3 border border-l-0 border-gray-300 bg-gray-100 rounded-none">小時</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-danger mb-1">
+                            * 最長不可超過
+                        </label>
+                        <div class="flex">
+                            <input type="number" class="border border-gray-300 rounded-l px-3 py-2 w-24 focus:outline-none focus:ring-2 focus:ring-primary" value="180">
+                            <span class="inline-flex items-center px-3 border border-l-0 border-gray-300 bg-gray-100 rounded-none">天</span>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-100 border-l-4 border-warning p-3 mb-4 text-sm rounded">
+                        <span class="font-bold text-gray-700">參數說明：</span>
+                        <span class="text-gray-700">
+                            用於設定系統使用者密碼的有效期限，到達設定天數後，系統將強制要求使用者變更密碼，以提升帳號安全性。
+                        </span>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">取消</button>
+                        <button type="submit" class="px-4 py-2 rounded bg-primary text-white hover:bg-green-700">儲存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 2. 密碼重複使用限制 -->
+        <div id="repeatModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 hidden">
+            <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+                <button onclick="closeRepeatModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-lg font-bold text-green-700 mb-4">密碼重複使用限制</h3>
+                <form>
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-danger mb-1">
+                            * 密碼不可與前
+                        </label>
+                        <div class="flex">
+                            <input type="number" class="border border-gray-300 rounded-l px-3 py-2 w-24 focus:outline-none focus:ring-2 focus:ring-primary" value="3">
+                            <span class="inline-flex items-center px-3 border border-l-0 border-gray-300 bg-gray-100 rounded-none">次相同</span>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-100 border-l-4 border-warning p-3 mb-4 text-sm rounded">
+                        <span class="font-bold text-gray-700">參數說明：</span>
+                        <span class="text-gray-700">
+                            設定使用者在變更密碼時，不可重複使用過去設定過的密碼。<br>
+                            可自訂需記錄幾代歷史密碼，避免使用者持續使用相同或類似密碼，提升系統整體安全性。
+                        </span>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" onclick="closeRepeatModal()" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">取消</button>
+                        <button type="submit" class="px-4 py-2 rounded bg-primary text-white hover:bg-green-700">儲存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 3. 停用帳號效期 -->
+        <div id="disableAccountModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 hidden">
+            <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+                <button onclick="closeDisableAccountModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-lg font-bold text-green-700 mb-4">停用帳號效期</h3>
+                <form>
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-danger mb-1">
+                            * 當帳號超過
+                        </label>
+                        <div class="flex">
+                            <input type="number" class="border border-gray-300 rounded-l px-3 py-2 w-24 focus:outline-none focus:ring-2 focus:ring-primary" value="180">
+                            <span class="inline-flex items-center px-3 border border-l-0 border-gray-300 bg-gray-100 rounded-none">天未登入時，自動停用</span>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-100 border-l-4 border-warning p-3 mb-4 text-sm rounded">
+                        <span class="font-bold text-gray-700">參數說明：</span>
+                        <span class="text-gray-700">
+                            用於設定使用者帳號在長時間未登入系統後，自動停用或標記為非活躍狀態。<br>
+                            可自訂天數門檻，例如超過 180 天未使用即停用，提升帳號管理安全與有效性。
+                        </span>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" onclick="closeDisableAccountModal()" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">取消</button>
+                        <button type="submit" class="px-4 py-2 rounded bg-primary text-white hover:bg-green-700">儲存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 4. 管理者登入IP限制 -->
+        <div id="ipLimitModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 hidden">
+            <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+                <button onclick="closeIpLimitModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-lg font-bold text-green-700 mb-4">管理者登入IP限制</h3>
+                <form>
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-danger mb-1">
+                            * 限定系統管理者僅可從以下IP登入
+                        </label>
+                        <div class="flex">
+                            <input type="text" class="border border-gray-300 rounded-l px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary" placeholder="請輸入">
+                            <button type="button" class="px-3 bg-gray-100 border border-l-0 border-gray-300 rounded-none text-danger hover:bg-red-100">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                        <button type="button" class="mt-2 px-3 py-1 bg-primary text-white rounded hover:bg-green-700 text-sm">
+                            <i class="fas fa-plus mr-1"></i>新增限制IP
+                        </button>
+                    </div>
+                    <div class="bg-yellow-100 border-l-4 border-warning p-3 mb-4 text-sm rounded">
+                        <span class="font-bold text-gray-700">參數說明：</span>
+                        <span class="text-gray-700">
+                            可限制系統管理者僅能從特定 IP 位址登入後台，防止未授權的外部存取，提升系統管理操作的安全性，保障關鍵功能不被非法入侵。
+                        </span>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" onclick="closeIpLimitModal()" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">取消</button>
+                        <button type="submit" class="px-4 py-2 rounded bg-primary text-white hover:bg-green-700">儲存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 5. 自動登出時限限制 -->
+        <div id="autoLogoutModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 hidden">
+            <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+                <button onclick="closeAutoLogoutModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-lg font-bold text-green-700 mb-4">自動登出時限設定</h3>
+                <form>
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-danger mb-1">
+                            * 最長間置
+                        </label>
+                        <div class="flex">
+                            <input type="number" class="border border-gray-300 rounded-l px-3 py-2 w-24 focus:outline-none focus:ring-2 focus:ring-primary" value="25">
+                            <span class="inline-flex items-center px-3 border border-l-0 border-gray-300 bg-gray-100 rounded-none">分鐘</span>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-100 border-l-4 border-warning p-3 mb-4 text-sm rounded">
+                        <span class="font-bold text-gray-700">參數說明：</span>
+                        <span class="text-gray-700">
+                            用於設定使用者閒置離開系統時限， 到達設定時間後，系統將自動登出，以提升帳號安全性。
+                        </span>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" onclick="closeAutoLogoutModal()" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">取消</button>
+                        <button type="submit" class="px-4 py-2 rounded bg-primary text-white hover:bg-green-700">儲存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function openModal() { document.getElementById('editModal').classList.remove('hidden'); }
+            function closeModal() { document.getElementById('editModal').classList.add('hidden'); }
+            function openRepeatModal() { document.getElementById('repeatModal').classList.remove('hidden'); }
+            function closeRepeatModal() { document.getElementById('repeatModal').classList.add('hidden'); }
+            function openDisableAccountModal() { document.getElementById('disableAccountModal').classList.remove('hidden'); }
+            function closeDisableAccountModal() { document.getElementById('disableAccountModal').classList.add('hidden'); }
+            function openIpLimitModal() { document.getElementById('ipLimitModal').classList.remove('hidden'); }
+            function closeIpLimitModal() { document.getElementById('ipLimitModal').classList.add('hidden'); }
+            function openAutoLogoutModal() { document.getElementById('autoLogoutModal').classList.remove('hidden'); }
+            function closeAutoLogoutModal() { document.getElementById('autoLogoutModal').classList.add('hidden'); }
+        </script>
+    </main>
+</body>
+</html>

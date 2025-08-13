@@ -464,7 +464,38 @@
                             <span class="block text-gray-700 bg-gray-100 rounded px-2 py-1">2024/04/28 20:20:21</span>
                         </div>
                     </div>
-                </div>
+                    <!-- 照片區塊（橫排4格，前2格有圖，後2格空） -->
+                    <div class="mt-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div id="workPhotoBlock3"
+                                class="work-photo-block w-full p-4 rounded-lg border border-gray-200">
+                                <div class="work-photo-title flex items-center text-gray-dark font-medium mb-3">
+                                    <span>後送紀錄</span>
+                                    <span class="text-xs text-gray-500 ml-2">(<span id="photoCount3">1</span>/4)</span>
+                                </div>
+                                <div id="workPhotoPreview3"
+                                    class="work-photo-preview grid grid-cols-4 gap-2 w-full min-h-[80px]">
+                                    <!-- 照片位置1 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:block;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片1"
+                                            src="img/Review03.jpg">
+                                    </div>
+                                    <!-- 照片位置2 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片2">
+                                    </div>
+                                    <!-- 照片位置3 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片3">
+                                    </div>
+                                    <!-- 照片位置4 -->
+                                    <div class="photo-slot relative aspect-square w-full" style="display:none;">
+                                        <img class="w-full h-full object-cover rounded cursor-pointer" alt="照片4">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </section>
             <!-- 電子簽章 -->
             <section>

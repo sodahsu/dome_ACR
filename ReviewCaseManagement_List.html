@@ -74,14 +74,14 @@
             </div>
 
             <form id="searchForm" class="md:block hidden">
-                <!-- 第一行：依欄位查詢 + 通報時間 + 案件完成時間 + 關鍵字 -->
+                <!-- 第一行：依欄位查詢 + 通報來源 + 通報時間 + 案件完成時間 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">依欄位查詢</label>
                         <div class="flex gap-2">
                             <select
                                 class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm flex-1">
-                                <option>不拘</option>
+                                <option selected>不拘</option>
                                 <option>立案編號</option>
                                 <option>通報人</option>
                                 <option>作業人員</option>
@@ -90,6 +90,15 @@
                             <input type="text" placeholder="請輸入"
                                 class="border border-border rounded px-3 py-2 text-gray-medium text-sm flex-1">
                         </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">通報來源</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option selected>請選擇</option>
+                            <option>119</option>
+                            <option>19999</option>
+                            <option>1959</option>
+                        </select>
                     </div>
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">通報時間</label>
@@ -111,28 +120,13 @@
                                 class="border border-border rounded px-3 py-2 text-gray-medium flex-1 text-sm">
                         </div>
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-secondary font-medium text-sm">關鍵字</label>
-                        <input type="text" placeholder="請輸入"
-                            class="border border-border rounded px-3 py-2 text-gray-medium text-sm">
-                    </div>
                 </div>
-
-                <!-- 第二行：通報來源 + 案件類型 + 鄉鎮 + 物種 -->
+                <!-- 第二行：案件類型 + 鄉鎮 + 物種 + 點交人員 -->
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
-                    <div class="flex flex-col gap-2">
-                        <label class="text-secondary font-medium text-sm">通報來源</label>
-                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>請選擇</option>
-                            <option>119</option>
-                            <option>19999</option>
-                            <option>1959</option>
-                        </select>
-                    </div>
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">案件類型</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>請選擇</option>
+                            <option selected>請選擇</option>
                             <option>捕蜂</option>
                             <option>捉蛇</option>
                             <option>動物救援</option>
@@ -142,23 +136,28 @@
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">鄉鎮</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>請選擇</option>
+                            <option selected>請選擇</option>
                         </select>
                     </div>
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">物種</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>請選擇</option>
+                            <option selected>請選擇</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-secondary font-medium text-sm">點交人員</label>
+                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
+                            <option selected>請選擇</option>
                         </select>
                     </div>
                 </div>
-
-                <!-- 第三行：案件進度 + 點交進度 + 點交人員 + 異常 -->
+                <!-- 第三行：案件進度 + 點交進度 + 異常 -->
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">案件進度</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>請選擇</option>
+                            <option selected>請選擇</option>
                             <option>審核中</option>
                             <option>審核完成</option>
                             <option>審核退回</option>
@@ -167,7 +166,7 @@
                     <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">點交進度</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>請選擇</option>
+                            <option selected>請選擇</option>
                             <option>待點交</option>
                             <option>限期交回</option>
                             <option>點交完成</option>
@@ -176,24 +175,19 @@
                         </select>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <label class="text-secondary font-medium text-sm">點交人員</label>
-                        <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>請選擇</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-2">
                         <label class="text-secondary font-medium text-sm">異常</label>
                         <select class="border border-border rounded px-3 py-2 text-gray-medium bg-white text-sm">
-                            <option>請選擇</option>
+                            <option selected>請選擇</option>
                         </select>
                     </div>
+                    <div></div>
                 </div>
                 <div class="border-t border-gray-300 pt-4">
                     <div class="flex gap-4">
                         <button type="submit"
                             class="bg-[#6C8C6B] text-white px-3 py-2 rounded flex items-center gap-1 justify-center text-sm hover:bg-[#5a7359] transition">
                             <i class="fas fa-search fa-fw text-base"></i>
-                            查詢
+                            搜尋
                         </button>
                         <button type="button"
                             class="bg-gray-medium text-white px-3 py-2 rounded flex items-center gap-1 justify-center text-sm">
@@ -233,14 +227,14 @@
                                 <input type="checkbox" class="w-4 h-4 mx-auto">
                             </th>
                             <th class="border-b border-gray-200 p-2 text-center font-bold">序號</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">立案編號</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">通報來源</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">通報時間</th>
-                            <th class="border-b border-gray-200 p-2 text-left font-bold">立案編號</th>
-                            <th class="border-b border-gray-200 p-2 text-left font-bold">鄉鎮</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">案件類型</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">鄉鎮</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">物種</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">點交人員</th>
-                            <th class="border-b border-gray-200 p-2 text-left font-bold">審核進度</th>
+                            <th class="border-b border-gray-200 p-2 text-left font-bold">案件進度</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">點交進度</th>
                             <th class="border-b border-gray-200 p-2 text-left font-bold">異常</th>
                         </tr>
@@ -250,13 +244,13 @@
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2 text-center">1</td>
-                            <td class="border-b border-gray-200 p-2">1959</td>
-                            <td class="border-b border-gray-200 p-2">2024/04/28 13:20:21</td>
                             <td class="border-b border-gray-200 p-2"><a href="ReviewCaseManagement_Edit.html"
                                     class="text-primary hover:underline">A1130428004</a></td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 13:20:21</td>
+                            <td class="border-b border-gray-200 p-2">綠鬣蜥</td>
                             <td class="border-b border-gray-200 p-2">林邊鄉</td>
-                            <td class="border-b border-gray-200 p-2">蜂蛹蜂</td>
-                            <td class="border-b border-gray-200 p-2">蜂蛹蜂</td>
+                            <td class="border-b border-gray-200 p-2">綠鬣蜥</td>
                             <td class="border-b border-gray-200 p-2">-</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
                                         class="fas fa-undo text-primary text-xl"></i>審核退回</span></td>
@@ -270,31 +264,32 @@
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2 text-center">2</td>
-                            <td class="border-b border-gray-200 p-2">119</td>
-                            <td class="border-b border-gray-200 p-2">2024/04/28 12:30:21</td>
                             <td class="border-b border-gray-200 p-2"><a href="ReviewCaseManagement_Edit.html"
                                     class="text-primary hover:underline">F1130428003</a></td>
-                            <td class="border-b border-gray-200 p-2">竹山鄉</td>
+                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 12:30:21</td>
                             <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">枋山鄉</td>
                             <td class="border-b border-gray-200 p-2">虎頭蜂</td>
-                            <td class="border-b border-gray-200 p-2">劉曉風</td>
+                            <td class="border-b border-gray-200 p-2">劉順風</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
                                         class="fas fa-history text-primary text-xl"></i>審核中</span></td>
                             <td class="border-b border-gray-200 p-2">限期交回</td>
                             <td class="border-b border-gray-200 p-2 text-center"><i
-                                    class="fas fa-check-circle fa-fw text-primary text-base cursor-pointer"
-                                    title="正常"></i></td>
+                                    class="fas fa-exclamation-circle fa-fw text-danger text-base cursor-pointer"
+                                    title="異常說明" onclick="showAbnormalModal()"></i>
+                            </td>
                         </tr>
                         <tr class="hover:bg-green-50">
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2 text-center">3</td>
-                            <td class="border-b border-gray-200 p-2">119</td>
-                            <td class="border-b border-gray-200 p-2">2024/04/28 12:27:21</td>
                             <td class="border-b border-gray-200 p-2"><a href="ReviewCaseManagement_Edit.html"
                                     class="text-primary hover:underline">F1130428002</a></td>
-                            <td class="border-b border-gray-200 p-2">竹山鄉</td>
+                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 12:27:21</td>
                             <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">竹山鄉</td>
                             <td class="border-b border-gray-200 p-2">虎頭蜂</td>
                             <td class="border-b border-gray-200 p-2">劉曉風</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
@@ -308,12 +303,12 @@
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2 text-center">4</td>
-                            <td class="border-b border-gray-200 p-2">119</td>
-                            <td class="border-b border-gray-200 p-2">2024/04/28 11:22:21</td>
                             <td class="border-b border-gray-200 p-2"><a href="ReviewCaseManagement_Edit.html"
                                     class="text-primary hover:underline">F1130428001</a></td>
-                            <td class="border-b border-gray-200 p-2">竹山鄉</td>
+                            <td class="border-b border-gray-200 p-2">119</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 11:22:21</td>
                             <td class="border-b border-gray-200 p-2">捕蜂</td>
+                            <td class="border-b border-gray-200 p-2">竹山鄉</td>
                             <td class="border-b border-gray-200 p-2">虎頭蜂</td>
                             <td class="border-b border-gray-200 p-2">劉曉風</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
@@ -327,12 +322,12 @@
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2 text-center">5</td>
-                            <td class="border-b border-gray-200 p-2">1959</td>
-                            <td class="border-b border-gray-200 p-2">2024/04/28 11:20:21</td>
                             <td class="border-b border-gray-200 p-2"><a href="ReviewCaseManagement_Edit.html"
                                     class="text-primary hover:underline">A1130428003</a></td>
-                            <td class="border-b border-gray-200 p-2">萬巒鄉</td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 11:20:21</td>
                             <td class="border-b border-gray-200 p-2">蜂蛹蜂</td>
+                            <td class="border-b border-gray-200 p-2">萬巒鄉</td>
                             <td class="border-b border-gray-200 p-2">蜂蛹蜂</td>
                             <td class="border-b border-gray-200 p-2">王大明</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
@@ -346,12 +341,12 @@
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2 text-center">6</td>
-                            <td class="border-b border-gray-200 p-2">1959</td>
-                            <td class="border-b border-gray-200 p-2">2024/04/28 11:10:21</td>
                             <td class="border-b border-gray-200 p-2"><a href="ReviewCaseManagement_Edit.html"
                                     class="text-primary hover:underline">A1130428002</a></td>
-                            <td class="border-b border-gray-200 p-2">萬巒鄉</td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 11:10:21</td>
                             <td class="border-b border-gray-200 p-2">蜂蛹蜂</td>
+                            <td class="border-b border-gray-200 p-2">萬巒鄉</td>
                             <td class="border-b border-gray-200 p-2">蜂蛹蜂</td>
                             <td class="border-b border-gray-200 p-2">王大明</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
@@ -365,12 +360,12 @@
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2 text-center">7</td>
-                            <td class="border-b border-gray-200 p-2">1959</td>
-                            <td class="border-b border-gray-200 p-2">2024/04/28 09:50:21</td>
                             <td class="border-b border-gray-200 p-2"><a href="ReviewCaseManagement_Edit.html"
                                     class="text-primary hover:underline">A1130428001</a></td>
-                            <td class="border-b border-gray-200 p-2">萬巒鄉</td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/28 09:50:21</td>
                             <td class="border-b border-gray-200 p-2">動物救援</td>
+                            <td class="border-b border-gray-200 p-2">萬巒鄉</td>
                             <td class="border-b border-gray-200 p-2">蜂蛹蜂</td>
                             <td class="border-b border-gray-200 p-2">王大明</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
@@ -384,12 +379,12 @@
                             <td class="border-b border-gray-200 p-2 align-middle text-center"><input type="checkbox"
                                     class="w-4 h-4 mx-auto"></td>
                             <td class="border-b border-gray-200 p-2 text-center">8</td>
-                            <td class="border-b border-gray-200 p-2">1959</td>
-                            <td class="border-b border-gray-200 p-2">2024/04/27 16:20:21</td>
                             <td class="border-b border-gray-200 p-2"><a href="ReviewCaseManagement_Edit.html"
                                     class="text-primary hover:underline">A1130427005</a></td>
-                            <td class="border-b border-gray-200 p-2">萬丹鄉</td>
+                            <td class="border-b border-gray-200 p-2">1959</td>
+                            <td class="border-b border-gray-200 p-2">2024/04/27 16:20:21</td>
                             <td class="border-b border-gray-200 p-2">動物救援</td>
+                            <td class="border-b border-gray-200 p-2">萬丹鄉</td>
                             <td class="border-b border-gray-200 p-2">白鼻心</td>
                             <td class="border-b border-gray-200 p-2">林曉明</td>
                             <td class="border-b border-gray-200 p-2"><span class="flex items-center gap-2"><i
